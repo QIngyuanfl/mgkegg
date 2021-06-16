@@ -4,8 +4,6 @@
 # Date: 2021/06/15
 # Version: 1.0.0
 import argparse
-import os
-import sys
 from requests.sessions import should_bypass_proxies
 from mgkegg.rest import *
 from mgkegg.downloads import *
@@ -68,5 +66,4 @@ def main():
         download()
 
 if __name__ == '__main__':
-    
     main()
