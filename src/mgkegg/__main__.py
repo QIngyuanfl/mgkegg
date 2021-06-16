@@ -5,8 +5,11 @@
 # Version: 1.0.0
 import argparse
 from requests.sessions import should_bypass_proxies
+from mgkegg import downloads
 from mgkegg.rest import *
 from mgkegg.downloads import *
+from mgkegg.update import *
+from mgkegg.html_parser import *
 
 def main():
     parser = argparse.ArgumentParser(prog = "mgkegg", 
@@ -51,7 +54,10 @@ def main():
     <option> = aaseq | ntseq | mol | kcf | image | conf | kgml | json""")
 
     parser_download = subparsers.add_parser('download',
-    help = 'download - download latest kegg reference maps with both png and html format')
+    help = 'download - download the latest kegg reference maps with both png and html format')
+
+    parser_update = subparsers.add_parser('update', 
+    help = 'update - update to the latest kegg reference maps database')
     
     args = parser.parse_args()
     if args.subcommand == 'ls':
@@ -63,7 +69,11 @@ def main():
     if args.subcommand == 'get':
         display(['get'] + args.dbentries)
     if args.subcommand == 'download':
+        print('start downloading...')
         download()
-
+    if args.subcommand == 'update':
+        print('start update...')
+        update(downloads.datadir)
 if __name__ == '__main__':
+    
     main()
