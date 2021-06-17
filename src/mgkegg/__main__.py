@@ -92,8 +92,9 @@ def main():
         outdir = args.outdir
         if not os.path.exists(outdir):
             os.makedirs(outdir)
-        highlight(gls, color, mgkegg.database, outdir)            
-
+        highlight(gls, color, mgkegg.database, outdir)
+    if not args.subcommand:
+        parser.print_help()
 if __name__ == '__main__':
     
     main()
