@@ -5,11 +5,12 @@
 # Version: 1.0.0
 import argparse
 from requests.sessions import should_bypass_proxies
-from mgkegg import downloads
+from mgkegg import downloads, highlight
 from mgkegg.rest import *
 from mgkegg.downloads import *
 from mgkegg.update import *
 from mgkegg.html_parser import *
+import mgkegg
 
 def main():
     parser = argparse.ArgumentParser(prog = "mgkegg", 
@@ -59,6 +60,17 @@ def main():
     parser_update = subparsers.add_parser('update', 
     help = 'update - update to the latest kegg reference maps database')
     
+    parser_highlight = subparsers.add_parser('highlight', 
+    help = 'highlight - highlight the given IDs of kegg components')
+
+    parser_highlight.add_argument('--glist', metavar='genelist', 
+    help = 'a file include gene list of kegg objects')
+
+    parser_highlight.add_argument('--outdir', '-o', 
+    help='outputdir for result')
+
+    parser_highlight.add_argument('--color', help='background highlight color')
+
     args = parser.parse_args()
     if args.subcommand == 'ls':
         display(['list'] + args.dbentries)
@@ -72,8 +84,16 @@ def main():
         print('start downloading...')
         download()
     if args.subcommand == 'update':
-        print('start update...')
+        print('start updating...')
         update(downloads.datadir)
+    if args.subcommand == 'highlight':
+        color = args.color
+        gls = args.glist
+        outdir = args.outdir
+        if not os.path.exists(outdir):
+            os.makedirs(outdir)
+        highlight(gls, color, mgkegg.database, outdir)            
+
 if __name__ == '__main__':
     
     main()

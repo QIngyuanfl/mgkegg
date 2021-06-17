@@ -82,7 +82,6 @@ Download png and html
             tasks = []
             loop.close()
         if i == len(pathway_list)-1 and i % 5 != 0:
-            print('ok')
             loop.run_until_complete(asyncio.gather(*tasks))
             loop.close()
 
@@ -90,7 +89,7 @@ Download png and html
         task.cancel()
 
     for pathway in pathway_list:
-        html_localize(os.path.join(datadir, f'{pathway}.html'))
+        html(os.path.join(datadir, f'{pathway}.html')).localize()
 
     with open(os.path.join(datadir, 'pathway.info'), 'w') as f:
         f.write(get(['info', 'pathway']))                      
