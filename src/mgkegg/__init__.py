@@ -1,3 +1,4 @@
+import re
 import os
 from shutil import copyfile
 from mgkegg.highlight import *
@@ -9,6 +10,9 @@ def highlight(gls:list, color:str, database:str, outdir:str):
     kegg_object = get_gene(gls)
     for i in os.listdir(database):
         i = os.path.join(database, i)
+        if re.search(r'map011\d+', i):
+            copyfile(i, os.path.join(outdir, os.path.basename(i)))
+            continue
         if 'html' not in i:
             continue
         conf = html(i).cordinate()
@@ -25,7 +29,7 @@ def highlight(gls:list, color:str, database:str, outdir:str):
                     continue
         if len(cord_rect) == 0 and len(cord_poly) == 0:
             continue
-        
+         
         img = Image.open(i.replace('html', 'png')).convert("RGB")
         
         if len(cord_rect) > 0:
