@@ -29,9 +29,12 @@ def highlight_rect(coords:list, image:str, color:str):
     return img
 
 def highlight_poly(coords:list, image:str, color:str):
-    poly = []
     for i in coords:
+        poly = []
         position = [int(x) for x in re.findall(r'\d+', i)]
+        if len(position) > 8:
+            continue
+        
         for x in range(1, len(position)):
             if x % 2 == 1:
                 poly.append(tuple(position[x-1:x+1]))
