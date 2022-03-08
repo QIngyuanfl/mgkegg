@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html>
+<!--
+ENTRY       map00600
+DEFINITION  Sphingolipid metabolism - Reference pathway
+--->
+<head>
+<meta charset="UTF-8">
+<title>
+KEGG PATHWAY: Sphingolipid metabolism - Reference pathway
+</title>
+<link rel="stylesheet" href=https://www.kegg.jp/css/kegg.css type="text/css" />
+<link rel="stylesheet" href=https://www.kegg.jp/css/jquery-ui.css />
+<style type="text/css">
+<!--
+
+h1.page-title {
+	font-size: 14px;
+	margin: 0px;
+	white-space: nowrap;
+}
+h1.page-title * {
+	vertical-align: middle;
+}
+
+input, select {
+	margin: 0px;
+}
+
+.hidden {
+	display: none !important;
+}
+
+/** navigation start **/
+.nav {
+	padding: 3px 0px 5px 0px;
+	position: relative;
+	min-width: 600px;
+	max-width: 800px;
+	background: #fff;
+}
+
+.nav form {
+	margin: 5px 0px 0px 0px;
+}
+
+.nav .help {
+	display: inline-block;
+	position: relative;
+	left: 20px;
+/*
+	position: absolute;
+	bottom: 5px;
+	right: 0px;
+*/
+}
+/** navigation end **/
+
+#description {
+	padding: 10px;
+	width: 800px;
+}
+
+#waiting-circle {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	display: none;
+}
+
+#controlPanel {
+	top: 0px;
+	left: 0px;
+	width: 220px;
+	background: #ffffff;
+	padding: 0px 0px 0px 0px;
+	white-space: nowrap;
+	overflow: auto;
+	position: fixed;
+	border: solid 1px #999999;
+	display: none;
+}
+
+#controlPanel.closed {
+	border: none;
+	padding: 0px 0px 0px 0px;
+	background: transparent;
+
+	/* jQuery-UI resizale.disabled() の実行で
+	 *      色が薄くなるのを打ち消す */
+	opacity: 1.0;
+}
+
+/** div.row start **/
+
+div.row {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	/* 以下のwidth,overflowの定義で.rowのブロック内で横スクロールする。 */
+	/*
+	width: 98%;
+	overflow: auto;
+	*/
+}
+
+div.row * {
+	vertical-align: middle;
+}
+
+/* 横に並べる場合(title可変幅) start */
+
+.row.scale input {
+	width: 110px;
+}
+
+.row.scale .label {
+	font-size: 0.9em;
+}
+
+/* 横に並べる場合(title可変幅) end */
+
+
+/* Search欄の検索結果 start */
+
+div.row.result > div {
+	margin: 5px 1px 2px 1px;
+}
+
+/* Search欄の検索結果 end */
+
+/**  div.row end **/
+
+#controlPanel h5 {
+  margin: 0px;
+	padding: 5px 0px 5px 10px;
+	vertical-align: middle;
+	border-top: solid 1px #cccccc;
+	border-bottom: solid 1px #cccccc;
+	background: #eeeeee;
+	/* ui-iconの位置調整のために必要 */
+	position: relative;
+}
+
+#controlPanel h5::before {
+	content: url(/Fig/get_htext/open.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5.closed::before {
+	content: url(/Fig/get_htext/close.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5:first-child {
+	border-top: none;
+}
+
+#controlPanel h5:hover {
+	cursor: pointer;
+}
+
+#controlPanel h5  + div {
+	padding: 5px 0px 5px 10px;
+}
+
+#controlPanel h5 .ui-icon {
+	display: inline-block;
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	margin-top: -8px;
+	cursor: pointer;
+}
+
+button {
+	/* Safariでボタンの周りに入る余白を削除 */
+	margin: 0px;
+	padding: 0px;
+	/* ボタンを押した時に表示されるボーダーを非表示にする */
+	outline: none;
+}
+
+button.close, button.open {
+	border: none;
+	padding: 0px;
+	position: absolute;
+	right: 5px;
+	top: 7px;
+}
+
+button.close {
+	/* コントロールパネルに合わせて初期は非表示 */
+	display: none;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+button img {
+	/* 画像の下に入る余白を無くす */
+	display: block;
+}
+
+/** tree style start **/
+ul.tree, ul.tree ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul.tree ul {
+	padding-left: 12px;
+}
+
+ul.tree .class-A > span {
+	font-weight: bold;
+}
+
+ul.tree li {
+	margin: 3px 0px 3px 0px;
+}
+
+.module-tree .module.disabled {
+	display: none;
+}
+
+.module-tree .classification.disabled {
+	display: none;
+}
+
+/** tree style > User data start **/
+ul.mappers {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul.mappers li {
+	position: relative;
+	margin: 5px 0px 2px 0px;
+}
+
+ul.mappers li .ui-icon {
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+}
+ul.mappers li .ui-icon:hover {
+	cursor: pointer;
+}
+ul.mappers li .ui-icon-trash {
+	right: 5px;
+}
+ul.mappers li .ui-icon-document {
+	right: 26px;
+}
+/** tree style > User data end **/
+
+/** tree style end **/
+
+.ui-icon.button {
+	display: inline-block;
+	cursor: pointer;
+}
+
+ul.simple {
+	margin: 0px;
+	padding: 0px;
+}
+ul.simple li {
+	list-style-type: none;
+}
+ul.simple li:not(:first-child) {
+	margin-top: 5px;
+}
+
+//-->
+</style>
+
+<script src=https://www.kegg.jp/js/jquery-3.1.0.min.js></script>
+<script src=https://www.kegg.jp/js/jquery-ui.js></script>
+<script src=https://www.kegg.jp/js/jquery.balloon.min.js></script>
+<script src=https://www.kegg.jp/js/lz-string.min.js></script>
+<script src=https://www.kegg.jp/kegg-bin/get_data.cgi?data=0021&id=show_pathway.merged.js&v2.09></script>
+<script type="text/javascript">
+<!--
+
+// common variable
+const env = {
+	       mapno: '00600',
+	         org: 'map',
+	       entry: 'map00600',
+	       scale: 1,
+	 colorModule: '',
+	personalConf: '',
+}
+
+// HELP button
+function btn(bobj,img) { bobj.src = https://www.kegg.jp/Fig/bget/button_ + img + ".gif"; }
+
+//-->
+</script>
+</head>
+<body>
+<!-- header logo start -->
+<!--
+<table cellpadding="0" width="100%" cellspacing="0" border="0">
+	<tr>
+		<td style="width:80px;">
+			<a href=https://www.kegg.jp/kegg/pathway.html><img align="middle" alt="KEGG" border="0" src=https://www.kegg.jp/Fig/bget/kegg3.gif /></a>
+		</td>
+		<td style="vertical-align:middle;">
+			<font class="title3"><b>Sphingolipid metabolism - Reference pathway</b></font>
+		</td>
+		<td valign="bottom" align="right">
+		</td>
+	</tr>
+</table>
+-->
+<h1 class="page-title">
+	<a href=https://www.kegg.jp/kegg/pathway.html><img alt="KEGG" border="0" src=https://www.kegg.jp/Fig/bget/kegg3.gif /></a>
+	&nbsp;Sphingolipid metabolism - Reference pathway
+</h1>
+<!-- header logo end -->
+
+<!-- page navigation start -->
+<div class="nav">
+	[
+	    <a href=https://www.kegg.jp/brite/query=00600&htext=br08901.keg&option=-a&node_proc=br08901_org&proc_enabled=map&panel=collapse id="navPathwayMenu">Pathway menu</a>
+	  | <a href=https://www.kegg.jp/entry/pathway+map00600 id="navPathwayEntry">Pathway entry</a>
+	  | <a id="downloadImageLink" href="#">Image file</a>
+	  | <a href="javascript:void(window.open('https://www.kegg.jp/kegg/document/help_pathway.html','KEGG_Help','width=720,height=640'))">Help</a>
+	]
+
+	
+	
+	<!-- organism list start -->
+	<form name="selmenu" method="get">
+		
+		<input type="button" id="changePathwayTypeButton" value="Change pathway type">
+		
+		
+		
+		<input type="text" class="hidden" name="mapno" value="00600" />
+		<input type="text" class="hidden" id="scale" name="scale" value="1" />
+		<input type="text" class="hidden" id="displayNoColoringImage" name="nocolor" value="0" />
+		<input type="text" class="hidden" id="displayDescription" name="show_description" value="hide" />
+		<input type="text" class="hidden" id="displayControlPanel" name="show_module_list" value="show" />
+		<input type="text" class="hidden" id="clickableMode" name="clickable_mode" value="" />
+		<input type="text" class="hidden" name="module" value="" />
+	</form>
+	<!-- organism list end -->
+
+</div>
+<!-- page navigation end -->
+
+<!-- pathway image start -->
+<div class="image-block" style="position:static;">
+<img src="map00600.png" name="pathwayimage" name="pathwayimage" usemap="#mapdata" border="0" />
+	<map id="mapdata" name="mapdata" data-scale="1">
+		<area id="DF6FFB66" shape="circle" coords="312,366,4" data-coords="312,366,4" class="original" href=https://www.kegg.jp/entry/C00836 title="C00836 (Sphinganine)" data-entry="C00836" />
+		<area id="D36FF6D9" shape="circle" coords="350,294,4" data-coords="350,294,4" class="original" href=https://www.kegg.jp/entry/C12144 title="C12144 (Phytosphingosine)" data-entry="C12144" />
+		<area id="F6700FD9" shape="circle" coords="457,294,4" data-coords="457,294,4" class="original" href=https://www.kegg.jp/entry/C12145 title="C12145 (Phytoceramide)" data-entry="C12145" />
+		<area id="F87014CA" shape="circle" coords="457,366,4" data-coords="457,366,4" class="original" href=https://www.kegg.jp/entry/C12126 title="C12126 (Dihydroceramide)" data-entry="C12126" />
+		<area id="E1700061" shape="circle" coords="313,453,4" data-coords="313,453,4" class="original" href=https://www.kegg.jp/entry/C01290 title="C01290 (Lactosylceramide)" data-entry="C01290" />
+		<area id="02703C61" shape="circle" coords="619,146,4" data-coords="619,146,4" class="original" href=https://www.kegg.jp/entry/C06124 title="C06124 (Sphingosine 1-phosphate)" data-entry="C06124" />
+		<area id="F67019C5" shape="circle" coords="457,454,4" data-coords="457,454,4" class="original" href=https://www.kegg.jp/entry/C01190 title="C01190 (Glucosylceramide)" data-entry="C01190" />
+		<area id="DF6FF15C" shape="circle" coords="312,146,4" data-coords="312,146,4" class="original" href=https://www.kegg.jp/entry/C01120 title="C01120 (Sphinganine 1-phosphate)" data-entry="C01120" />
+		<area id="F8700AC0" shape="circle" coords="457,146,4" data-coords="457,146,4" class="original" href=https://www.kegg.jp/entry/C00346 title="C00346 (Ethanolamine phosphate)" data-entry="C00346" />
+		<area id="E1705AED" shape="circle" coords="763,283,4" data-coords="763,283,4" class="original" href=https://www.kegg.jp/entry/C06062 title="C06062 (Ceramide phosphoethanolamine)" data-entry="C06062" />
+		<area id="E6705FC5" shape="circle" coords="763,308,4" data-coords="763,308,4" class="original" href=https://www.kegg.jp/entry/C05681 title="C05681 (Ceramide 2-aminoethylphosphonate)" data-entry="C05681" />
+		<area id="EE6FE24D" shape="circle" coords="205,366,4" data-coords="205,366,4" class="original" href=https://www.kegg.jp/entry/C02934 title="C02934 (3-Dehydrosphinganine)" data-entry="C02934" />
+		<area id="E56FC948" shape="circle" coords="113,307,4" data-coords="113,307,4" class="original" href=https://www.kegg.jp/entry/C00065 title="C00065 (L-Serine)" data-entry="C00065" />
+		<area id="1EB48AB4" shape="circle" coords="95,366,4" data-coords="95,366,4" class="original" href=https://www.kegg.jp/entry/C00154 title="C00154 (Palmitoyl-CoA)" data-entry="C00154" />
+		<area id="FD704152" shape="circle" coords="619,221,4" data-coords="619,221,4" class="original" href=https://www.kegg.jp/entry/C00319 title="C00319 (Sphingosine)" data-entry="C00319" />
+		<area id="D470467F" shape="circle" coords="620,365,4" data-coords="620,365,4" class="original" href=https://www.kegg.jp/entry/C00195 title="C00195 (N-Acylsphingosine)" data-entry="C00195" />
+		<area id="D5705070" shape="circle" coords="620,536,4" data-coords="620,536,4" class="original" href=https://www.kegg.jp/entry/C02686 title="C02686 (Galactosylceramide)" data-entry="C02686" />
+		<area id="E77055D9" shape="circle" coords="763,149,4" data-coords="763,149,4" class="original" href=https://www.kegg.jp/entry/C01747 title="C01747 (Psychosine)" data-entry="C01747" />
+		<area id="F3707915" shape="circle" coords="886,366,4" data-coords="886,366,4" class="original" href=https://www.kegg.jp/entry/C03640 title="C03640 (Sphingosyl-phosphocholine)" data-entry="C03640" />
+		<area id="E27064DE" shape="circle" coords="763,454,4" data-coords="763,454,4" class="original" href=https://www.kegg.jp/entry/C02960 title="C02960 (Ceramide 1-phosphate)" data-entry="C02960" />
+		<area id="E3705FE3" shape="circle" coords="763,365,4" data-coords="763,365,4" class="original" href=https://www.kegg.jp/entry/C00550 title="C00550 (Sphingomyelin)" data-entry="C00550" />
+		<area id="E47069D4" shape="circle" coords="763,536,4" data-coords="763,536,4" class="original" href=https://www.kegg.jp/entry/C06125 title="C06125 (Sulfatide)" data-entry="C06125" />
+		<area id="EE701EED" shape="circle" coords="475,536,4" data-coords="475,536,4" class="original" href=https://www.kegg.jp/entry/C06128 title="C06128 (GM4)" data-entry="C06128" />
+		<area id="FF70555C" shape="circle" coords="619,643,4" data-coords="619,643,4" class="original" href=https://www.kegg.jp/entry/C06126 title="C06126 (Digalactosylceramide)" data-entry="C06126" />
+		<area id="DD706ED9" shape="circle" coords="762,644,4" data-coords="762,644,4" class="original" href=https://www.kegg.jp/entry/C06127 title="C06127 (Digalactosylceramide sulfate)" data-entry="C06127" />
+		<area id="32A5E8CC" shape="rect" coords="511,493,557,510" data-coords="511,493,557,510" class="original" href=https://www.kegg.jp/entry/K12382 title="K12382 (PSAP)" />
+		<area id="B693F994" shape="rect" coords="376,414,422,431" data-coords="376,414,422,431" class="original" href=https://www.kegg.jp/entry/K04711+R06518 title="K04711 (ACER3), R06518" />
+		<area id="E791057C" shape="rect" coords="376,296,422,313" data-coords="376,296,422,313" class="original" href=https://www.kegg.jp/entry/K05848+R06528 title="K05848 (YPC1), R06528" />
+		<area id="029DF377" shape="rect" coords="682,346,728,363" data-coords="682,346,728,363" class="original" href=https://www.kegg.jp/entry/2.7.8.3+R01891 title="2.7.8.3, R01891" />
+		<area id="039F70F4" shape="rect" coords="682,456,728,473" data-coords="682,456,728,473" class="original" href=https://www.kegg.jp/entry/K04716+K04717+R06522 title="K04716 (SGPP1), K04717 (SGPP2), R06522" />
+		<area id="A5B18248" shape="rect" coords="523,178,569,195" data-coords="523,178,569,195" class="original" href=https://www.kegg.jp/entry/K04716+K04717+R06521 title="K04716 (SGPP1), K04717 (SGPP2), R06521" />
+		<area id="01A9B048" shape="rect" coords="233,222,279,239" data-coords="233,222,279,239" class="original" href=https://www.kegg.jp/entry/K04716+K04717+K23451+R06520 title="K04716 (SGPP1), K04717 (SGPP2), K23451 (LCB3), R06520" />
+		<area id="9D917F7C" shape="rect" coords="376,393,422,410" data-coords="376,393,422,410" class="original" href=https://www.kegg.jp/entry/K12348+K12349+3.5.1.23+R06518 title="K12348 (ASAH1), K12349 (ASAH2), 3.5.1.23, R06518" />
+		<area id="CD990382" shape="rect" coords="376,275,422,292" data-coords="376,275,422,292" class="original" href=https://www.kegg.jp/entry/K12348+K12349+3.5.1.23+R06528 title="K12348 (ASAH1), K12349 (ASAH2), 3.5.1.23, R06528" />
+		<area id="0098820A" shape="rect" coords="376,367,422,384" data-coords="376,367,422,384" class="original" href=https://www.kegg.jp/entry/K04710+K24621+K24622+K23727+2.3.1.299+2.3.1.297+2.3.1.298+2.3.1.291+R06517 title="K04710 (CERS1), K24621 (CERS2_4), K24622 (CERS3), K23727 (CERS5_6), 2.3.1.299, 2.3.1.297, 2.3.1.298, 2.3.1.291, R06517" />
+		<area id="63AB607B" shape="rect" coords="509,356,555,373" data-coords="509,356,555,373" class="original" href=https://www.kegg.jp/entry/K04712+1.14.19.17+R06519 title="K04712 (DEGS), 1.14.19.17, R06519" />
+		<area id="18950493" shape="rect" coords="376,238,422,255" data-coords="376,238,422,255" class="original" href=https://www.kegg.jp/entry/K04709+2.3.1.297+R06527 title="K04709 (LAG1), 2.3.1.297, R06527" />
+		<area id="6AB4EBCA" shape="rect" coords="436,331,482,348" data-coords="436,331,482,348" class="original" href=https://www.kegg.jp/entry/K04713+K04712+1.14.18.5+R06526 title="K04713 (SUR2), K04712 (DEGS), 1.14.18.5, R06526" />
+		<area id="EEA398DE" shape="rect" coords="313,331,359,348" data-coords="313,331,359,348" class="original" href=https://www.kegg.jp/entry/K04713+K04712+1.14.18.5+R06525 title="K04713 (SUR2), K04712 (DEGS), 1.14.18.5, R06525" />
+		<area id="029FF471" shape="rect" coords="682,366,728,383" data-coords="682,366,728,383" class="original" href=https://www.kegg.jp/entry/K01117+K12350+K12351+K12352+K12353+K12354+3.1.4.12+R02541 title="K01117 (sph), K12350 (SMPD1), K12351 (SMPD2), K12352 (SMPD3), K12353 (SMPD4), K12354 (ENPP7), 3.1.4.12, R02541" />
+		<area id="99B5F6AF" shape="rect" coords="530,272,576,289" data-coords="530,272,576,289" class="original" href=https://www.kegg.jp/entry/K04710+K24621+K24622+K23727+2.3.1.299+2.3.1.297+2.3.1.298+2.3.1.291+R01496 title="K04710 (CERS1), K24621 (CERS2_4), K24622 (CERS3), K23727 (CERS5_6), 2.3.1.299, 2.3.1.297, 2.3.1.298, 2.3.1.291, R01496" />
+		<area id="6C98F57E" shape="rect" coords="682,300,728,317" data-coords="682,300,728,317" class="original" href=https://www.kegg.jp/entry/R04921 title="2.7.8.-, R04921" />
+		<area id="E8A076E9" shape="rect" coords="682,275,728,292" data-coords="682,275,728,292" class="original" href=https://www.kegg.jp/entry/R01503 title="2.7.8.-, R01503" />
+		<area id="CBBE3324" shape="rect" coords="744,394,790,411" data-coords="744,394,790,411" class="original" href=https://www.kegg.jp/entry/K01123+3.1.4.41+R02542 title="K01123 (SMaseD), 3.1.4.41, R02542" />
+		<area id="B89B6BFB" shape="rect" coords="682,413,728,430" data-coords="682,413,728,430" class="original" href=https://www.kegg.jp/entry/K04715+2.7.1.138+R01495 title="K04715 (CERK), 2.7.1.138, R01495" />
+		<area id="EA9D6EF5" shape="rect" coords="682,435,728,452" data-coords="682,435,728,452" class="original" href=https://www.kegg.jp/entry/K01080+3.1.3.4+R06522 title="K01080 (PLPP1_2_3), 3.1.3.4, R06522" />
+		<area id="A5961D7D" shape="rect" coords="473,178,519,195" data-coords="473,178,519,195" class="original" href=https://www.kegg.jp/entry/K01080+3.1.3.4+R06521 title="K01080 (PLPP1_2_3), 3.1.3.4, R06521" />
+		<area id="848E4678" shape="rect" coords="182,222,228,239" data-coords="182,222,228,239" class="original" href=https://www.kegg.jp/entry/K01080+3.1.3.4+R06520 title="K01080 (PLPP1_2_3), 3.1.3.4, R06520" />
+		<area id="10AB8A53" shape="rect" coords="124,358,170,375" data-coords="124,358,170,375" class="original" href=https://www.kegg.jp/entry/K00654+2.3.1.50+R01281 title="K00654 (SPT), 2.3.1.50, R01281" />
+		<area id="7FAF2A3C" shape="rect" coords="233,367,279,384" data-coords="233,367,279,384" class="original" href=https://www.kegg.jp/entry/K04708+1.1.1.102+R02978 title="K04708 (KDSR), 1.1.1.102, R02978" />
+		<area id="EC9E68F5" shape="rect" coords="682,635,728,652" data-coords="682,635,728,652" class="original" href=https://www.kegg.jp/entry/K01019+2.8.2.11+R05105 title="K01019 (GAL3ST1), 2.8.2.11, R05105" />
+		<area id="5D9F5782" shape="rect" coords="575,575,621,592" data-coords="575,575,621,592" class="original" href=https://www.kegg.jp/entry/K01189+K07406+K07407+3.2.1.22+R04019 title="K01189 (GLA), K07406 (melA), K07407 (E3.2.1.22B), 3.2.1.22, R04019" />
+		<area id="369CEE7D" shape="rect" coords="682,528,728,545" data-coords="682,528,728,545" class="original" href=https://www.kegg.jp/entry/K01019+2.8.2.11+R04017 title="K01019 (GAL3ST1), 2.8.2.11, R04017" />
+		<area id="84B354E1" shape="rect" coords="527,527,573,544" data-coords="527,527,573,544" class="original" href=https://www.kegg.jp/entry/K01186+K12357+K23550+3.2.1.18+R04018 title="K01186 (NEU1), K12357 (NEU2_3_4), K23550 (nanH), 3.2.1.18, R04018" />
+		<area id="7CAC68C5" shape="rect" coords="623,486,669,503" data-coords="623,486,669,503" class="original" href=https://www.kegg.jp/entry/K04628+2.4.1.47+R01500 title="K04628 (CGT), 2.4.1.47, R01500" />
+		<area id="E897FD88" shape="rect" coords="376,456,422,473" data-coords="376,456,422,473" class="original" href=https://www.kegg.jp/entry/K01190+K12309+3.2.1.23+R03355 title="K01190 (lacZ), K12309 (GLB1), 3.2.1.23, R03355" />
+		<area id="E6AAE356" shape="rect" coords="510,445,556,462" data-coords="510,445,556,462" class="original" href=https://www.kegg.jp/entry/K01201+K17108+3.2.1.45+R01498 title="K01201 (GBA), K17108 (GBA2), 3.2.1.45, R01498" />
+		<area id="FFA7E2DF" shape="rect" coords="510,416,556,433" data-coords="510,416,556,433" class="original" href=https://www.kegg.jp/entry/K00720+2.4.1.80+R01497 title="K00720 (UGCG), 2.4.1.80, R01497" />
+		<area id="D1A4FD6F" shape="rect" coords="599,250,645,267" data-coords="599,250,645,267" class="original" href=https://www.kegg.jp/entry/K01441+K12348+K12349+3.5.1.23+R01494 title="K01441 (ACER1_2), K12348 (ASAH1), K12349 (ASAH2), 3.5.1.23, R01494" />
+		<area id="CFB2986C" shape="rect" coords="804,354,850,371" data-coords="804,354,850,371" class="original" href=https://www.kegg.jp/entry/2.3.1.24+R02543 title="2.3.1.24, R02543" />
+		<area id="B49E3317" shape="rect" coords="865,258,911,275" data-coords="865,258,911,275" class="original" href=https://www.kegg.jp/entry/2.7.8.10+R01929 title="2.7.8.10, R01929" />
+		<area id="1BA77A6E" shape="rect" coords="598,178,644,195" data-coords="598,178,644,195" class="original" href=https://www.kegg.jp/entry/K04718+2.7.1.91+R01926 title="K04718 (SPHK), 2.7.1.91, R01926" />
+		<area id="7795A387" shape="rect" coords="288,222,334,239" data-coords="288,222,334,239" class="original" href=https://www.kegg.jp/entry/K04718+2.7.1.91+R02976 title="K04718 (SPHK), 2.7.1.91, R02976" />
+		<area id="ACA76804" shape="rect" coords="509,129,555,146" data-coords="509,129,555,146" class="original" href=https://www.kegg.jp/entry/K01634+4.1.2.27+R06516 title="K01634 (SGPL1), 4.1.2.27, R06516" />
+		<area id="17948793" shape="rect" coords="376,138,422,155" data-coords="376,138,422,155" class="original" href=https://www.kegg.jp/entry/K01634+4.1.2.27+R02464 title="K01634 (SGPL1), 4.1.2.27, R02464" />
+		<area id="6BADCFE0" shape="rect" coords="619,596,665,613" data-coords="619,596,665,613" class="original" href=https://www.kegg.jp/entry/R04016 title="2.4.1.-, R04016" />
+		<area id="3D9DE30A" shape="rect" coords="577,464,623,481" data-coords="577,464,623,481" class="original" href=https://www.kegg.jp/entry/K01202+3.2.1.46+R03617 title="K01202 (GALC), 3.2.1.46, R03617" />
+		<area id="B99FEAEF" shape="rect" coords="682,553,728,570" data-coords="682,553,728,570" class="original" href=https://www.kegg.jp/entry/K01130+3.1.6.1+R04856 title="K01130 (E3.1.6.1), 3.1.6.1, R04856" />
+		<area id="D2A1ECE9" shape="rect" coords="682,574,728,591" data-coords="682,574,728,591" class="original" href=https://www.kegg.jp/entry/K01134+3.1.6.8+R04856 title="K01134 (ARSA), 3.1.6.8, R04856" />
+		<area id="E895FC8E" shape="rect" coords="376,436,422,453" data-coords="376,436,422,453" class="original" href=https://www.kegg.jp/entry/K07553+2.4.1.274+R03354 title="K07553 (B4GALT6), 2.4.1.274, R03354" />
+		<area id="83C05D25" shape="rect" coords="741,176,787,193" data-coords="741,176,787,193" class="original" href=https://www.kegg.jp/entry/2.4.1.23+R01928 title="2.4.1.23, R01928" />
+		<area id="1B9BF37D" shape="rect" coords="682,327,728,344" data-coords="682,327,728,344" class="original" href=https://www.kegg.jp/entry/K04714+2.7.8.27+R08969 title="K04714 (SGMS), 2.7.8.27, R08969" />
+		<area id="E796800B" shape="rect" coords="376,346,422,363" data-coords="376,346,422,363" class="original" href=https://www.kegg.jp/entry/K04709+2.3.1.297+R06517 title="K04709 (LAG1), 2.3.1.297, R06517" />
+		<area id="49CEC14F" shape="rect" coords="97,605,267,639" data-coords="97,605,267,639" class="original" href=https://www.kegg.jp/pathway/map00604 title="map00604: Glycosphingolipid biosynthesis - ganglio series" data-entry="map00604" />
+		<area id="E4D44338" shape="rect" coords="97,561,267,595" data-coords="97,561,267,595" class="original" href=https://www.kegg.jp/pathway/map00603 title="map00603: Glycosphingolipid biosynthesis - globo and isoglobo series" data-entry="map00603" />
+		<area id="7AD03CCC" shape="rect" coords="97,517,267,551" data-coords="97,517,267,551" class="original" href=https://www.kegg.jp/pathway/map00601 title="map00601: Glycosphingolipid biosynthesis - lacto and neolacto series" data-entry="map00601" />
+		<area id="01CE466F" shape="rect" coords="52,167,178,201" data-coords="52,167,178,201" class="original" href=https://www.kegg.jp/pathway/map00260 title="map00260: Glycine, serine and threonine metabolism" data-entry="map00260" />
+		<area id="37B2BAD8" shape="rect" coords="40,45,254,70" data-coords="40,45,254,70" class="original" href=https://www.kegg.jp/entry/map00600 title="map00600: Sphingolipid metabolism" data-entry="map00600" />
+	</map>
+	<map id="module_mapdata" name="module_mapdata" data-scale="1">
+		<area shape="rect" coords="511,493,557,510" data-coords="511,493,557,510" href="javascript:void(0)"  data-refid="32A5E8CC" data-network="N00642" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?K12382 data-network-title="K12382 (PSAP)" class="module" />
+		<area shape="poly" coords="533,490,533,465,535,465,535,490" data-coords="533,490,533,465,535,465,535,490" href="javascript:void(0)"  data-refid="4D176B78" data-network="N00642" class="module" />
+		<area shape="poly" coords="600,485,600,496,600,496,600,497,600,497,600,498,600,498,599,499,599,499,598,500,598,500,597,501,597,501,596,502,597,501,596,501,596,501,595,501,595,501,560,501,560,503,595,503,595,503,596,503,596,503,597,503,598,502,599,501,599,501,600,500,600,500,601,499,601,499,602,498,602,498,602,497,602,497,602,496,602,496,602,485" data-coords="600,485,600,496,600,496,600,497,600,497,600,498,600,498,599,499,599,499,598,500,598,500,597,501,597,501,596,502,597,501,596,501,596,501,595,501,595,501,560,501,560,503,595,503,595,503,596,503,596,503,597,503,598,502,599,501,599,501,600,500,600,500,601,499,601,499,602,498,602,498,602,497,602,497,602,496,602,496,602,485" href="javascript:void(0)"  data-refid="2C34CD14" data-network="N00642" class="module" />
+		<area shape="poly" coords="211,370,305,370,305,372,211,372" data-coords="211,370,305,370,305,372,211,372" href="javascript:void(0)"  data-refid="F00F5E4C" data-module="M00094+M00099" class="module" />
+		<area shape="poly" coords="305,371,296,374,296,367" data-coords="305,371,296,374,296,367" href="javascript:void(0)"  data-refid="CCD42CCD" data-module="M00094+M00099" class="module" />
+		<area shape="poly" coords="615,544,615,636,617,636,617,544" data-coords="615,544,615,636,617,636,617,544" href="javascript:void(0)"  data-refid="B61A74E9" data-network="N00644" class="module" />
+		<area shape="poly" coords="616,544,619,552,612,552" data-coords="616,544,619,552,612,552" href="javascript:void(0)"  data-refid="8A87E1A9" data-network="N00644" class="module" />
+		<area shape="poly" coords="628,535,758,535,758,537,628,537" data-coords="628,535,758,535,758,537,628,537" href="javascript:void(0)"  data-refid="EC1A8B46" data-module="M00067" class="module" />
+		<area shape="poly" coords="758,536,749,539,749,532" data-coords="758,536,749,539,749,532" href="javascript:void(0)"  data-refid="715AFFEA" data-module="M00067" class="module" />
+		<area shape="poly" coords="625,527,625,374,627,374,627,527" data-coords="625,527,625,374,627,374,627,527" href="javascript:void(0)"  data-refid="FF1A678D" data-module="M00067" class="module" />
+		<area shape="poly" coords="626,527,622,518,629,518" data-coords="626,527,622,518,629,518" href="javascript:void(0)"  data-refid="91F988A9" data-module="M00067" class="module" />
+		<area shape="poly" coords="619,374,619,528,621,528,621,374" data-coords="619,374,619,528,621,528,621,374" href="javascript:void(0)"  data-refid="AC1979D6" data-network="N00644" class="module" />
+		<area shape="poly" coords="620,374,623,382,616,382" data-coords="620,374,623,382,616,382" href="javascript:void(0)"  data-refid="888EC990" data-network="N00644" class="module" />
+		<area shape="poly" coords="463,453,605,453,605,453,607,453,606,454,607,453,608,452,610,452,609,453,610,452,610,452,611,451,611,451,612,450,612,450,612,448,612,448,613,447,613,447,613,445,613,445,613,374,615,374,615,445,615,445,615,447,615,447,614,448,614,448,614,450,614,450,613,451,613,451,612,452,612,452,611,453,610,454,608,454,609,453,608,454,607,455,605,455,605,455,463,455" data-coords="463,453,605,453,605,453,607,453,606,454,607,453,608,452,610,452,609,453,610,452,610,452,611,451,611,451,612,450,612,450,612,448,612,448,613,447,613,447,613,445,613,445,613,374,615,374,615,445,615,445,615,447,615,447,614,448,614,448,614,450,614,450,613,451,613,451,612,452,612,452,611,453,610,454,608,454,609,453,608,454,607,455,605,455,605,455,463,455" href="javascript:void(0)"  data-refid="ABF0D246" data-network="N00640" class="module" />
+		<area shape="poly" coords="614,374,617,382,610,382" data-coords="614,374,617,382,610,382" href="javascript:void(0)"  data-refid="7C0F7390" data-network="N00640" class="module" />
+		<area shape="poly" coords="607,374,607,417,607,417,607,419,607,419,606,420,606,420,606,422,606,422,605,423,605,423,604,424,604,424,603,425,604,424,602,424,601,425,600,426,601,425,599,425,599,425,466,425,466,425,464,425,463,426,462,427,463,426,461,426,460,427,459,428,459,428,458,429,458,429,457,430,457,430,457,432,457,432,456,433,456,433,456,435,456,435,456,447,458,447,458,435,458,435,458,433,458,433,459,432,459,432,459,430,459,430,460,429,460,429,461,428,461,428,462,427,461,428,463,428,464,427,465,426,464,427,466,427,466,427,599,427,599,427,601,427,602,426,603,425,602,426,604,426,605,425,606,424,606,424,607,423,607,423,608,422,608,422,608,420,608,420,609,419,609,419,609,417,609,417,609,374" data-coords="607,374,607,417,607,417,607,419,607,419,606,420,606,420,606,422,606,422,605,423,605,423,604,424,604,424,603,425,604,424,602,424,601,425,600,426,601,425,599,425,599,425,466,425,466,425,464,425,463,426,462,427,463,426,461,426,460,427,459,428,459,428,458,429,458,429,457,430,457,430,457,432,457,432,456,433,456,433,456,435,456,435,456,447,458,447,458,435,458,435,458,433,458,433,459,432,459,432,459,430,459,430,460,429,460,429,461,428,461,428,462,427,461,428,463,428,464,427,465,426,464,427,466,427,466,427,599,427,599,427,601,427,602,426,603,425,602,426,604,426,605,425,606,424,606,424,607,423,607,423,608,422,608,422,608,420,608,420,609,419,609,419,609,417,609,417,609,374" href="javascript:void(0)"  data-refid="A632445C" data-module="M00066" class="module" />
+		<area shape="poly" coords="457,447,453,438,460,438" data-coords="457,447,453,438,460,438" href="javascript:void(0)"  data-refid="C4460D1D" data-module="M00066" class="module" />
+		<area shape="poly" coords="758,368,632,368,632,370,758,370" data-coords="758,368,632,368,632,370,758,370" href="javascript:void(0)"  data-refid="1C1BE7F2" data-network="N00649" class="module" />
+		<area shape="poly" coords="632,369,640,365,640,372" data-coords="632,369,640,365,640,372" href="javascript:void(0)"  data-refid="934C1E90" data-network="N00649" class="module" />
+		<area shape="poly" coords="620,354,620,230,622,230,622,354" data-coords="620,354,620,230,622,230,622,354" href="javascript:void(0)"  data-refid="261969E6" data-module="M00099" data-network="N00649" class="module" />
+		<area shape="poly" coords="621,230,624,238,617,238" data-coords="621,230,624,238,617,238" href="javascript:void(0)"  data-refid="F34C5881" data-module="M00099" data-network="N00649" class="module" />
+		<area shape="poly" coords="463,364,612,364,612,366,463,366" data-coords="463,364,612,364,612,366,463,366" href="javascript:void(0)"  data-refid="43149722" data-module="M00094+M00099" class="module" />
+		<area shape="poly" coords="612,365,603,368,603,361" data-coords="612,365,603,368,603,361" href="javascript:void(0)"  data-refid="78D12A90" data-module="M00094+M00099" class="module" />
+		<area shape="poly" coords="451,449,321,449,321,451,451,451" data-coords="451,449,321,449,321,451,451,451" href="javascript:void(0)"  data-refid="C214CB3E" data-module="M00066" class="module" />
+		<area shape="poly" coords="321,450,329,446,329,453" data-coords="321,450,329,446,329,453" href="javascript:void(0)"  data-refid="E9509BDC" data-module="M00066" class="module" />
+		<area shape="poly" coords="320,457,450,457,450,459,320,459" data-coords="320,457,450,457,450,459,320,459" href="javascript:void(0)"  data-refid="10126C3B" data-network="N00640" class="module" />
+		<area shape="poly" coords="450,458,441,461,441,454" data-coords="450,458,441,461,441,454" href="javascript:void(0)"  data-refid="C628631D" data-network="N00640" class="module" />
+		<area shape="poly" coords="320,364,450,364,450,366,320,366" data-coords="320,364,450,364,450,366,320,366" href="javascript:void(0)"  data-refid="C211EAB8" data-module="M00094+M00099" class="module" />
+		<area shape="poly" coords="450,365,441,368,441,361" data-coords="450,365,441,368,441,361" href="javascript:void(0)"  data-refid="3D93BC13" data-module="M00094+M00099" class="module" />
+		<area shape="poly" coords="99,365,197,365,197,367,99,367" data-coords="99,365,197,365,197,367,99,367" href="javascript:void(0)"  data-refid="8DD124B3" data-module="M00094+M00099" class="module" />
+		<area shape="poly" coords="197,366,188,369,188,362" data-coords="197,366,188,369,188,362" href="javascript:void(0)"  data-refid="4BCB4755" data-module="M00094+M00099" class="module" />
+		<area shape="poly" coords="614,142,465,142,465,144,614,144" data-coords="614,142,465,142,465,144,614,144" href="javascript:void(0)"  data-refid="9B183666" data-module="M00100" class="module" />
+		<area shape="poly" coords="465,143,473,139,473,146" data-coords="465,143,473,139,473,146" href="javascript:void(0)"  data-refid="305904FA" data-module="M00100" class="module" />
+		<area shape="poly" coords="618,214,618,153,620,153,620,214" data-coords="618,214,618,153,620,153,620,214" href="javascript:void(0)"  data-refid="3918E386" data-module="M00100" class="module" />
+		<area shape="poly" coords="619,153,622,161,615,161" data-coords="619,153,622,161,615,161" href="javascript:void(0)"  data-refid="61AE9977" data-module="M00100" class="module" />
+		<area shape="rect" coords="376,367,422,384" data-coords="376,367,422,384" href="javascript:void(0)"  data-refid="0098820A" data-module="M00094+M00099" class="module" />
+		<area shape="rect" coords="509,356,555,373" data-coords="509,356,555,373" href="javascript:void(0)"  data-refid="63AB607B" data-module="M00094+M00099" class="module" />
+		<area shape="rect" coords="682,366,728,383" data-coords="682,366,728,383" href="javascript:void(0)"  data-refid="029FF471" data-network="N00649" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?K01117+K12350+K12351+K12352+K12353+K12354 data-network-title="K01117 (sph), K12350 (SMPD1), K12351 (SMPD2), K12352 (SMPD3), K12353 (SMPD4), K12354 (ENPP7)" class="module" />
+		<area shape="circle" coords="312,366,4" data-coords="312,366,4" href="javascript:void(0)"  data-refid="DF6FFB66" data-module="M00094+M00099" class="module" />
+		<area shape="circle" coords="457,366,4" data-coords="457,366,4" href="javascript:void(0)"  data-refid="F87014CA" data-module="M00094+M00099" class="module" />
+		<area shape="circle" coords="313,453,4" data-coords="313,453,4" href="javascript:void(0)"  data-refid="E1700061" data-module="M00066" data-network="N00640" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?C01290 data-network-title="C01290 (Lactosylceramide)" class="module" />
+		<area shape="circle" coords="619,146,4" data-coords="619,146,4" href="javascript:void(0)"  data-refid="02703C61" data-module="M00100" class="module" />
+		<area shape="rect" coords="124,358,170,375" data-coords="124,358,170,375" href="javascript:void(0)"  data-refid="10AB8A53" data-module="M00094+M00099" class="module" />
+		<area shape="rect" coords="233,367,279,384" data-coords="233,367,279,384" href="javascript:void(0)"  data-refid="7FAF2A3C" data-module="M00094+M00099" class="module" />
+		<area shape="rect" coords="575,575,621,592" data-coords="575,575,621,592" href="javascript:void(0)"  data-refid="5D9F5782" data-network="N00644" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?K01189+K07406+K07407 data-network-title="K01189 (GLA), K07406 (melA), K07407 (E3.2.1.22B)" class="module" />
+		<area shape="rect" coords="682,528,728,545" data-coords="682,528,728,545" href="javascript:void(0)"  data-refid="369CEE7D" data-module="M00067" class="module" />
+		<area shape="rect" coords="623,486,669,503" data-coords="623,486,669,503" href="javascript:void(0)"  data-refid="7CAC68C5" data-module="M00067" class="module" />
+		<area shape="rect" coords="376,456,422,473" data-coords="376,456,422,473" href="javascript:void(0)"  data-refid="E897FD88" data-network="N00640" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?K01190+K12309 data-network-title="K01190 (lacZ), K12309 (GLB1)" class="module" />
+		<area shape="rect" coords="510,445,556,462" data-coords="510,445,556,462" href="javascript:void(0)"  data-refid="E6AAE356" data-network="N00640+N00642" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?K01201+K17108 data-network-title="K01201 (GBA), K17108 (GBA2)" class="module" />
+		<area shape="rect" coords="510,416,556,433" data-coords="510,416,556,433" href="javascript:void(0)"  data-refid="FFA7E2DF" data-module="M00066" class="module" />
+		<area shape="rect" coords="599,250,645,267" data-coords="599,250,645,267" href="javascript:void(0)"  data-refid="D1A4FD6F" data-module="M00099" data-network="N00649" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?K01441+K12348+K12349 data-network-title="K01441 (ACER1_2), K12348 (ASAH1), K12349 (ASAH2)" class="module" />
+		<area shape="rect" coords="598,178,644,195" data-coords="598,178,644,195" href="javascript:void(0)"  data-refid="1BA77A6E" data-module="M00100" class="module" />
+		<area shape="rect" coords="509,129,555,146" data-coords="509,129,555,146" href="javascript:void(0)"  data-refid="ACA76804" data-module="M00100" class="module" />
+		<area shape="rect" coords="577,464,623,481" data-coords="577,464,623,481" href="javascript:void(0)"  data-refid="3D9DE30A" data-network="N00644+N00642" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?K01202 data-network-title="K01202 (GALC)" class="module" />
+		<area shape="rect" coords="682,574,728,591" data-coords="682,574,728,591" href="javascript:void(0)"  data-refid="D2A1ECE9" data-network="N00647" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?K01134 data-network-title="K01134 (ARSA)" class="module" />
+		<area shape="rect" coords="376,436,422,453" data-coords="376,436,422,453" href="javascript:void(0)"  data-refid="E895FC8E" data-module="M00066" class="module" />
+		<area shape="circle" coords="457,454,4" data-coords="457,454,4" href="javascript:void(0)"  data-refid="F67019C5" data-module="M00066" data-network="N00640" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?C01190 data-network-title="C01190 (Glucosylceramide)" class="module" />
+		<area shape="circle" coords="457,146,4" data-coords="457,146,4" href="javascript:void(0)"  data-refid="F8700AC0" data-module="M00100" class="module" />
+		<area shape="circle" coords="205,366,4" data-coords="205,366,4" href="javascript:void(0)"  data-refid="EE6FE24D" data-module="M00094+M00099" class="module" />
+		<area shape="circle" coords="113,307,4" data-coords="113,307,4" href="javascript:void(0)"  data-refid="E56FC948" data-module="M00094" class="module" />
+		<area shape="circle" coords="95,366,4" data-coords="95,366,4" href="javascript:void(0)"  data-refid="1EB48AB4" data-module="M00094+M00099" class="module" />
+		<area shape="circle" coords="619,221,4" data-coords="619,221,4" href="javascript:void(0)"  data-refid="FD704152" data-module="M00099+M00100" data-network="N00649" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?C00319 data-network-title="C00319 (Sphingosine)" class="module" />
+		<area shape="circle" coords="620,365,4" data-coords="620,365,4" href="javascript:void(0)"  data-refid="D470467F" data-module="M00066+M00067+M00094+M00099" data-network="N00640+N00644+N00649" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?C00195 data-network-title="C00195 (N-Acylsphingosine)" class="module" />
+		<area shape="circle" coords="620,536,4" data-coords="620,536,4" href="javascript:void(0)"  data-refid="D5705070" data-module="M00067" data-network="N00644+N00647" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?C02686 data-network-title="C02686 (Galactosylceramide)" class="module" />
+		<area shape="circle" coords="763,365,4" data-coords="763,365,4" href="javascript:void(0)"  data-refid="E3705FE3" data-network="N00649" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?C00550 data-network-title="C00550 (Sphingomyelin)" class="module" />
+		<area shape="circle" coords="763,536,4" data-coords="763,536,4" href="javascript:void(0)"  data-refid="E47069D4" data-module="M00067" data-network="N00647" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?C06125 data-network-title="C06125 (Sulfatide)" class="module" />
+		<area shape="circle" coords="619,643,4" data-coords="619,643,4" href="javascript:void(0)"  data-refid="FF70555C" data-network="N00644" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?C06126 data-network-title="C06126 (Digalactosylceramide)" class="module" />
+		<area shape="poly" coords="762,540,762,563,762,563,762,565,762,565,761,566,761,566,761,568,761,568,760,569,761,568,759,569,758,570,757,571,758,570,757,570,757,570,755,571,755,571,754,571,754,571,640,571,640,571,639,571,639,571,637,570,637,570,636,570,635,571,634,570,635,569,633,568,632,569,631,568,631,568,631,566,631,566,630,565,630,565,630,563,630,563,630,545,632,545,632,563,632,563,632,565,632,565,633,566,633,566,633,568,633,568,634,569,633,570,635,571,636,570,637,571,636,572,637,572,637,572,639,573,639,573,640,573,640,573,754,573,754,573,755,573,755,573,757,572,757,572,758,572,759,571,760,570,759,571,761,570,762,569,763,568,763,568,763,566,763,566,764,565,764,565,764,563,764,563,764,540" data-coords="762,540,762,563,762,563,762,565,762,565,761,566,761,566,761,568,761,568,760,569,761,568,759,569,758,570,757,571,758,570,757,570,757,570,755,571,755,571,754,571,754,571,640,571,640,571,639,571,639,571,637,570,637,570,636,570,635,571,634,570,635,569,633,568,632,569,631,568,631,568,631,566,631,566,630,565,630,565,630,563,630,563,630,545,632,545,632,563,632,563,632,565,632,565,633,566,633,566,633,568,633,568,634,569,633,570,635,571,636,570,637,571,636,572,637,572,637,572,639,573,639,573,640,573,640,573,754,573,754,573,755,573,755,573,757,572,757,572,758,572,759,571,760,570,759,571,761,570,762,569,763,568,763,568,763,566,763,566,764,565,764,565,764,563,764,563,764,540" href="javascript:void(0)"  data-refid="74CB7659" data-network="N00647" class="module" />
+		<area shape="poly" coords="631,545,634,553,627,553" data-coords="631,545,634,553,627,553" href="javascript:void(0)"  data-refid="A3B40BA9" data-network="N00647" class="module" />
+		<area shape="poly" coords="112,312,112,357,112,357,112,359,112,359,113,360,113,360,113,362,113,362,114,363,114,363,115,364,115,364,116,365,117,364,119,364,118,365,119,366,120,365,122,365,122,365,123,365,123,367,122,367,122,367,120,367,121,366,120,365,119,366,117,366,118,365,117,364,117,364,116,363,116,363,115,362,115,362,115,360,115,360,114,359,114,359,114,357,114,357,114,312" data-coords="112,312,112,357,112,357,112,359,112,359,113,360,113,360,113,362,113,362,114,363,114,363,115,364,115,364,116,365,117,364,119,364,118,365,119,366,120,365,122,365,122,365,123,365,123,367,122,367,122,367,120,367,121,366,120,365,119,366,117,366,118,365,117,364,117,364,116,363,116,363,115,362,115,362,115,360,115,360,114,359,114,359,114,357,114,357,114,312" href="javascript:void(0)"  data-refid="E88100DB" data-module="M00094" class="module" />
+		<area shape="rect" coords="376,346,422,363" data-coords="376,346,422,363" href="javascript:void(0)"  data-refid="E796800B" data-module="M00094+M00099" class="module" />
+	</map>
+</div>
+<!-- pathway image end -->
+
+<!-- control panel start -->
+
+<div id="controlPanel">
+	<div class="controller">
+		<div class="feature option">
+			<h5>Option</h5>
+			<div>
+				<div class="row scale">
+					<span class="title">Scale:</span>
+					<span class="content">
+						<input type="range" min="0.1" max="1" step="0.1" value="1">
+						<span class="label">100%</span>
+					</span>
+				</div>
+				
+				
+				
+			</div>
+		</div>
+		<div class="feature search">
+			<h5>Search</h5>
+			<div>
+				<div class="row query">
+					<form>
+						<input type="text" name="query" style="width:130px;" autocomplete="off" value="">
+						<input type="submit" value="Go">
+						<span class="ui-icon button ui-icon-close clear-query hidden"></span>
+					</form>
+				</div>
+				<div class="row result">
+				</div>
+			</div>
+		</div>
+		<div class="feature search-pathway">
+			<h5>ID search
+				<span class="ui-icon ui-icon-plus">
+			</h5>
+			<div>
+				<form>
+					<div class="row" style="display:grid; grid-template-columns:135px 1fr; column-gap:5px;">
+						<div>
+							<textarea class="query" rows="2" style="width:130px; resize:none;"></textarea>
+						</div>
+						<div>
+							<input type="submit" class="submit" value="Go">
+							<span class="ui-icon button ui-icon-close clear-query hidden"></span>
+						</div>
+					</div>
+				</form>
+				<div class="row personal hidden">
+					<ul class="mappers"></ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="feature color-pathway">
+			<h5>Color
+				<span class="ui-icon ui-icon-plus">
+			</h5>
+			<div>
+				
+				<div class="row personal hidden">
+					<ul class="mappers"></ul>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="feature">
+			<h5>Module</h5>
+			<div>
+			  
+				<div class="row">
+					<ul class="tree module-tree">
+					
+						
+	<li class="classification class-A  ">
+		<span>
+		<input type="checkbox" >
+		Pathway modules
+
+		</span>
+		<ul>
+	<li class="classification class-B  ">
+		<span>
+		<input type="checkbox" >
+		Lipid metabolism
+
+		</span>
+		<ul>
+	<li class="classification class-C  ">
+		<span>
+		<input type="checkbox" >
+		Lipid metabolism
+
+		</span>
+		<ul>
+	<li class="entry class-D module complete">
+		<span>
+		<input type="checkbox" >
+		<a href=https://www.kegg.jp/module/M00094 data-entry="M00094" target="_blank">M00094</a>
+		
+		Ceramide biosynthesis
+
+		</span>
+	</li>
+
+	<li class="entry class-D module complete">
+		<span>
+		<input type="checkbox" >
+		<a href=https://www.kegg.jp/module/M00066 data-entry="M00066" target="_blank">M00066</a>
+		
+		Lactosylceramide biosynthesis
+
+		</span>
+	</li>
+
+	<li class="entry class-D module complete">
+		<span>
+		<input type="checkbox" >
+		<a href=https://www.kegg.jp/module/M00067 data-entry="M00067" target="_blank">M00067</a>
+		
+		Sulfoglycolipids biosynthesis
+
+		</span>
+	</li>
+
+	<li class="entry class-D module complete">
+		<span>
+		<input type="checkbox" >
+		<a href=https://www.kegg.jp/module/M00099 data-entry="M00099" target="_blank">M00099</a>
+		
+		Sphingosine biosynthesis
+
+		</span>
+	</li>
+
+	<li class="entry class-D module complete">
+		<span>
+		<input type="checkbox" >
+		<a href=https://www.kegg.jp/module/M00100 data-entry="M00100" target="_blank">M00100</a>
+		
+		Sphingosine degradation
+
+		</span>
+	</li>
+
+		</ul>
+	</li>
+
+		</ul>
+	</li>
+
+		</ul>
+	</li>
+
+					
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<div class="feature">
+			<h5>Network</h5>
+			<div>
+				<div class="row">
+					<ul class="tree network-tree">
+					
+						
+	<li class="classification class-C  ">
+		<span>
+		<input type="checkbox" >
+		<a href=https://www.kegg.jp/network/nt06014+N00640+N00642+N00644+N00647+N00649 target="_blank">nt06014</a> Sphingolipid degradation
+
+		</span>
+		<ul>
+	<li class="entry class-D network ">
+		<span>
+		<input type="checkbox" >
+		<a href=https://www.kegg.jp/entry/N00640 data-entry="N00640" target="_blank">N00640</a>
+		
+		Hydrolysis of lactosylceramide
+
+		</span>
+	</li>
+
+	<li class="entry class-D network ">
+		<span>
+		<input type="checkbox" >
+		<a href=https://www.kegg.jp/entry/N00642 data-entry="N00642" target="_blank">N00642</a>
+		
+		Saposin stimulation of GBA and GALC
+
+		</span>
+	</li>
+
+	<li class="entry class-D network ">
+		<span>
+		<input type="checkbox" >
+		<a href=https://www.kegg.jp/entry/N00644 data-entry="N00644" target="_blank">N00644</a>
+		
+		Hydrolysis of galabiosylceramide
+
+		</span>
+	</li>
+
+	<li class="entry class-D network ">
+		<span>
+		<input type="checkbox" >
+		<a href=https://www.kegg.jp/entry/N00647 data-entry="N00647" target="_blank">N00647</a>
+		
+		Hydrolysis of galactosylceramide sulfate
+
+		</span>
+	</li>
+
+	<li class="entry class-D network ">
+		<span>
+		<input type="checkbox" >
+		<a href=https://www.kegg.jp/entry/N00649 data-entry="N00649" target="_blank">N00649</a>
+		
+		Hydrolysis of sphingomyelin
+
+		</span>
+	</li>
+
+		</ul>
+	</li>
+
+					
+					</ul>
+				</div>
+			</div>
+			
+			
+		
+			
+	</div>
+	<button class="close">
+		<img src=https://www.kegg.jp/Fig/left_triangle_12x12.png>
+	</button>
+	<button class="open">
+		<img src=https://www.kegg.jp/Fig/right_triangle_12x12.png>
+	</button>
+</div>
+<!-- control panel end -->
+
+
+<form id="downloadForm" action=https://www.kegg.jp/kegg-bin/download method="post">
+	<input type="hidden" name="name" value="map00600.png" />
+	<input type="hidden" name="content" />
+	<input type="hidden" name="decode" value="base64" />
+</form>
+
+<div id="waiting-circle">
+	<img src=https://www.kegg.jp/Fig/waiting-circle-small.gif>
+</div>
+
+<!-- pathway image url start -->
+<form class="imageset" data-name="">
+	<input type="hidden" name="image_normal" value="/kegg/pathway/map/map00600.png 1x"
+	       data-src=https://www.kegg.jp/kegg/pathway/map/map00600.png data-situation="1x">
+</form>
+<!-- pathway image url end -->
+
+</body>
+</html>

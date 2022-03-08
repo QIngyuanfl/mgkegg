@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<!--
+ENTRY       map04977
+DEFINITION  Vitamin digestion and absorption - Reference pathway
+--->
+<head>
+<meta charset="UTF-8">
+<title>
+KEGG PATHWAY: Vitamin digestion and absorption - Reference pathway
+</title>
+<link rel="stylesheet" href=https://www.kegg.jp/css/kegg.css type="text/css" />
+<link rel="stylesheet" href=https://www.kegg.jp/css/jquery-ui.css />
+<style type="text/css">
+<!--
+
+h1.page-title {
+	font-size: 14px;
+	margin: 0px;
+	white-space: nowrap;
+}
+h1.page-title * {
+	vertical-align: middle;
+}
+
+input, select {
+	margin: 0px;
+}
+
+.hidden {
+	display: none !important;
+}
+
+/** navigation start **/
+.nav {
+	padding: 3px 0px 5px 0px;
+	position: relative;
+	min-width: 600px;
+	max-width: 800px;
+	background: #fff;
+}
+
+.nav form {
+	margin: 5px 0px 0px 0px;
+}
+
+.nav .help {
+	display: inline-block;
+	position: relative;
+	left: 20px;
+/*
+	position: absolute;
+	bottom: 5px;
+	right: 0px;
+*/
+}
+/** navigation end **/
+
+#description {
+	padding: 10px;
+	width: 800px;
+}
+
+#waiting-circle {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	display: none;
+}
+
+#controlPanel {
+	top: 0px;
+	left: 0px;
+	width: 220px;
+	background: #ffffff;
+	padding: 0px 0px 0px 0px;
+	white-space: nowrap;
+	overflow: auto;
+	position: fixed;
+	border: solid 1px #999999;
+	display: none;
+}
+
+#controlPanel.closed {
+	border: none;
+	padding: 0px 0px 0px 0px;
+	background: transparent;
+
+	/* jQuery-UI resizale.disabled() の実行で
+	 *      色が薄くなるのを打ち消す */
+	opacity: 1.0;
+}
+
+/** div.row start **/
+
+div.row {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	/* 以下のwidth,overflowの定義で.rowのブロック内で横スクロールする。 */
+	/*
+	width: 98%;
+	overflow: auto;
+	*/
+}
+
+div.row * {
+	vertical-align: middle;
+}
+
+/* 横に並べる場合(title可変幅) start */
+
+.row.scale input {
+	width: 110px;
+}
+
+.row.scale .label {
+	font-size: 0.9em;
+}
+
+/* 横に並べる場合(title可変幅) end */
+
+
+/* Search欄の検索結果 start */
+
+div.row.result > div {
+	margin: 5px 1px 2px 1px;
+}
+
+/* Search欄の検索結果 end */
+
+/**  div.row end **/
+
+#controlPanel h5 {
+  margin: 0px;
+	padding: 5px 0px 5px 10px;
+	vertical-align: middle;
+	border-top: solid 1px #cccccc;
+	border-bottom: solid 1px #cccccc;
+	background: #eeeeee;
+	/* ui-iconの位置調整のために必要 */
+	position: relative;
+}
+
+#controlPanel h5::before {
+	content: url(/Fig/get_htext/open.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5.closed::before {
+	content: url(/Fig/get_htext/close.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5:first-child {
+	border-top: none;
+}
+
+#controlPanel h5:hover {
+	cursor: pointer;
+}
+
+#controlPanel h5  + div {
+	padding: 5px 0px 5px 10px;
+}
+
+#controlPanel h5 .ui-icon {
+	display: inline-block;
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	margin-top: -8px;
+	cursor: pointer;
+}
+
+button {
+	/* Safariでボタンの周りに入る余白を削除 */
+	margin: 0px;
+	padding: 0px;
+	/* ボタンを押した時に表示されるボーダーを非表示にする */
+	outline: none;
+}
+
+button.close, button.open {
+	border: none;
+	padding: 0px;
+	position: absolute;
+	right: 5px;
+	top: 7px;
+}
+
+button.close {
+	/* コントロールパネルに合わせて初期は非表示 */
+	display: none;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+button img {
+	/* 画像の下に入る余白を無くす */
+	display: block;
+}
+
+/** tree style start **/
+ul.tree, ul.tree ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul.tree ul {
+	padding-left: 12px;
+}
+
+ul.tree .class-A > span {
+	font-weight: bold;
+}
+
+ul.tree li {
+	margin: 3px 0px 3px 0px;
+}
+
+.module-tree .module.disabled {
+	display: none;
+}
+
+.module-tree .classification.disabled {
+	display: none;
+}
+
+/** tree style > User data start **/
+ul.mappers {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul.mappers li {
+	position: relative;
+	margin: 5px 0px 2px 0px;
+}
+
+ul.mappers li .ui-icon {
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+}
+ul.mappers li .ui-icon:hover {
+	cursor: pointer;
+}
+ul.mappers li .ui-icon-trash {
+	right: 5px;
+}
+ul.mappers li .ui-icon-document {
+	right: 26px;
+}
+/** tree style > User data end **/
+
+/** tree style end **/
+
+.ui-icon.button {
+	display: inline-block;
+	cursor: pointer;
+}
+
+ul.simple {
+	margin: 0px;
+	padding: 0px;
+}
+ul.simple li {
+	list-style-type: none;
+}
+ul.simple li:not(:first-child) {
+	margin-top: 5px;
+}
+
+//-->
+</style>
+
+<script src=https://www.kegg.jp/js/jquery-3.1.0.min.js></script>
+<script src=https://www.kegg.jp/js/jquery-ui.js></script>
+<script src=https://www.kegg.jp/js/jquery.balloon.min.js></script>
+<script src=https://www.kegg.jp/js/lz-string.min.js></script>
+<script src=https://www.kegg.jp/kegg-bin/get_data.cgi?data=0021&id=show_pathway.merged.js&v2.09></script>
+<script type="text/javascript">
+<!--
+
+// common variable
+const env = {
+	       mapno: '04977',
+	         org: 'map',
+	       entry: 'map04977',
+	       scale: 1,
+	 colorModule: '',
+	personalConf: '',
+}
+
+// HELP button
+function btn(bobj,img) { bobj.src = https://www.kegg.jp/Fig/bget/button_ + img + ".gif"; }
+
+//-->
+</script>
+</head>
+<body>
+<!-- header logo start -->
+<!--
+<table cellpadding="0" width="100%" cellspacing="0" border="0">
+	<tr>
+		<td style="width:80px;">
+			<a href=https://www.kegg.jp/kegg/pathway.html><img align="middle" alt="KEGG" border="0" src=https://www.kegg.jp/Fig/bget/kegg3.gif /></a>
+		</td>
+		<td style="vertical-align:middle;">
+			<font class="title3"><b>Vitamin digestion and absorption - Reference pathway</b></font>
+		</td>
+		<td valign="bottom" align="right">
+		</td>
+	</tr>
+</table>
+-->
+<h1 class="page-title">
+	<a href=https://www.kegg.jp/kegg/pathway.html><img alt="KEGG" border="0" src=https://www.kegg.jp/Fig/bget/kegg3.gif /></a>
+	&nbsp;Vitamin digestion and absorption - Reference pathway
+</h1>
+<!-- header logo end -->
+
+<!-- page navigation start -->
+<div class="nav">
+	[
+	    <a href=https://www.kegg.jp/brite/query=04977&htext=br08901.keg&option=-a&node_proc=br08901_org&proc_enabled=map&panel=collapse id="navPathwayMenu">Pathway menu</a>
+	  | <a href=https://www.kegg.jp/entry/pathway+map04977 id="navPathwayEntry">Pathway entry</a>
+	  | <a id="descLink" href="#description">Show description</a>
+	  | <a id="downloadImageLink" href="#">Image file</a>
+	  | <a href="javascript:void(window.open('https://www.kegg.jp/kegg/document/help_pathway.html','KEGG_Help','width=720,height=640'))">Help</a>
+	]
+
+	
+	<div id="description" class="hidden">
+	Vitamins are a diverse and chemically unrelated group of organic substances that share a common feature of being essential for normal health and well-being. They catalyze numerous biochemical reactions. Because humans and other mammals cannot synthesize these compounds (except for some synthesis of niacin), they must obtain them from exogenous sources via intestinal absorption. Vitamins are classified based on their solubility in water or fat. Most of the water-soluble vitamins are transported across the small intestinal membrane by carrier-mediated mechanisms, but vitamin B12, cobalamin, is transported by a receptor-mediated mechanism. Intestinal absorption of fat-soluble vitamins requires all of the processes needed for fat absorption. After digestion, these vitamins and the products of pancreatic hydrolysis of triglycerides (TG) are emulsified by bile salts to form mixed micelles which are taken up by intestinal enterocytes and incorporated into chylomicrons (CM). CM are then secreted into the lymphatic system, and finally moves into the plasma.
+	</div>
+	
+	
+	<!-- organism list start -->
+	<form name="selmenu" method="get">
+		
+		<input type="button" id="changePathwayTypeButton" value="Change pathway type">
+		
+		
+		
+		<input type="text" class="hidden" name="mapno" value="04977" />
+		<input type="text" class="hidden" id="scale" name="scale" value="1" />
+		<input type="text" class="hidden" id="displayNoColoringImage" name="nocolor" value="0" />
+		<input type="text" class="hidden" id="displayDescription" name="show_description" value="hide" />
+		<input type="text" class="hidden" id="displayControlPanel" name="show_module_list" value="show" />
+		<input type="text" class="hidden" id="clickableMode" name="clickable_mode" value="" />
+		<input type="text" class="hidden" name="module" value="" />
+	</form>
+	<!-- organism list end -->
+
+</div>
+<!-- page navigation end -->
+
+<!-- pathway image start -->
+<div class="image-block" style="position:static;">
+<img src="map04977.png" name="pathwayimage" name="pathwayimage" usemap="#mapdata" border="0" />
+	<map id="mapdata" name="mapdata" data-scale="1">
+		<area id="8CAF56DA" shape="circle" coords="1150,662,4" data-coords="1150,662,4" class="original" href=https://www.kegg.jp/entry/C00422 title="C00422 (Triacylglycerol)" data-entry="C00422" />
+		<area id="9CAF56E9" shape="circle" coords="1153,693,4" data-coords="1153,693,4" class="original" href=https://www.kegg.jp/entry/C02530 title="C02530 (Cholesterol ester)" data-entry="C02530" />
+		<area id="ACAF7025" shape="circle" coords="1286,664,4" data-coords="1286,664,4" class="original" href=https://www.kegg.jp/entry/C00422 title="C00422 (Triacylglycerol)" data-entry="C00422" />
+		<area id="B4AF7034" shape="circle" coords="1288,692,4" data-coords="1288,692,4" class="original" href=https://www.kegg.jp/entry/C02530 title="C02530 (Cholesterol ester)" data-entry="C02530" />
+		<area id="D76FDD7A" shape="circle" coords="120,758,4" data-coords="120,758,4" class="original" href=https://www.kegg.jp/entry/C01558 title="C01558 (Bile salt)" data-entry="C01558" />
+		<area id="FD70A07A" shape="circle" coords="928,656,4" data-coords="928,656,4" class="original" href=https://www.kegg.jp/entry/C00422 title="C00422 (Triacylglycerol)" data-entry="C00422" />
+		<area id="EE70A0A2" shape="circle" coords="935,686,4" data-coords="935,686,4" class="original" href=https://www.kegg.jp/entry/C02530 title="C02530 (Cholesterol ester)" data-entry="C02530" />
+		<area id="A9AF6FFD" shape="circle" coords="1266,681,4" data-coords="1266,681,4" class="original" href=https://www.kegg.jp/entry/C02075+C05443+C02477+C02059+C00828+C05377 title="C02075 (Retinyl ester), C05443 (Vitamin D3), C02477 (alpha-Tocopherol), C02059 (Phylloquinone), C00828 (Menaquinone), C05377 (Menadione)" data-entry="C02075" />
+		<area id="93AF56B2" shape="circle" coords="1131,684,4" data-coords="1131,684,4" class="original" href=https://www.kegg.jp/entry/C02075+C05443+C02477+C02059+C00828+C05377 title="C02075 (Retinyl ester), C05443 (Vitamin D3), C02477 (alpha-Tocopherol), C02059 (Phylloquinone), C00828 (Menaquinone), C05377 (Menadione)" data-entry="C02075" />
+		<area id="E5708C98" shape="circle" coords="843,717,4" data-coords="843,717,4" class="original" href=https://www.kegg.jp/entry/C02075 title="C02075 (Retinyl ester)" data-entry="C02075" />
+		<area id="F27073B6" shape="circle" coords="747,770,4" data-coords="747,770,4" class="original" href=https://www.kegg.jp/entry/C00473 title="C00473 (Retinol)" data-entry="C00473" />
+		<area id="E3700ADE" shape="circle" coords="373,605,4" data-coords="373,605,4" class="original" href=https://www.kegg.jp/entry/C13202+C12981 title="C13202 (alpha-Tocopherol acetate), C12981 (dl-alpha-Tocopherol nicotinate)" data-entry="C13202" />
+		<area id="E7700B06" shape="circle" coords="373,689,4" data-coords="373,689,4" class="original" href=https://www.kegg.jp/entry/C02477 title="C02477 (alpha-Tocopherol)" data-entry="C02477" />
+		<area id="016FF166" shape="circle" coords="229,605,4" data-coords="229,605,4" class="original" href=https://www.kegg.jp/entry/C02075 title="C02075 (Retinyl ester)" data-entry="C02075" />
+		<area id="FD6FF684" shape="circle" coords="229,771,4" data-coords="229,771,4" class="original" href=https://www.kegg.jp/entry/C00473 title="C00473 (Retinol)" data-entry="C00473" />
+		<area id="D570150B" shape="circle" coords="481,341,4" data-coords="481,341,4" class="original" href=https://www.kegg.jp/entry/C05776 title="C05776 (Vitamin B12)" data-entry="C05776" />
+		<area id="DE700AC0" shape="circle" coords="443,190,4" data-coords="443,190,4" class="original" href=https://www.kegg.jp/entry/C05776 title="C05776 (Vitamin B12)" data-entry="C05776" />
+		<area id="D870782F" shape="circle" coords="801,304,4" data-coords="801,304,4" class="original" href=https://www.kegg.jp/entry/C05776 title="C05776 (Vitamin B12)" data-entry="C05776" />
+		<area id="DE709148" shape="circle" coords="912,305,4" data-coords="912,305,4" class="original" href=https://www.kegg.jp/entry/C05776 title="C05776 (Vitamin B12)" data-entry="C05776" />
+		<area id="D270471A" shape="circle" coords="680,373,4" data-coords="680,373,4" class="original" href=https://www.kegg.jp/entry/C05776 title="C05776 (Vitamin B12)" data-entry="C05776" />
+		<area id="94AF2F20" shape="circle" coords="1092,300,4" data-coords="1092,300,4" class="original" href=https://www.kegg.jp/entry/C05776 title="C05776 (Vitamin B12)" data-entry="C05776" />
+		<area id="A1AF79DA" shape="circle" coords="1354,363,4" data-coords="1354,363,4" class="original" href=https://www.kegg.jp/entry/C05776 title="C05776 (Vitamin B12)" data-entry="C05776" />
+		<area id="A4AF29A8" shape="circle" coords="1034,266,4" data-coords="1034,266,4" class="original" href=https://www.kegg.jp/entry/C05776 title="C05776 (Vitamin B12)" data-entry="C05776" />
+		<area id="EE7032D4" shape="circle" coords="565,436,4" data-coords="565,436,4" class="original" href=https://www.kegg.jp/entry/C01330 title="C01330 (Sodium cation)" data-entry="C01330" />
+		<area id="F270325C" shape="circle" coords="516,445,4" data-coords="516,445,4" class="original" href=https://www.kegg.jp/entry/C00120+C00864 title="C00120 (Biotin), C00864 (Pantothenate)" data-entry="C00120" />
+		<area id="F4701EDE" shape="circle" coords="477,502,4" data-coords="477,502,4" class="original" href=https://www.kegg.jp/entry/C01330 title="C01330 (Sodium cation)" data-entry="C01330" />
+		<area id="E8701ECA" shape="circle" coords="465,510,4" data-coords="465,510,4" class="original" href=https://www.kegg.jp/entry/C00072 title="C00072 (Ascorbate)" data-entry="C00072" />
+		<area id="FD7014FC" shape="circle" coords="478,366,4" data-coords="478,366,4" class="original" href=https://www.kegg.jp/entry/C00378 title="C00378 (Thiamine)" data-entry="C00378" />
+		<area id="FC6FF64D" shape="circle" coords="319,210,4" data-coords="319,210,4" class="original" href=https://www.kegg.jp/entry/C00068 title="C00068 (Thiamin diphosphate)" data-entry="C00068" />
+		<area id="E66FDDBB" shape="circle" coords="253,238,4" data-coords="253,238,4" class="original" href=https://www.kegg.jp/entry/C00061 title="C00061 (FMN)" data-entry="C00061" />
+		<area id="E56FDDF7" shape="circle" coords="273,257,4" data-coords="273,257,4" class="original" href=https://www.kegg.jp/entry/C00016 title="C00016 (FAD)" data-entry="C00016" />
+		<area id="EA6FE2ED" shape="circle" coords="264,387,4" data-coords="264,387,4" class="original" href=https://www.kegg.jp/entry/C00255 title="C00255 (Riboflavin)" data-entry="C00255" />
+		<area id="ED6FDD34" shape="circle" coords="206,210,4" data-coords="206,210,4" class="original" href=https://www.kegg.jp/entry/C05552 title="C05552 (Biocytin)" data-entry="C05552" />
+		<area id="D76FC4C5" shape="circle" coords="151,253,4" data-coords="151,253,4" class="original" href=https://www.kegg.jp/entry/C00072 title="C00072 (Ascorbate)" data-entry="C00072" />
+		<area id="046FFB61" shape="circle" coords="319,348,4" data-coords="319,348,4" class="original" href=https://www.kegg.jp/entry/C00378 title="C00378 (Thiamine)" data-entry="C00378" />
+		<area id="EE6FE73E" shape="circle" coords="206,431,4" data-coords="206,431,4" class="original" href=https://www.kegg.jp/entry/C00120 title="C00120 (Biotin)" data-entry="C00120" />
+		<area id="F66FF729" shape="circle" coords="396,259,4" data-coords="396,259,4" class="original" href=https://www.kegg.jp/entry/C00647 title="C00647 (Pyridoxamine phosphate)" data-entry="C00647" />
+		<area id="E96FFC1A" shape="circle" coords="395,321,4" data-coords="395,321,4" class="original" href=https://www.kegg.jp/entry/C00534 title="C00534 (Pyridoxamine)" data-entry="C00534" />
+		<area id="F76FC9DE" shape="circle" coords="177,305,4" data-coords="177,305,4" class="original" href=https://www.kegg.jp/entry/C00010 title="C00010 (CoA)" data-entry="C00010" />
+		<area id="F96FCEF7" shape="circle" coords="178,452,4" data-coords="178,452,4" class="original" href=https://www.kegg.jp/entry/C00864 title="C00864 (Pantothenate)" data-entry="C00864" />
+		<area id="07B494B4" shape="circle" coords="91,563,4" data-coords="91,563,4" class="original" href=https://www.kegg.jp/entry/C00504 title="C00504 (Folate)" data-entry="C00504" />
+		<area id="D46FC961" shape="circle" coords="120,305,4" data-coords="120,305,4" class="original" href=https://www.kegg.jp/entry/C00003 title="C00003 (NAD+)" data-entry="C00003" />
+		<area id="D36FD36B" shape="circle" coords="120,524,4" data-coords="120,524,4" class="original" href=https://www.kegg.jp/entry/C00153 title="C00153 (Nicotinamide)" data-entry="C00153" />
+		<area id="F7700A48" shape="circle" coords="317,605,4" data-coords="317,605,4" class="original" href=https://www.kegg.jp/entry/C05443 title="C05443 (Vitamin D3)" data-entry="C05443" />
+		<area id="D8702361" shape="circle" coords="421,604,4" data-coords="421,604,4" class="original" href=https://www.kegg.jp/entry/C02059 title="C02059 (Phylloquinone)" data-entry="C02059" />
+		<area id="DC702375" shape="circle" coords="421,648,4" data-coords="421,648,4" class="original" href=https://www.kegg.jp/entry/C05377 title="C05377 (Menadione)" data-entry="C05377" />
+		<area id="D4702370" shape="circle" coords="421,630,4" data-coords="421,630,4" class="original" href=https://www.kegg.jp/entry/C00828 title="C00828 (Menaquinone)" data-entry="C00828" />
+		<area id="DE70A052" shape="circle" coords="902,675,4" data-coords="902,675,4" class="original" href=https://www.kegg.jp/entry/C02075+C05443+C02477+C02059+C00828+C05377 title="C02075 (Retinyl ester), C05443 (Vitamin D3), C02477 (alpha-Tocopherol), C02059 (Phylloquinone), C00828 (Menaquinone), C05377 (Menadione)" data-entry="C02075" />
+		<area id="E970563D" shape="circle" coords="695,691,4" data-coords="695,691,4" class="original" href=https://www.kegg.jp/entry/C02477 title="C02477 (alpha-Tocopherol)" data-entry="C02477" />
+		<area id="DF7037CF" shape="circle" coords="552,576,4" data-coords="552,576,4" class="original" href=https://www.kegg.jp/entry/C00504 title="C00504 (Folate)" data-entry="C00504" />
+		<area id="10B49E87" shape="circle" coords="83,722,4" data-coords="83,722,4" class="original" href=https://www.kegg.jp/entry/C00681 title="C00681 (1-Acyl-sn-glycerol 3-phosphate)" data-entry="C00681" />
+		<area id="32B49973" shape="circle" coords="69,686,4" data-coords="69,686,4" class="original" href=https://www.kegg.jp/entry/C02112+C01885 title="C02112 (2-Acylglycerol), C01885 (1-Acylglycerol)" data-entry="C02112" />
+		<area id="E46FD8ED" shape="circle" coords="164,681,4" data-coords="164,681,4" class="original" href=https://www.kegg.jp/entry/C00473+C02094+C05443+C02477+C02059+C00828+C05377 title="C00473 (Retinol), C02094 (beta-Carotene), C05443 (Vitamin D3), C02477 (alpha-Tocopherol), C02059 (Phylloquinone), C00828 (Menaquinone), C05377 (Menadione)" data-entry="C00473" />
+		<area id="17B49991" shape="circle" coords="83,649,4" data-coords="83,649,4" class="original" href=https://www.kegg.jp/entry/C00162 title="C00162 (Fatty acid)" data-entry="C00162" />
+		<area id="E26FF64D" shape="circle" coords="203,764,4" data-coords="203,764,4" class="original" href=https://www.kegg.jp/entry/C00187 title="C00187 (Cholesterol)" data-entry="C00187" />
+		<area id="FE701506" shape="circle" coords="478,387,4" data-coords="478,387,4" class="original" href=https://www.kegg.jp/entry/C00255 title="C00255 (Riboflavin)" data-entry="C00255" />
+		<area id="DD6FF6F7" shape="circle" coords="371,259,4" data-coords="371,259,4" class="original" href=https://www.kegg.jp/entry/C00018 title="C00018 (Pyridoxal phosphate)" data-entry="C00018" />
+		<area id="D06FFBE8" shape="circle" coords="370,321,4" data-coords="370,321,4" class="original" href=https://www.kegg.jp/entry/C00250 title="C00250 (Pyridoxal)" data-entry="C00250" />
+		<area id="056FF210" shape="circle" coords="289,649,4" data-coords="289,649,4" class="original" href=https://www.kegg.jp/entry/C02094 title="C02094 (beta-Carotene)" data-entry="C02094" />
+		<area id="E7705B10" shape="circle" coords="684,754,4" data-coords="684,754,4" class="original" href=https://www.kegg.jp/entry/C00376 title="C00376 (Retinal)" data-entry="C00376" />
+		<area id="EF702910" shape="circle" coords="486,752,4" data-coords="486,752,4" class="original" href=https://www.kegg.jp/entry/C02094 title="C02094 (beta-Carotene)" data-entry="C02094" />
+		<area id="C0AF7E5D" shape="circle" coords="1319,419,4" data-coords="1319,419,4" class="original" href=https://www.kegg.jp/entry/C00378 title="C00378 (Thiamine)" data-entry="C00378" />
+		<area id="A9AF6634" shape="circle" coords="1296,441,4" data-coords="1296,441,4" class="original" href=https://www.kegg.jp/entry/C00255 title="C00255 (Riboflavin)" data-entry="C00255" />
+		<area id="ADAF660C" shape="circle" coords="1276,465,4" data-coords="1276,465,4" class="original" href=https://www.kegg.jp/entry/C00120 title="C00120 (Biotin)" data-entry="C00120" />
+		<area id="8CAF65E4" shape="circle" coords="1250,482,4" data-coords="1250,482,4" class="original" href=https://www.kegg.jp/entry/C00864 title="C00864 (Pantothenate)" data-entry="C00864" />
+		<area id="ABAF6A71" shape="circle" coords="1225,508,4" data-coords="1225,508,4" class="original" href=https://www.kegg.jp/entry/C00072 title="C00072 (Ascorbate)" data-entry="C00072" />
+		<area id="94AF5202" shape="circle" coords="1172,540,4" data-coords="1172,540,4" class="original" href=https://www.kegg.jp/entry/C00504 title="C00504 (Folate)" data-entry="C00504" />
+		<area id="CF70374D" shape="circle" coords="500,560,4" data-coords="500,560,4" class="original" href=https://www.kegg.jp/entry/C00504 title="C00504 (Folate)" data-entry="C00504" />
+		<area id="D3703793" shape="circle" coords="530,554,4" data-coords="530,554,4" class="original" href=https://www.kegg.jp/entry/C00080 title="C00080 (H+)" data-entry="C00080" />
+		<area id="97AF6A49" shape="circle" coords="1201,528,4" data-coords="1201,528,4" class="original" href=https://www.kegg.jp/entry/C00153 title="C00153 (Nicotinamide)" data-entry="C00153" />
+		<area id="B8AF79B7" shape="circle" coords="1338,396,4" data-coords="1338,396,4" class="original" href=https://www.kegg.jp/entry/C00018 title="C00018 (Pyridoxal phosphate)" data-entry="C00018" />
+		<area id="03CC83B4" shape="rect" coords="1122,632,1168,649" data-coords="1122,632,1168,649" class="original" href=https://www.kegg.jp/entry/K14462 title="K14462 (APOB)" />
+		<area id="102A34C6" shape="rect" coords="1260,636,1306,653" data-coords="1260,636,1306,653" class="original" href=https://www.kegg.jp/entry/K14462 title="K14462 (APOB)" />
+		<area id="12AB7007" shape="rect" coords="1304,677,1350,694" data-coords="1304,677,1350,694" class="original" href=https://www.kegg.jp/entry/K08760 title="K08760 (APOA4)" />
+		<area id="11A4482B" shape="rect" coords="1262,715,1308,732" data-coords="1262,715,1308,732" class="original" href=https://www.kegg.jp/entry/K08757 title="K08757 (APOA1)" />
+		<area id="08C31719" shape="rect" coords="1164,671,1210,688" data-coords="1164,671,1210,688" class="original" href=https://www.kegg.jp/entry/K08760 title="K08760 (APOA4)" />
+		<area id="054C5E13" shape="rect" coords="1124,713,1170,730" data-coords="1124,713,1170,730" class="original" href=https://www.kegg.jp/entry/K08757 title="K08757 (APOA1)" />
+		<area id="4FAAAEFE" shape="rect" coords="896,709,942,726" data-coords="896,709,942,726" class="original" href=https://www.kegg.jp/entry/K08757 title="K08757 (APOA1)" />
+		<area id="86CA9BB2" shape="rect" coords="946,661,992,678" data-coords="946,661,992,678" class="original" href=https://www.kegg.jp/entry/K08760 title="K08760 (APOA4)" />
+		<area id="67AC33F8" shape="rect" coords="897,625,943,642" data-coords="897,625,943,642" class="original" href=https://www.kegg.jp/entry/K14462 title="K14462 (APOB)" />
+		<area id="E1B139E3" shape="rect" coords="605,680,651,697" data-coords="605,680,651,697" class="original" href=https://www.kegg.jp/entry/K13885 title="K13885 (SCARB1)" />
+		<area id="74A8BB00" shape="rect" coords="605,306,651,323" data-coords="605,306,651,323" class="original" href=https://www.kegg.jp/entry/K14616 title="K14616 (CUBN)" />
+		<area id="21ADD1C0" shape="rect" coords="720,287,766,304" data-coords="720,287,766,304" class="original" href=https://www.kegg.jp/entry/K14616 title="K14616 (CUBN)" />
+		<area id="3FA1D50F" shape="rect" coords="778,269,824,286" data-coords="778,269,824,286" class="original" href=https://www.kegg.jp/entry/K14615 title="K14615 (GIF)" />
+		<area id="638AF93F" shape="rect" coords="459,306,505,323" data-coords="459,306,505,323" class="original" href=https://www.kegg.jp/entry/K14615 title="K14615 (GIF)" />
+		<area id="23956A94" shape="rect" coords="465,263,511,280" data-coords="465,263,511,280" class="original" href=https://www.kegg.jp/entry/K14615 title="K14615 (GIF)" />
+		<area id="97A13850" shape="rect" coords="966,290,1012,307" data-coords="966,290,1012,307" class="original" href=https://www.kegg.jp/entry/K14617 title="K14617 (LMBRD1)" />
+		<area id="F8A95B55" shape="rect" coords="891,270,937,287" data-coords="891,270,937,287" class="original" href=https://www.kegg.jp/entry/K14615 title="K14615 (GIF)" />
+		<area id="FED5F2D2" shape="rect" coords="1118,293,1164,310" data-coords="1118,293,1164,310" class="original" href=https://www.kegg.jp/entry/K05665 title="K05665 (ABCC1)" />
+		<area id="0BC5241F" shape="rect" coords="1283,354,1329,371" data-coords="1283,354,1329,371" class="original" href=https://www.kegg.jp/entry/K14619 title="K14619 (TCN2)" />
+		<area id="F7F4C48B" shape="rect" coords="1034,354,1080,371" data-coords="1034,354,1080,371" class="original" href=https://www.kegg.jp/entry/K14619 title="K14619 (TCN2)" />
+		<area id="8C92D3B1" shape="rect" coords="657,337,703,354" data-coords="657,337,703,354" class="original" href=https://www.kegg.jp/entry/K14615 title="K14615 (GIF)" />
+		<area id="98A95672" shape="rect" coords="703,337,749,354" data-coords="703,337,749,354" class="original" href=https://www.kegg.jp/entry/K14616 title="K14616 (CUBN)" />
+		<area id="21996021" shape="rect" coords="668,258,714,275" data-coords="668,258,714,275" class="original" href=https://www.kegg.jp/entry/K14616 title="K14616 (CUBN)" />
+		<area id="F6601A20" shape="rect" coords="1013,232,1059,249" data-coords="1013,232,1059,249" class="original" href=https://www.kegg.jp/entry/K14618 title="K14618 (MMACHC)" />
+		<area id="F29E5FFB" shape="rect" coords="773,760,819,777" data-coords="773,760,819,777" class="original" href=https://www.kegg.jp/entry/K14622 title="K14622 (RBP2)" />
+		<area id="44B2A481" shape="rect" coords="808,739,854,756" data-coords="808,739,854,756" class="original" href=https://www.kegg.jp/entry/K00678 title="K00678 (LRAT)" />
+		<area id="11AB3F77" shape="rect" coords="605,432,651,449" data-coords="605,432,651,449" class="original" href=https://www.kegg.jp/entry/K14386 title="K14386 (SLC5A6)" />
+		<area id="A3AACFD6" shape="rect" coords="515,498,561,515" data-coords="515,498,561,515" class="original" href=https://www.kegg.jp/entry/K14611 title="K14611 (SLC23A1)" />
+		<area id="4AAADDE9" shape="rect" coords="602,569,648,586" data-coords="602,569,648,586" class="original" href=https://www.kegg.jp/entry/K14609 title="K14609 (SLC19A1)" />
+		<area id="1EB055E7" shape="rect" coords="516,358,562,375" data-coords="516,358,562,375" class="original" href=https://www.kegg.jp/entry/K14610 title="K14610 (SLC19A2_3)" />
+		<area id="BEA00FFF" shape="rect" coords="209,320,255,337" data-coords="209,320,255,337" class="original" href=https://www.kegg.jp/entry/K01435 title="K01435 (BTD)" />
+		<area id="CA5ACFF7" shape="rect" coords="41,384,87,401" data-coords="41,384,87,401" class="original" href=https://www.kegg.jp/entry/K14592 title="K14592 (FOLH1)" />
+		<area id="73B14265" shape="rect" coords="515,746,561,763" data-coords="515,746,561,763" class="original" href=https://www.kegg.jp/entry/K13885 title="K13885 (SCARB1)" />
+		<area id="56B25959" shape="rect" coords="516,380,562,397" data-coords="516,380,562,397" class="original" href=https://www.kegg.jp/entry/K14620 title="K14620 (SLC52A3)" />
+		<area id="4A9534B7" shape="rect" coords="756,719,802,736" data-coords="756,719,802,736" class="original" href=https://www.kegg.jp/entry/K11156 title="K11156 (DGAT2L4)" />
+		<area id="31A8DBEF" shape="rect" coords="602,548,648,565" data-coords="602,548,648,565" class="original" href=https://www.kegg.jp/entry/K14613 title="K14613 (SLC46A1)" />
+		<area id="05B1A736" shape="rect" coords="233,682,279,699" data-coords="233,682,279,699" class="original" href=https://www.kegg.jp/entry/K14073 title="K14073 (PNLIP)" />
+		<area id="1FAB174E" shape="rect" coords="233,703,279,720" data-coords="233,703,279,720" class="original" href=https://www.kegg.jp/entry/K14621 title="K14621 (PLB1)" />
+		<area id="37B7BAE2" shape="rect" coords="40,45,356,70" data-coords="40,45,356,70" class="original" href=https://www.kegg.jp/entry/map04977 title="map04977: Vitamin digestion and absorption" data-entry="map04977" />
+		<area id="7DA2F34E" shape="rect" coords="634,101,749,126" data-coords="634,101,749,126" class="original" href=https://www.kegg.jp/pathway/map04530 title="map04530: Tight junction" data-entry="map04530" />
+		<area id="D3870870" shape="rect" coords="287,780,402,814" data-coords="287,780,402,814" class="original" href=https://www.kegg.jp/pathway/ko00830 title="ko00830: Retinol metabolism" data-entry="ko00830" />
+		<area id="F5DDA56D" shape="rect" coords="79,802,194,827" data-coords="79,802,194,827" class="original" href=https://www.kegg.jp/pathway/map04976 title="map04976: Bile secretion" data-entry="map04976" />
+		<area id="B6AC591E" shape="rect" coords="754,363,846,388" data-coords="754,363,846,388" class="original" href=https://www.kegg.jp/pathway/map04144 title="map04144: Endocytosis" data-entry="map04144" />
+		<area id="DABEBE6C" shape="rect" coords="881,369,973,394" data-coords="881,369,973,394" class="original" href=https://www.kegg.jp/pathway/map04142 title="map04142: Lysosome" data-entry="map04142" />
+		<area id="D8AF4707" shape="rect" coords="762,574,863,608" data-coords="762,574,863,608" class="original" href=https://www.kegg.jp/pathway/map04975 title="map04975: Fat digestion and absorption" data-entry="map04975" />
+		<area id="FD9D97B2" shape="rect" coords="246,467,356,501" data-coords="246,467,356,501" class="original" href=https://www.kegg.jp/pathway/ko00770 title="ko00770: Pantothenate and CoA biosynthesis" data-entry="ko00770" />
+		<area id="139D7B90" shape="rect" coords="350,397,442,431" data-coords="350,397,442,431" class="original" href=https://www.kegg.jp/pathway/ko00740 title="ko00740: Riboflavin metabolism" data-entry="ko00740" />
+		<area id="E7A12700" shape="rect" coords="274,166,366,200" data-coords="274,166,366,200" class="original" href=https://www.kegg.jp/pathway/ko00730 title="ko00730: Thiamine metabolism" data-entry="ko00730" />
+		<area id="6B99A48A" shape="rect" coords="161,166,253,200" data-coords="161,166,253,200" class="original" href=https://www.kegg.jp/pathway/ko00780 title="ko00780: Biotin metabolism" data-entry="ko00780" />
+		<area id="59BA4808" shape="rect" coords="47,166,139,200" data-coords="47,166,139,200" class="original" href=https://www.kegg.jp/pathway/ko00790 title="ko00790: Folate biosynthesis" data-entry="ko00790" />
+		<area id="8087B5A0" shape="rect" coords="166,522,308,556" data-coords="166,522,308,556" class="original" href=https://www.kegg.jp/pathway/ko00760 title="ko00760: Nicotinate and nicotinamide metabolism" data-entry="ko00760" />
+		<area id="E099EAD5" shape="rect" coords="338,216,430,250" data-coords="338,216,430,250" class="original" href=https://www.kegg.jp/pathway/ko00750 title="ko00750: Vitamin B6 metabolism" data-entry="ko00750" />
+	</map>
+	<map id="module_mapdata" name="module_mapdata" data-scale="1">
+	</map>
+</div>
+<!-- pathway image end -->
+
+<!-- control panel start -->
+
+<div id="controlPanel">
+	<div class="controller">
+		<div class="feature option">
+			<h5>Option</h5>
+			<div>
+				<div class="row scale">
+					<span class="title">Scale:</span>
+					<span class="content">
+						<input type="range" min="0.1" max="1" step="0.1" value="1">
+						<span class="label">100%</span>
+					</span>
+				</div>
+				
+				
+				
+			</div>
+		</div>
+		<div class="feature search">
+			<h5>Search</h5>
+			<div>
+				<div class="row query">
+					<form>
+						<input type="text" name="query" style="width:130px;" autocomplete="off" value="">
+						<input type="submit" value="Go">
+						<span class="ui-icon button ui-icon-close clear-query hidden"></span>
+					</form>
+				</div>
+				<div class="row result">
+				</div>
+			</div>
+		</div>
+		<div class="feature search-pathway">
+			<h5>ID search
+				<span class="ui-icon ui-icon-plus">
+			</h5>
+			<div>
+				<form>
+					<div class="row" style="display:grid; grid-template-columns:135px 1fr; column-gap:5px;">
+						<div>
+							<textarea class="query" rows="2" style="width:130px; resize:none;"></textarea>
+						</div>
+						<div>
+							<input type="submit" class="submit" value="Go">
+							<span class="ui-icon button ui-icon-close clear-query hidden"></span>
+						</div>
+					</div>
+				</form>
+				<div class="row personal hidden">
+					<ul class="mappers"></ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="feature color-pathway">
+			<h5>Color
+				<span class="ui-icon ui-icon-plus">
+			</h5>
+			<div>
+				
+				<div class="row personal hidden">
+					<ul class="mappers"></ul>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+			
+		
+			
+	</div>
+	<button class="close">
+		<img src=https://www.kegg.jp/Fig/left_triangle_12x12.png>
+	</button>
+	<button class="open">
+		<img src=https://www.kegg.jp/Fig/right_triangle_12x12.png>
+	</button>
+</div>
+<!-- control panel end -->
+
+
+<form id="downloadForm" action=https://www.kegg.jp/kegg-bin/download method="post">
+	<input type="hidden" name="name" value="map04977.png" />
+	<input type="hidden" name="content" />
+	<input type="hidden" name="decode" value="base64" />
+</form>
+
+<div id="waiting-circle">
+	<img src=https://www.kegg.jp/Fig/waiting-circle-small.gif>
+</div>
+
+<!-- pathway image url start -->
+<form class="imageset" data-name="">
+	<input type="hidden" name="image_normal" value="/kegg/pathway/map/map04977.png 1x"
+	       data-src=https://www.kegg.jp/kegg/pathway/map/map04977.png data-situation="1x">
+</form>
+<!-- pathway image url end -->
+
+</body>
+</html>

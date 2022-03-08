@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<!--
+ENTRY       map00471
+DEFINITION  D-Glutamine and D-glutamate metabolism - Reference pathway
+--->
+<head>
+<meta charset="UTF-8">
+<title>
+KEGG PATHWAY: D-Glutamine and D-glutamate metabolism - Reference pathway
+</title>
+<link rel="stylesheet" href=https://www.kegg.jp/css/kegg.css type="text/css" />
+<link rel="stylesheet" href=https://www.kegg.jp/css/jquery-ui.css />
+<style type="text/css">
+<!--
+
+input, select {
+	margin: 0px;
+}
+
+.d-none, .hidden {
+	display: none;
+}
+
+/** navigation start **/
+.nav {
+	padding: 3px 0px 5px 0px;
+	position: relative;
+	min-width: 600px;
+	max-width: 800px;
+	background: #fff;
+}
+
+.nav form {
+	margin: 5px 0px 0px 0px;
+}
+
+.nav .help {
+	display: inline-block;
+	position: relative;
+	left: 20px;
+/*
+	position: absolute;
+	bottom: 5px;
+	right: 0px;
+*/
+}
+/** navigation end **/
+
+#description {
+	padding: 10px;
+	width: 800px;
+}
+
+#waiting-circle {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	display: none;
+}
+
+#controlPanel {
+	top: 0px;
+	left: 0px;
+	width: 220px;
+	background: #ffffff;
+	padding: 0px 0px 0px 0px;
+	white-space: nowrap;
+	overflow: auto;
+	position: fixed;
+	border: solid 1px #999999;
+	display: none;
+}
+
+#controlPanel.closed {
+	border: none;
+	padding: 0px 0px 0px 0px;
+	background: transparent;
+
+	/* jQuery-UI resizale.disabled() の実行で
+	 *      色が薄くなるのを打ち消す */
+	opacity: 1.0;
+}
+
+/** div.row start **/
+
+div.row {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	/* 以下のwidth,overflowの定義で.rowのブロック内で横スクロールする。 */
+	/*
+	width: 98%;
+	overflow: auto;
+	*/
+}
+
+div.row * {
+	vertical-align: middle;
+}
+
+/* 横に並べる場合(title可変幅) start */
+
+.row.scale input {
+	width: 110px;
+}
+
+.row.scale .label {
+	font-size: 0.9em;
+}
+
+/* 横に並べる場合(title可変幅) end */
+
+
+/* Search欄の検索結果 start */
+
+div.row.result > div {
+	margin: 5px 1px 2px 1px;
+}
+
+/* Search欄の検索結果 end */
+
+/**  div.row end **/
+
+#controlPanel h5 {
+  margin: 0px;
+	padding: 5px 0px 5px 10px;
+	vertical-align: middle;
+	border-top: solid 1px #cccccc;
+	border-bottom: solid 1px #cccccc;
+	background: #eeeeee;
+	/* ui-iconの位置調整のために必要 */
+	position: relative;
+}
+
+#controlPanel h5::before {
+	content: url(/Fig/get_htext/open.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5.closed::before {
+	content: url(/Fig/get_htext/close.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5:first-child {
+	border-top: none;
+}
+
+#controlPanel h5:hover {
+	cursor: pointer;
+}
+
+#controlPanel h5  + div {
+	padding: 5px 0px 5px 10px;
+}
+
+#controlPanel h5 .ui-icon {
+	display: inline-block;
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	margin-top: -8px;
+	cursor: pointer;
+}
+
+button {
+	/* Safariでボタンの周りに入る余白を削除 */
+	margin: 0px;
+	padding: 0px;
+	/* ボタンを押した時に表示されるボーダーを非表示にする */
+	outline: none;
+}
+
+button.close, button.open {
+	border: none;
+	padding: 0px;
+	position: absolute;
+	right: 5px;
+	top: 7px;
+}
+
+button.close {
+	/* コントロールパネルに合わせて初期は非表示 */
+	display: none;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+button img {
+	/* 画像の下に入る余白を無くす */
+	display: block;
+}
+
+/** tree style start **/
+ul.tree, ul.tree ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul.tree ul {
+	padding-left: 12px;
+}
+
+ul.tree .class-A > span {
+	font-weight: bold;
+}
+
+ul.tree li {
+	margin: 3px 0px 3px 0px;
+}
+
+.module.disabled, .module.disabled *{
+	color: #999999;
+}
+
+.module.disabled {
+	display: none;
+}
+
+/** tree style > User data start **/
+.map-data ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+.map-data li {
+	position: relative;
+	margin: 5px 0px 2px 0px;
+}
+
+.map-data li .ui-icon {
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+}
+.map-data li .ui-icon:hover {
+	cursor: pointer;
+}
+.map-data li .ui-icon-trash {
+	right: 5px;
+}
+.map-data li .ui-icon-document {
+	right: 26px;
+}
+/** tree style > User data end **/
+
+/** tree style end **/
+
+ul.simple {
+	margin: 0px;
+	padding: 0px;
+}
+ul.simple li {
+	list-style-type: none;
+}
+ul.simple li:not(:first-child) {
+	margin-top: 5px;
+}
+
+//-->
+</style>
+
+<script src=https://www.kegg.jp/js/jquery-3.1.0.min.js></script>
+<script src=https://www.kegg.jp/js/jquery-ui.js></script>
+<script src=https://www.kegg.jp/js/jquery.balloon.min.js></script>
+<script src=https://www.kegg.jp/js/lz-string.min.js></script>
+<script src=https://www.kegg.jp/kegg-bin/get_data.cgi?data=0021&id=show_pathway.merged.js&v2.09></script>
+<script type="text/javascript">
+<!--
+
+// common variable
+const env = {
+	       mapno: '00471',
+	         org: 'map',
+	       entry: 'map00471',
+	       scale: 1,
+	 colorModule: '',
+	personalConf: '',
+}
+
+// HELP button
+function btn(bobj,img) { bobj.src = https://www.kegg.jp/Fig/bget/button_ + img + ".gif"; }
+
+//-->
+</script>
+</head>
+<body>
+<!-- header logo start -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0">
+	<tr>
+		<td style="width:80px;">
+			<a href=https://www.kegg.jp/kegg/pathway.html><img align="middle" alt="KEGG" border="0" src=https://www.kegg.jp/Fig/bget/kegg3.gif /></a>
+		</td>
+		<td style="vertical-align:middle;">
+			<font class="title3"><b>D-Glutamine and D-glutamate metabolism - Reference pathway</b></font>
+		</td>
+		<td valign="bottom" align="right">
+		</td>
+	</tr>
+</table>
+<!-- header logo end -->
+
+<!-- page navigation start -->
+<div class="nav">
+	[
+	    <a href=https://www.kegg.jp/brite/query=00471&htext=br08901.keg&option=-a&node_proc=br08901_org&proc_enabled=map&panel=collapse id="navPathwayMenu">Pathway menu</a>
+	  | <a href=https://www.kegg.jp/entry/pathway+map00471 id="navPathwayEntry">Pathway entry</a>
+	  | <a id="downloadImageLink" href="#">Image (png) file</a>
+	  | <a href="javascript:void(window.open('https://www.kegg.jp/kegg/document/help_pathway.html','KEGG_Help','width=720,height=640'))">Help</a>
+	]
+
+	
+	
+	<!-- organism list start -->
+	<form name="selmenu" method="get">
+		
+		<input type="button" id="changePathwayTypeButton" value="Change pathway type">
+		
+		
+		
+		<input type="text" class="hidden" name="mapno" value="00471" />
+		<input type="text" class="hidden" id="scale" name="scale" value="1" />
+		<input type="text" class="hidden" id="displayNoColoringImage" name="nocolor" value="0" />
+		<input type="text" class="hidden" id="displayDescription" name="show_description" value="hide" />
+		<input type="text" class="hidden" id="displayControlPanel" name="show_module_list" value="show" />
+		<input type="text" class="hidden" id="clickableMode" name="clickable_mode" value="" />
+		<input type="text" class="hidden" name="module" value="" />
+	</form>
+	<!-- organism list end -->
+
+</div>
+<!-- page navigation end -->
+
+<!-- pathway image start -->
+<div class="image-block" style="position:static;">
+<img src="map00471.png" name="pathwayimage" name="pathwayimage" usemap="#mapdata" border="0" />
+	<map id="mapdata" name="mapdata" data-scale="1">
+		<area id="EF6FC01F" shape="circle" coords="196,132,4" data-coords="196,132,4" class="original" href=https://www.kegg.jp/entry/C00064 title="C00064 (L-Glutamine)" data-entry="C00064" />
+		<area id="EA6FF1A2" shape="circle" coords="345,132,4" data-coords="345,132,4" class="original" href=https://www.kegg.jp/entry/C00819 title="C00819 (D-Glutamine)" data-entry="C00819" />
+		<area id="047023BB" shape="circle" coords="559,128,4" data-coords="559,128,4" class="original" href=https://www.kegg.jp/entry/C03933 title="C03933 (5-D-Glutamyl-D-glutamyl-peptide)" data-entry="C03933" />
+		<area id="1CB48564" shape="circle" coords="74,209,4" data-coords="74,209,4" class="original" href=https://www.kegg.jp/entry/C05723 title="C05723 (Poly-gamma-D-glutamate)" data-entry="C05723" />
+		<area id="F66FC510" shape="circle" coords="196,209,4" data-coords="196,209,4" class="original" href=https://www.kegg.jp/entry/C00025 title="C00025 (L-Glutamate)" data-entry="C00025" />
+		<area id="F16FF693" shape="circle" coords="345,209,4" data-coords="345,209,4" class="original" href=https://www.kegg.jp/entry/C00217 title="C00217 (D-Glutamate)" data-entry="C00217" />
+		<area id="F7700A9D" shape="circle" coords="438,170,4" data-coords="438,170,4" class="original" href=https://www.kegg.jp/entry/C02671 title="C02671 (D-Glutamyl-peptide)" data-entry="C02671" />
+		<area id="FE7028B1" shape="circle" coords="559,212,4" data-coords="559,212,4" class="original" href=https://www.kegg.jp/entry/C00692 title="C00692 (UDP-N-acetylmuramoyl-L-alanyl-D-glutamate)" data-entry="C00692" />
+		<area id="F9700F9D" shape="circle" coords="438,272,4" data-coords="438,272,4" class="original" href=https://www.kegg.jp/entry/C01212 title="C01212 (UDP-N-acetylmuramoyl-L-alanine)" data-entry="C01212" />
+		<area id="FF701489" shape="circle" coords="438,338,4" data-coords="438,338,4" class="original" href=https://www.kegg.jp/entry/C01050 title="C01050 (UDP-N-acetylmuramate)" data-entry="C01050" />
+		<area id="EC6FFB93" shape="circle" coords="345,304,4" data-coords="345,304,4" class="original" href=https://www.kegg.jp/entry/C02237 title="C02237 (5-Oxo-D-proline)" data-entry="C02237" />
+		<area id="F16FCA10" shape="circle" coords="196,304,4" data-coords="196,304,4" class="original" href=https://www.kegg.jp/entry/C00026 title="C00026 (2-Oxoglutarate)" data-entry="C00026" />
+		<area id="FE7028CF" shape="circle" coords="559,272,4" data-coords="559,272,4" class="original" href=https://www.kegg.jp/entry/C22053 title="C22053 (UDP-N-acetyl-alpha-D-muramoyl-L-alanyl-L-glutamate)" data-entry="C22053" />
+		<area id="CB950916" shape="rect" coords="479,120,525,137" data-coords="479,120,525,137" class="original" href=https://www.kegg.jp/entry/2.3.2.1+R04012 title="2.3.2.1, R04012" />
+		<area id="06A7E171" shape="rect" coords="415,302,461,319" data-coords="415,302,461,319" class="original" href=https://www.kegg.jp/entry/K01924+6.3.2.8+R03193 title="K01924 (murC), 6.3.2.8, R03193" />
+		<area id="AC8F8D0D" shape="rect" coords="472,203,518,220" data-coords="472,203,518,220" class="original" href=https://www.kegg.jp/entry/K01925+6.3.2.9+R02783 title="K01925 (murD), 6.3.2.9, R02783" />
+		<area id="83AA1AD1" shape="rect" coords="323,247,369,264" data-coords="323,247,369,264" class="original" href=https://www.kegg.jp/entry/K22210+4.2.1.48+R01583 title="K22210 (DGLUCY), 4.2.1.48, R01583" />
+		<area id="7EA7A9D1" shape="rect" coords="223,247,269,264" data-coords="223,247,269,264" class="original" href=https://www.kegg.jp/entry/1.4.3.7+R00279 title="1.4.3.7, R00279" />
+		<area id="848C3B01" shape="rect" coords="171,247,217,264" data-coords="171,247,217,264" class="original" href=https://www.kegg.jp/entry/K00261+1.4.1.3+R00243+R00248 title="K00261 (GLUD1_2), 1.4.1.3, R00243, R00248" />
+		<area id="27B1132E" shape="rect" coords="247,194,293,211" data-coords="247,194,293,211" class="original" href=https://www.kegg.jp/entry/K01776+5.1.1.3+R00260 title="K01776 (murI), 5.1.1.3, R00260" />
+		<area id="7A919FF6" shape="rect" coords="370,161,416,178" data-coords="370,161,416,178" class="original" href=https://www.kegg.jp/entry/K05597+3.5.1.38+R01579 title="K05597 (aspQ), 3.5.1.38, R01579" />
+		<area id="6FAA9DC6" shape="rect" coords="322,161,368,178" data-coords="322,161,368,178" class="original" href=https://www.kegg.jp/entry/3.5.1.35+R01579 title="3.5.1.35, R01579" />
+		<area id="69941100" shape="rect" coords="274,161,320,178" data-coords="274,161,320,178" class="original" href=https://www.kegg.jp/entry/K01425+K23265+3.5.1.2+R01579 title="K01425 (glsA), K23265 (purQ), 3.5.1.2, R01579" />
+		<area id="53B4ACB7" shape="rect" coords="148,161,194,178" data-coords="148,161,194,178" class="original" href=https://www.kegg.jp/entry/K01425+K23265+3.5.1.2+R00256 title="K01425 (glsA), K23265 (purQ), 3.5.1.2, R00256" />
+		<area id="589BB8EC" shape="rect" coords="198,161,244,178" data-coords="198,161,244,178" class="original" href=https://www.kegg.jp/entry/K05597+3.5.1.38+R00256 title="K05597 (aspQ), 3.5.1.38, R00256" />
+		<area id="838EB606" shape="rect" coords="273,247,319,264" data-coords="273,247,319,264" class="original" href=https://www.kegg.jp/entry/1.4.3.15+R00279 title="1.4.3.15, R00279" />
+		<area id="0DB40EC3" shape="rect" coords="247,123,293,140" data-coords="247,123,293,140" class="original" href=https://www.kegg.jp/entry/5.1.1.10+R00579 title="5.1.1.10, R00579" />
+		<area id="A69A6800" shape="rect" coords="474,263,520,280" data-coords="474,263,520,280" class="original" href=https://www.kegg.jp/entry/K23169+6.3.2.53+R12272 title="K23169 (murD2), 6.3.2.53, R12272" />
+		<area id="68B7DFCF" shape="rect" coords="537,236,583,253" data-coords="537,236,583,253" class="original" href=https://www.kegg.jp/entry/K23170+5.1.1.23+R12271 title="K23170 (murL), 5.1.1.23, R12271" />
+		<area id="37BCA1CE" shape="rect" coords="40,45,402,70" data-coords="40,45,402,70" class="original" href=https://www.kegg.jp/entry/map00471 title="map00471: D-Glutamine and D-glutamate metabolism" data-entry="map00471" />
+		<area id="E29DD524" shape="rect" coords="644,195,731,229" data-coords="644,195,731,229" class="original" href=https://www.kegg.jp/pathway/map00550 title="map00550: Peptidoglycan biosynthesis" data-entry="map00550" />
+		<area id="F7A219EE" shape="rect" coords="495,321,649,355" data-coords="495,321,649,355" class="original" href=https://www.kegg.jp/pathway/map00520 title="map00520: Amino sugar and nucleotide sugar metabolism" data-entry="map00520" />
+		<area id="6CC0AE52" shape="rect" coords="62,291,142,316" data-coords="62,291,142,316" class="original" href=https://www.kegg.jp/pathway/map00020 title="map00020: Citrate cycle (TCA cycle)" data-entry="map00020" />
+		<area id="40D1B71A" shape="rect" coords="38,250,166,284" data-coords="38,250,166,284" class="original" href=https://www.kegg.jp/pathway/map00250 title="map00250: Alanine, aspartate and glutamate metabolism" data-entry="map00250" />
+		<area id="E7C929F9" shape="rect" coords="52,116,153,150" data-coords="52,116,153,150" class="original" href=https://www.kegg.jp/pathway/map00460 title="map00460: Cyanoamino acid metabolism" data-entry="map00460" />
+	</map>
+	<map id="module_mapdata" name="module_mapdata" data-scale="1">
+	</map>
+</div>
+<!-- pathway image end -->
+
+<!-- control panel start -->
+
+<div id="controlPanel">
+	<div class="controller">
+		<h5>Option</h5>
+		<div>
+			<div class="row scale">
+				<span class="title">Scale:</span>
+				<span class="content">
+					<input type="range" min="0.1" max="1" step="0.1" value="1">
+					<span class="label">100%</span>
+				</span>
+			</div>
+			
+			
+			
+		</div>
+		<h5>Search</h5>
+		<div>
+			<div class="row query">
+				<form>
+					<input type="search" name="query" style="width:150px;" autocomplete="off" value="">
+					<input type="submit" value="Go">
+					<input type="button" value="&times;" class="clear hidden">
+				</form>
+			</div>
+			<div class="row result">
+			</div>
+		</div>
+		
+		<h5>User data
+			<span class="ui-icon ui-icon-plus mapper">
+		</h5>
+		<div>
+			<div class="row map-data">
+				<ul></ul>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+	</div>
+	<button class="close">
+		<img src=https://www.kegg.jp/Fig/left_triangle_12x12.png>
+	</button>
+	<button class="open">
+		<img src=https://www.kegg.jp/Fig/right_triangle_12x12.png>
+	</button>
+</div>
+<!-- control panel end -->
+
+
+<form id="downloadForm" action=https://www.kegg.jp/kegg-bin/download method="post">
+	<input type="hidden" name="name" value="map00471.png" />
+	<input type="hidden" name="content" />
+	<input type="hidden" name="decode" value="base64" />
+</form>
+
+<div id="waiting-circle">
+	<img src=https://www.kegg.jp/Fig/waiting-circle-small.gif>
+</div>
+
+<!-- pathway image url start -->
+<form class="imageset" data-name="">
+	<input type="hidden" name="image_normal" value="/kegg/pathway/map/map00471.png 1x"
+	       data-src=https://www.kegg.jp/kegg/pathway/map/map00471.png data-situation="1x">
+</form>
+<!-- pathway image url end -->
+
+</body>
+</html>

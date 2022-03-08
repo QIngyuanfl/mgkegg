@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<!--
+ENTRY       map00072
+DEFINITION  Synthesis and degradation of ketone bodies - Reference pathway
+--->
+<head>
+<meta charset="UTF-8">
+<title>
+KEGG PATHWAY: Synthesis and degradation of ketone bodies - Reference pathway
+</title>
+<link rel="stylesheet" href=https://www.kegg.jp/css/kegg.css type="text/css" />
+<link rel="stylesheet" href=https://www.kegg.jp/css/jquery-ui.css />
+<style type="text/css">
+<!--
+
+input, select {
+	margin: 0px;
+}
+
+.d-none, .hidden {
+	display: none;
+}
+
+/** navigation start **/
+.nav {
+	padding: 3px 0px 5px 0px;
+	position: relative;
+	min-width: 600px;
+	max-width: 800px;
+	background: #fff;
+}
+
+.nav form {
+	margin: 5px 0px 0px 0px;
+}
+
+.nav .help {
+	display: inline-block;
+	position: relative;
+	left: 20px;
+/*
+	position: absolute;
+	bottom: 5px;
+	right: 0px;
+*/
+}
+/** navigation end **/
+
+#description {
+	padding: 10px;
+	width: 800px;
+}
+
+#waiting-circle {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	display: none;
+}
+
+#controlPanel {
+	top: 0px;
+	left: 0px;
+	width: 220px;
+	background: #ffffff;
+	padding: 0px 0px 0px 0px;
+	white-space: nowrap;
+	overflow: auto;
+	position: fixed;
+	border: solid 1px #999999;
+	display: none;
+}
+
+#controlPanel.closed {
+	border: none;
+	padding: 0px 0px 0px 0px;
+	background: transparent;
+
+	/* jQuery-UI resizale.disabled() の実行で
+	 *      色が薄くなるのを打ち消す */
+	opacity: 1.0;
+}
+
+/** div.row start **/
+
+div.row {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	/* 以下のwidth,overflowの定義で.rowのブロック内で横スクロールする。 */
+	/*
+	width: 98%;
+	overflow: auto;
+	*/
+}
+
+div.row * {
+	vertical-align: middle;
+}
+
+/* 横に並べる場合(title可変幅) start */
+
+.row.scale input {
+	width: 110px;
+}
+
+.row.scale .label {
+	font-size: 0.9em;
+}
+
+/* 横に並べる場合(title可変幅) end */
+
+
+/* Search欄の検索結果 start */
+
+div.row.result > div {
+	margin: 5px 1px 2px 1px;
+}
+
+/* Search欄の検索結果 end */
+
+/**  div.row end **/
+
+#controlPanel h5 {
+  margin: 0px;
+	padding: 5px 0px 5px 10px;
+	vertical-align: middle;
+	border-top: solid 1px #cccccc;
+	border-bottom: solid 1px #cccccc;
+	background: #eeeeee;
+	/* ui-iconの位置調整のために必要 */
+	position: relative;
+}
+
+#controlPanel h5::before {
+	content: url(/Fig/get_htext/open.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5.closed::before {
+	content: url(/Fig/get_htext/close.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5:first-child {
+	border-top: none;
+}
+
+#controlPanel h5:hover {
+	cursor: pointer;
+}
+
+#controlPanel h5  + div {
+	padding: 5px 0px 5px 10px;
+}
+
+#controlPanel h5 .ui-icon {
+	display: inline-block;
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	margin-top: -8px;
+	cursor: pointer;
+}
+
+button {
+	/* Safariでボタンの周りに入る余白を削除 */
+	margin: 0px;
+	padding: 0px;
+	/* ボタンを押した時に表示されるボーダーを非表示にする */
+	outline: none;
+}
+
+button.close, button.open {
+	border: none;
+	padding: 0px;
+	position: absolute;
+	right: 5px;
+	top: 7px;
+}
+
+button.close {
+	/* コントロールパネルに合わせて初期は非表示 */
+	display: none;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+button img {
+	/* 画像の下に入る余白を無くす */
+	display: block;
+}
+
+/** tree style start **/
+ul.tree, ul.tree ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul.tree ul {
+	padding-left: 12px;
+}
+
+ul.tree .class-A > span {
+	font-weight: bold;
+}
+
+ul.tree li {
+	margin: 3px 0px 3px 0px;
+}
+
+.module.disabled, .module.disabled *{
+	color: #999999;
+}
+
+.module.disabled {
+	display: none;
+}
+
+/** tree style > User data start **/
+.map-data ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+.map-data li {
+	position: relative;
+	margin: 5px 0px 2px 0px;
+}
+
+.map-data li .ui-icon {
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+}
+.map-data li .ui-icon:hover {
+	cursor: pointer;
+}
+.map-data li .ui-icon-trash {
+	right: 5px;
+}
+.map-data li .ui-icon-document {
+	right: 26px;
+}
+/** tree style > User data end **/
+
+/** tree style end **/
+
+ul.simple {
+	margin: 0px;
+	padding: 0px;
+}
+ul.simple li {
+	list-style-type: none;
+}
+ul.simple li:not(:first-child) {
+	margin-top: 5px;
+}
+
+//-->
+</style>
+
+<script src=https://www.kegg.jp/js/jquery-3.1.0.min.js></script>
+<script src=https://www.kegg.jp/js/jquery-ui.js></script>
+<script src=https://www.kegg.jp/js/jquery.balloon.min.js></script>
+<script src=https://www.kegg.jp/js/lz-string.min.js></script>
+<script src=https://www.kegg.jp/kegg-bin/get_data.cgi?data=0021&id=show_pathway.merged.js&v2.09></script>
+<script type="text/javascript">
+<!--
+
+// common variable
+const env = {
+	       mapno: '00072',
+	         org: 'map',
+	       entry: 'map00072',
+	       scale: 1,
+	 colorModule: '',
+	personalConf: '',
+}
+
+// HELP button
+function btn(bobj,img) { bobj.src = https://www.kegg.jp/Fig/bget/button_ + img + ".gif"; }
+
+//-->
+</script>
+</head>
+<body>
+<!-- header logo start -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0">
+	<tr>
+		<td style="width:80px;">
+			<a href=https://www.kegg.jp/kegg/pathway.html><img align="middle" alt="KEGG" border="0" src=https://www.kegg.jp/Fig/bget/kegg3.gif /></a>
+		</td>
+		<td style="vertical-align:middle;">
+			<font class="title3"><b>Synthesis and degradation of ketone bodies - Reference pathway</b></font>
+		</td>
+		<td valign="bottom" align="right">
+		</td>
+	</tr>
+</table>
+<!-- header logo end -->
+
+<!-- page navigation start -->
+<div class="nav">
+	[
+	    <a href=https://www.kegg.jp/brite/query=00072&htext=br08901.keg&option=-a&node_proc=br08901_org&proc_enabled=map&panel=collapse id="navPathwayMenu">Pathway menu</a>
+	  | <a href=https://www.kegg.jp/entry/pathway+map00072 id="navPathwayEntry">Pathway entry</a>
+	  | <a id="downloadImageLink" href="#">Image (png) file</a>
+	  | <a href="javascript:void(window.open('https://www.kegg.jp/kegg/document/help_pathway.html','KEGG_Help','width=720,height=640'))">Help</a>
+	]
+
+	
+	
+	<!-- organism list start -->
+	<form name="selmenu" method="get">
+		
+		<input type="button" id="changePathwayTypeButton" value="Change pathway type">
+		
+		
+		
+		<input type="text" class="hidden" name="mapno" value="00072" />
+		<input type="text" class="hidden" id="scale" name="scale" value="1" />
+		<input type="text" class="hidden" id="displayNoColoringImage" name="nocolor" value="0" />
+		<input type="text" class="hidden" id="displayDescription" name="show_description" value="hide" />
+		<input type="text" class="hidden" id="displayControlPanel" name="show_module_list" value="show" />
+		<input type="text" class="hidden" id="clickableMode" name="clickable_mode" value="" />
+		<input type="text" class="hidden" name="module" value="" />
+	</form>
+	<!-- organism list end -->
+
+</div>
+<!-- page navigation end -->
+
+<!-- pathway image start -->
+<div class="image-block" style="position:static;">
+<img src="map00072.png" name="pathwayimage" name="pathwayimage" usemap="#mapdata" border="0" />
+	<map id="mapdata" name="mapdata" data-scale="1">
+		<area id="D46FDD4D" shape="circle" coords="211,210,4" data-coords="211,210,4" class="original" href=https://www.kegg.jp/entry/C00332 title="C00332 (Acetoacetyl-CoA)" data-entry="C00332" />
+		<area id="D46FE252" shape="circle" coords="211,320,4" data-coords="211,320,4" class="original" href=https://www.kegg.jp/entry/C00356 title="C00356 ((S)-3-Hydroxy-3-methylglutaryl-CoA)" data-entry="C00356" />
+		<area id="D46FEC4D" shape="circle" coords="211,510,4" data-coords="211,510,4" class="original" href=https://www.kegg.jp/entry/C00207 title="C00207 (Acetone)" data-entry="C00207" />
+		<area id="DD6FE752" shape="circle" coords="211,429,4" data-coords="211,429,4" class="original" href=https://www.kegg.jp/entry/C00164 title="C00164 (Acetoacetate)" data-entry="C00164" />
+		<area id="FC6FECFC" shape="circle" coords="289,510,4" data-coords="289,510,4" class="original" href=https://www.kegg.jp/entry/C01089 title="C01089 ((R)-3-Hydroxybutanoate)" data-entry="C01089" />
+		<area id="E76FF693" shape="circle" coords="333,259,4" data-coords="333,259,4" class="original" href=https://www.kegg.jp/entry/C00024 title="C00024 (Acetyl-CoA)" data-entry="C00024" />
+		<area id="EF982F7B" shape="rect" coords="188,267,234,284" data-coords="188,267,234,284" class="original" href=https://www.kegg.jp/entry/K01641+2.3.3.10+R01978 title="K01641 (E2.3.3.10), 2.3.3.10, R01978" />
+		<area id="BE96A981" shape="rect" coords="188,345,234,362" data-coords="188,345,234,362" class="original" href=https://www.kegg.jp/entry/K01640+4.1.3.4+R01360 title="K01640 (E4.1.3.4), 4.1.3.4, R01360" />
+		<area id="23982B03" shape="rect" coords="189,454,235,471" data-coords="189,454,235,471" class="original" href=https://www.kegg.jp/entry/K01574+4.1.1.4+R01366 title="K01574 (adc), 4.1.1.4, R01366" />
+		<area id="6A848630" shape="rect" coords="254,201,300,218" data-coords="254,201,300,218" class="original" href=https://www.kegg.jp/entry/K00626+2.3.1.9+R00238 title="K00626 (ACAT), 2.3.1.9, R00238" />
+		<area id="2E908D1C" shape="rect" coords="267,454,313,471" data-coords="267,454,313,471" class="original" href=https://www.kegg.jp/entry/K00019+1.1.1.30+R01361 title="K00019 (E1.1.1.30), 1.1.1.30, R01361" />
+		<area id="7E2FCDF7" shape="rect" coords="50,307,96,324" data-coords="50,307,96,324" class="original" href=https://www.kegg.jp/entry/K01027+K01028+K01029+2.8.3.5+R00410 title="K01027 (OXCT), K01028 (E2.8.3.5A), K01029 (E2.8.3.5B), 2.8.3.5, R00410" />
+		<area id="E76733AA" shape="rect" coords="117,45,374,79" data-coords="117,45,374,79" class="original" href=https://www.kegg.jp/entry/map00072 title="map00072: Synthesis and degradation of ketone bodies" data-entry="map00072" />
+		<area id="38A8B325" shape="rect" coords="150,129,276,154" data-coords="150,129,276,154" class="original" href=https://www.kegg.jp/pathway/map00071 title="map00071: Fatty acid degradation" data-entry="map00071" />
+		<area id="B3A79741" shape="rect" coords="335,169,457,194" data-coords="335,169,457,194" class="original" href=https://www.kegg.jp/pathway/map00620 title="map00620: Pyruvate metabolism" data-entry="map00620" />
+		<area id="82A1200B" shape="rect" coords="375,247,448,272" data-coords="375,247,448,272" class="original" href=https://www.kegg.jp/pathway/map00010 title="map00010: Glycolysis / Gluconeogenesis" data-entry="map00010" />
+		<area id="A6B7A15F" shape="rect" coords="50,483,121,517" data-coords="50,483,121,517" class="original" href=https://www.kegg.jp/pathway/map00650 title="map00650: Butanoate metabolism" data-entry="map00650" />
+	</map>
+	<map id="module_mapdata" name="module_mapdata" data-scale="1">
+		<area shape="poly" coords="218,429,280,429,280,429,281,429,281,429,283,430,283,430,284,430,283,431,284,432,285,431,287,432,286,433,287,434,287,434,287,436,287,436,288,437,288,437,288,439,288,439,288,503,290,503,290,439,290,439,290,437,290,437,289,436,289,436,289,434,289,434,288,433,287,434,285,433,286,432,285,431,284,432,283,432,283,432,281,431,281,431,280,431,280,431,218,431" data-coords="218,429,280,429,280,429,281,429,281,429,283,430,283,430,284,430,283,431,284,432,285,431,287,432,286,433,287,434,287,434,287,436,287,436,288,437,288,437,288,439,288,439,288,503,290,503,290,439,290,439,290,437,290,437,289,436,289,436,289,434,289,434,288,433,287,434,285,433,286,432,285,431,284,432,283,432,283,432,281,431,281,431,280,431,280,431,218,431" href="javascript:void(0)"  data-refid="F327C46E" data-module="M00088" class="module" />
+		<area shape="poly" coords="289,503,285,494,292,494" data-coords="289,503,285,494,292,494" href="javascript:void(0)"  data-refid="E4524EAA" data-module="M00088" class="module" />
+		<area shape="poly" coords="218,430,226,426,226,433" data-coords="218,430,226,426,226,433" href="javascript:void(0)"  data-refid="215988A0" data-module="M00088" class="module" />
+		<area shape="poly" coords="210,435,210,503,212,503,212,435" data-coords="210,435,210,503,212,503,212,435" href="javascript:void(0)"  data-refid="420FCA53" data-module="M00088" class="module" />
+		<area shape="poly" coords="211,503,207,494,214,494" data-coords="211,503,207,494,214,494" href="javascript:void(0)"  data-refid="8A6EAAAA" data-module="M00088" class="module" />
+		<area shape="poly" coords="210,335,210,362,210,362,210,363,210,363,211,365,211,365,211,366,211,366,212,367,212,367,213,369,213,369,214,370,215,369,217,369,216,370,217,371,218,370,220,370,220,370,324,370,324,370,325,370,325,370,327,369,327,369,328,369,327,370,328,369,328,369,330,367,330,367,331,366,331,366,331,365,331,365,332,363,332,363,332,362,332,362,332,266,334,266,334,362,334,362,334,363,334,363,333,365,333,365,333,366,333,366,332,367,332,367,330,369,330,369,329,370,328,371,327,371,327,371,325,372,325,372,324,372,324,372,220,372,220,372,218,372,219,371,218,370,217,371,215,371,216,370,215,369,215,369,214,367,214,367,213,366,213,366,213,365,213,365,212,363,212,363,212,362,212,362,212,335" data-coords="210,335,210,362,210,362,210,363,210,363,211,365,211,365,211,366,211,366,212,367,212,367,213,369,213,369,214,370,215,369,217,369,216,370,217,371,218,370,220,370,220,370,324,370,324,370,325,370,325,370,327,369,327,369,328,369,327,370,328,369,328,369,330,367,330,367,331,366,331,366,331,365,331,365,332,363,332,363,332,362,332,362,332,266,334,266,334,362,334,362,334,363,334,363,333,365,333,365,333,366,333,366,332,367,332,367,330,369,330,369,329,370,328,371,327,371,327,371,325,372,325,372,324,372,324,372,220,372,220,372,218,372,219,371,218,370,217,371,215,371,216,370,215,369,215,369,214,367,214,367,213,366,213,366,213,365,213,365,212,363,212,363,212,362,212,362,212,335" href="javascript:void(0)"  data-refid="649B8FB3" data-module="M00088" class="module" />
+		<area shape="poly" coords="332,266,336,274,329,274" data-coords="332,266,336,274,329,274" href="javascript:void(0)"  data-refid="E2D9CEC3" data-module="M00088" class="module" />
+		<area shape="poly" coords="210,325,210,422,212,422,212,325" data-coords="210,325,210,422,212,422,212,325" href="javascript:void(0)"  data-refid="410F47E0" data-module="M00088" class="module" />
+		<area shape="poly" coords="211,422,207,413,214,413" data-coords="211,422,207,413,214,413" href="javascript:void(0)"  data-refid="1D7E1FA0" data-module="M00088" class="module" />
+		<area shape="poly" coords="219,209,324,209,324,209,325,209,325,209,327,210,327,210,328,210,327,211,328,212,329,211,331,212,330,213,331,214,331,214,331,216,331,216,332,217,332,217,332,219,332,219,332,252,334,252,334,219,334,219,334,217,334,217,333,216,333,216,333,214,333,214,332,213,331,214,329,213,330,212,329,211,328,212,327,212,327,212,325,211,325,211,324,211,324,211,219,211" data-coords="219,209,324,209,324,209,325,209,325,209,327,210,327,210,328,210,327,211,328,212,329,211,331,212,330,213,331,214,331,214,331,216,331,216,332,217,332,217,332,219,332,219,332,252,334,252,334,219,334,219,334,217,334,217,333,216,333,216,333,214,333,214,332,213,331,214,329,213,330,212,329,211,328,212,327,212,327,212,325,211,325,211,324,211,324,211,219,211" href="javascript:void(0)"  data-refid="A73642FC" data-module="M00088" class="module" />
+		<area shape="poly" coords="333,252,329,243,336,243" data-coords="333,252,329,243,336,243" href="javascript:void(0)"  data-refid="DFA68DC3" data-module="M00088" class="module" />
+		<area shape="poly" coords="219,210,227,206,227,213" data-coords="219,210,227,206,227,213" href="javascript:void(0)"  data-refid="06503F87" data-module="M00088" class="module" />
+		<area shape="poly" coords="328,258,220,258,220,258,218,258,217,259,216,260,217,259,215,259,214,260,213,261,213,261,212,263,212,263,211,264,211,264,211,265,211,265,210,267,210,267,210,268,210,268,210,291,212,291,212,268,212,268,212,267,212,267,213,265,213,265,213,264,213,264,214,263,214,263,215,261,215,261,216,260,215,261,217,261,218,260,219,259,218,260,220,260,220,260,328,260" data-coords="328,258,220,258,220,258,218,258,217,259,216,260,217,259,215,259,214,260,213,261,213,261,212,263,212,263,211,264,211,264,211,265,211,265,210,267,210,267,210,268,210,268,210,291,212,291,212,268,212,268,212,267,212,267,213,265,213,265,213,264,213,264,214,263,214,263,215,261,215,261,216,260,215,261,217,261,218,260,219,259,218,260,220,260,220,260,328,260" href="javascript:void(0)"  data-refid="51061D29" data-module="M00088" class="module" />
+		<area shape="poly" coords="210,213,210,313,212,313,212,213" data-coords="210,213,210,313,212,313,212,213" href="javascript:void(0)"  data-refid="100EC55E" data-module="M00088" class="module" />
+		<area shape="poly" coords="211,313,207,304,214,304" data-coords="211,313,207,304,214,304" href="javascript:void(0)"  data-refid="8FF5AA91" data-module="M00088" class="module" />
+		<area shape="rect" coords="188,267,234,284" data-coords="188,267,234,284" href="javascript:void(0)"  data-refid="EF982F7B" data-module="M00088" class="module" />
+		<area shape="rect" coords="188,345,234,362" data-coords="188,345,234,362" href="javascript:void(0)"  data-refid="BE96A981" data-module="M00088" class="module" />
+		<area shape="rect" coords="189,454,235,471" data-coords="189,454,235,471" href="javascript:void(0)"  data-refid="23982B03" data-module="M00088" class="module" />
+		<area shape="rect" coords="254,201,300,218" data-coords="254,201,300,218" href="javascript:void(0)"  data-refid="6A848630" data-module="M00088" class="module" />
+		<area shape="rect" coords="267,454,313,471" data-coords="267,454,313,471" href="javascript:void(0)"  data-refid="2E908D1C" data-module="M00088" class="module" />
+		<area shape="circle" coords="211,210,4" data-coords="211,210,4" href="javascript:void(0)"  data-refid="D46FDD4D" data-module="M00088" class="module" />
+		<area shape="circle" coords="211,320,4" data-coords="211,320,4" href="javascript:void(0)"  data-refid="D46FE252" data-module="M00088" class="module" />
+		<area shape="circle" coords="211,510,4" data-coords="211,510,4" href="javascript:void(0)"  data-refid="D46FEC4D" data-module="M00088" class="module" />
+		<area shape="circle" coords="211,429,4" data-coords="211,429,4" href="javascript:void(0)"  data-refid="DD6FE752" data-module="M00088" class="module" />
+		<area shape="circle" coords="289,510,4" data-coords="289,510,4" href="javascript:void(0)"  data-refid="FC6FECFC" data-module="M00088" class="module" />
+		<area shape="circle" coords="333,259,4" data-coords="333,259,4" href="javascript:void(0)"  data-refid="E76FF693" data-module="M00088" class="module" />
+	</map>
+</div>
+<!-- pathway image end -->
+
+<!-- control panel start -->
+
+<div id="controlPanel">
+	<div class="controller">
+		<h5>Option</h5>
+		<div>
+			<div class="row scale">
+				<span class="title">Scale:</span>
+				<span class="content">
+					<input type="range" min="0.1" max="1" step="0.1" value="1">
+					<span class="label">100%</span>
+				</span>
+			</div>
+			
+			
+			
+		</div>
+		<h5>Search</h5>
+		<div>
+			<div class="row query">
+				<form>
+					<input type="search" name="query" style="width:150px;" autocomplete="off" value="">
+					<input type="submit" value="Go">
+					<input type="button" value="&times;" class="clear hidden">
+				</form>
+			</div>
+			<div class="row result">
+			</div>
+		</div>
+		
+		<h5>User data
+			<span class="ui-icon ui-icon-plus mapper">
+		</h5>
+		<div>
+			<div class="row map-data">
+				<ul></ul>
+			</div>
+		</div>
+		
+		
+		<h5>Module</h5>
+		<div>
+		  
+			<div class="row">
+				<ul class="tree module-tree">
+				
+					
+	<li class="classification class-A  ">
+		<span>
+		<input type="checkbox" >
+		Pathway modules
+
+		</span>
+		<ul>
+	<li class="classification class-B  ">
+		<span>
+		<input type="checkbox" >
+		Lipid metabolism
+
+		</span>
+		<ul>
+	<li class="classification class-C  ">
+		<span>
+		<input type="checkbox" >
+		Lipid metabolism
+
+		</span>
+		<ul>
+	<li class="entry class-D module complete">
+		<span>
+		<input type="checkbox" >
+		<a href=https://www.kegg.jp/module/M00088 data-entry="M00088" target="_blank">M00088</a>
+		
+		Ketone body biosynthesis
+
+		</span>
+	</li>
+
+		</ul>
+	</li>
+
+		</ul>
+	</li>
+
+		</ul>
+	</li>
+
+				
+				</ul>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+	</div>
+	<button class="close">
+		<img src=https://www.kegg.jp/Fig/left_triangle_12x12.png>
+	</button>
+	<button class="open">
+		<img src=https://www.kegg.jp/Fig/right_triangle_12x12.png>
+	</button>
+</div>
+<!-- control panel end -->
+
+
+<form id="downloadForm" action=https://www.kegg.jp/kegg-bin/download method="post">
+	<input type="hidden" name="name" value="map00072.png" />
+	<input type="hidden" name="content" />
+	<input type="hidden" name="decode" value="base64" />
+</form>
+
+<div id="waiting-circle">
+	<img src=https://www.kegg.jp/Fig/waiting-circle-small.gif>
+</div>
+
+<!-- pathway image url start -->
+<form class="imageset" data-name="">
+	<input type="hidden" name="image_normal" value="/kegg/pathway/map/map00072.png 1x"
+	       data-src=https://www.kegg.jp/kegg/pathway/map/map00072.png data-situation="1x">
+</form>
+<!-- pathway image url end -->
+
+</body>
+</html>

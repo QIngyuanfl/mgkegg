@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<!--
+ENTRY       map03020
+DEFINITION  RNA polymerase - Reference pathway
+--->
+<head>
+<meta charset="UTF-8">
+<title>
+KEGG PATHWAY: RNA polymerase - Reference pathway
+</title>
+<link rel="stylesheet" href=https://www.kegg.jp/css/kegg.css type="text/css" />
+<link rel="stylesheet" href=https://www.kegg.jp/css/jquery-ui.css />
+<style type="text/css">
+<!--
+
+h1.page-title {
+	font-size: 14px;
+	margin: 0px;
+	white-space: nowrap;
+}
+h1.page-title * {
+	vertical-align: middle;
+}
+
+input, select {
+	margin: 0px;
+}
+
+.hidden {
+	display: none !important;
+}
+
+/** navigation start **/
+.nav {
+	padding: 3px 0px 5px 0px;
+	position: relative;
+	min-width: 600px;
+	max-width: 800px;
+	background: #fff;
+}
+
+.nav form {
+	margin: 5px 0px 0px 0px;
+}
+
+.nav .help {
+	display: inline-block;
+	position: relative;
+	left: 20px;
+/*
+	position: absolute;
+	bottom: 5px;
+	right: 0px;
+*/
+}
+/** navigation end **/
+
+#description {
+	padding: 10px;
+	width: 800px;
+}
+
+#waiting-circle {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	display: none;
+}
+
+#controlPanel {
+	top: 0px;
+	left: 0px;
+	width: 220px;
+	background: #ffffff;
+	padding: 0px 0px 0px 0px;
+	white-space: nowrap;
+	overflow: auto;
+	position: fixed;
+	border: solid 1px #999999;
+	display: none;
+}
+
+#controlPanel.closed {
+	border: none;
+	padding: 0px 0px 0px 0px;
+	background: transparent;
+
+	/* jQuery-UI resizale.disabled() の実行で
+	 *      色が薄くなるのを打ち消す */
+	opacity: 1.0;
+}
+
+/** div.row start **/
+
+div.row {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	/* 以下のwidth,overflowの定義で.rowのブロック内で横スクロールする。 */
+	/*
+	width: 98%;
+	overflow: auto;
+	*/
+}
+
+div.row * {
+	vertical-align: middle;
+}
+
+/* 横に並べる場合(title可変幅) start */
+
+.row.scale input {
+	width: 110px;
+}
+
+.row.scale .label {
+	font-size: 0.9em;
+}
+
+/* 横に並べる場合(title可変幅) end */
+
+
+/* Search欄の検索結果 start */
+
+div.row.result > div {
+	margin: 5px 1px 2px 1px;
+}
+
+/* Search欄の検索結果 end */
+
+/**  div.row end **/
+
+#controlPanel h5 {
+  margin: 0px;
+	padding: 5px 0px 5px 10px;
+	vertical-align: middle;
+	border-top: solid 1px #cccccc;
+	border-bottom: solid 1px #cccccc;
+	background: #eeeeee;
+	/* ui-iconの位置調整のために必要 */
+	position: relative;
+}
+
+#controlPanel h5::before {
+	content: url(/Fig/get_htext/open.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5.closed::before {
+	content: url(/Fig/get_htext/close.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5:first-child {
+	border-top: none;
+}
+
+#controlPanel h5:hover {
+	cursor: pointer;
+}
+
+#controlPanel h5  + div {
+	padding: 5px 0px 5px 10px;
+}
+
+#controlPanel h5 .ui-icon {
+	display: inline-block;
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	margin-top: -8px;
+	cursor: pointer;
+}
+
+button {
+	/* Safariでボタンの周りに入る余白を削除 */
+	margin: 0px;
+	padding: 0px;
+	/* ボタンを押した時に表示されるボーダーを非表示にする */
+	outline: none;
+}
+
+button.close, button.open {
+	border: none;
+	padding: 0px;
+	position: absolute;
+	right: 5px;
+	top: 7px;
+}
+
+button.close {
+	/* コントロールパネルに合わせて初期は非表示 */
+	display: none;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+button img {
+	/* 画像の下に入る余白を無くす */
+	display: block;
+}
+
+/** tree style start **/
+ul.tree, ul.tree ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul.tree ul {
+	padding-left: 12px;
+}
+
+ul.tree .class-A > span {
+	font-weight: bold;
+}
+
+ul.tree li {
+	margin: 3px 0px 3px 0px;
+}
+
+.module-tree .module.disabled {
+	display: none;
+}
+
+.module-tree .classification.disabled {
+	display: none;
+}
+
+/** tree style > User data start **/
+ul.mappers {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul.mappers li {
+	position: relative;
+	margin: 5px 0px 2px 0px;
+}
+
+ul.mappers li .ui-icon {
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+}
+ul.mappers li .ui-icon:hover {
+	cursor: pointer;
+}
+ul.mappers li .ui-icon-trash {
+	right: 5px;
+}
+ul.mappers li .ui-icon-document {
+	right: 26px;
+}
+/** tree style > User data end **/
+
+/** tree style end **/
+
+.ui-icon.button {
+	display: inline-block;
+	cursor: pointer;
+}
+
+ul.simple {
+	margin: 0px;
+	padding: 0px;
+}
+ul.simple li {
+	list-style-type: none;
+}
+ul.simple li:not(:first-child) {
+	margin-top: 5px;
+}
+
+//-->
+</style>
+
+<script src=https://www.kegg.jp/js/jquery-3.1.0.min.js></script>
+<script src=https://www.kegg.jp/js/jquery-ui.js></script>
+<script src=https://www.kegg.jp/js/jquery.balloon.min.js></script>
+<script src=https://www.kegg.jp/js/lz-string.min.js></script>
+<script src=https://www.kegg.jp/kegg-bin/get_data.cgi?data=0021&id=show_pathway.merged.js&v2.09></script>
+<script type="text/javascript">
+<!--
+
+// common variable
+const env = {
+	       mapno: '03020',
+	         org: 'map',
+	       entry: 'map03020',
+	       scale: 1,
+	 colorModule: '',
+	personalConf: '',
+}
+
+// HELP button
+function btn(bobj,img) { bobj.src = https://www.kegg.jp/Fig/bget/button_ + img + ".gif"; }
+
+//-->
+</script>
+</head>
+<body>
+<!-- header logo start -->
+<!--
+<table cellpadding="0" width="100%" cellspacing="0" border="0">
+	<tr>
+		<td style="width:80px;">
+			<a href=https://www.kegg.jp/kegg/pathway.html><img align="middle" alt="KEGG" border="0" src=https://www.kegg.jp/Fig/bget/kegg3.gif /></a>
+		</td>
+		<td style="vertical-align:middle;">
+			<font class="title3"><b>RNA polymerase - Reference pathway</b></font>
+		</td>
+		<td valign="bottom" align="right">
+		</td>
+	</tr>
+</table>
+-->
+<h1 class="page-title">
+	<a href=https://www.kegg.jp/kegg/pathway.html><img alt="KEGG" border="0" src=https://www.kegg.jp/Fig/bget/kegg3.gif /></a>
+	&nbsp;RNA polymerase - Reference pathway
+</h1>
+<!-- header logo end -->
+
+<!-- page navigation start -->
+<div class="nav">
+	[
+	    <a href=https://www.kegg.jp/brite/query=03020&htext=br08901.keg&option=-a&node_proc=br08901_org&proc_enabled=map&panel=collapse id="navPathwayMenu">Pathway menu</a>
+	  | <a href=https://www.kegg.jp/entry/pathway+map03020 id="navPathwayEntry">Pathway entry</a>
+	  | <a id="downloadImageLink" href="#">Image file</a>
+	  | <a href="javascript:void(window.open('https://www.kegg.jp/kegg/document/help_pathway.html','KEGG_Help','width=720,height=640'))">Help</a>
+	]
+
+	
+	
+	<!-- organism list start -->
+	<form name="selmenu" method="get">
+		
+		<input type="button" id="changePathwayTypeButton" value="Change pathway type">
+		
+		
+		
+		<input type="text" class="hidden" name="mapno" value="03020" />
+		<input type="text" class="hidden" id="scale" name="scale" value="1" />
+		<input type="text" class="hidden" id="displayNoColoringImage" name="nocolor" value="0" />
+		<input type="text" class="hidden" id="displayDescription" name="show_description" value="hide" />
+		<input type="text" class="hidden" id="displayControlPanel" name="show_module_list" value="show" />
+		<input type="text" class="hidden" id="clickableMode" name="clickable_mode" value="" />
+		<input type="text" class="hidden" name="module" value="" />
+	</form>
+	<!-- organism list end -->
+
+</div>
+<!-- page navigation end -->
+
+<!-- pathway image start -->
+<div class="image-block" style="position:static;">
+<img src="map03020.png" name="pathwayimage" name="pathwayimage" usemap="#mapdata" border="0" />
+	<map id="mapdata" name="mapdata" data-scale="1">
+		<area id="CFB99663" shape="rect" coords="75,800,121,817" data-coords="75,800,121,817" class="original" href=https://www.kegg.jp/entry/K03010 title="K03010 (RPB2)" />
+		<area id="7EBB93E5" shape="rect" coords="75,817,121,834" data-coords="75,817,121,834" class="original" href=https://www.kegg.jp/entry/K03006 title="K03006 (RPB1)" />
+		<area id="D6A31DD3" shape="rect" coords="121,800,167,817" data-coords="121,800,167,817" class="original" href=https://www.kegg.jp/entry/K03011 title="K03011 (RPB3)" />
+		<area id="468F1B1C" shape="rect" coords="178,800,224,817" data-coords="178,800,224,817" class="original" href=https://www.kegg.jp/entry/K03012 title="K03012 (RPB4)" />
+		<area id="71891BA1" shape="rect" coords="263,906,309,923" data-coords="263,906,309,923" class="original" href=https://www.kegg.jp/entry/K03013 title="K03013 (RPABC1)" />
+		<area id="5FA46A0A" shape="rect" coords="309,906,355,923" data-coords="309,906,355,923" class="original" href=https://www.kegg.jp/entry/K03014 title="K03014 (RPABC2)" />
+		<area id="52AA6BDD" shape="rect" coords="224,800,270,817" data-coords="224,800,270,817" class="original" href=https://www.kegg.jp/entry/K03015 title="K03015 (RPB7)" />
+		<area id="708B6235" shape="rect" coords="355,906,401,923" data-coords="355,906,401,923" class="original" href=https://www.kegg.jp/entry/K03016 title="K03016 (RPABC3)" />
+		<area id="638C9608" shape="rect" coords="270,800,316,817" data-coords="270,800,316,817" class="original" href=https://www.kegg.jp/entry/K03017 title="K03017 (RPB9)" />
+		<area id="6ABADAC9" shape="rect" coords="447,906,493,923" data-coords="447,906,493,923" class="original" href=https://www.kegg.jp/entry/K03007 title="K03007 (RPABC5)" />
+		<area id="85A51B55" shape="rect" coords="121,817,167,834" data-coords="121,817,167,834" class="original" href=https://www.kegg.jp/entry/K03008 title="K03008 (RPB11)" />
+		<area id="7CA1E4F6" shape="rect" coords="401,906,447,923" data-coords="401,906,447,923" class="original" href=https://www.kegg.jp/entry/K03009 title="K03009 (RPABC4)" />
+		<area id="3BC23954" shape="rect" coords="89,355,135,372" data-coords="89,355,135,372" class="original" href=https://www.kegg.jp/entry/K03043+K13797 title="K03043 (rpoB), K13797 (rpoBC)" />
+		<area id="F0C34149" shape="rect" coords="89,372,135,389" data-coords="89,372,135,389" class="original" href=https://www.kegg.jp/entry/K03046+K13797 title="K03046 (rpoC), K13797 (rpoBC)" />
+		<area id="42B18F41" shape="rect" coords="135,365,181,382" data-coords="135,365,181,382" class="original" href=https://www.kegg.jp/entry/K03040 title="K03040 (rpoA)" />
+		<area id="5393B96C" shape="rect" coords="181,365,227,382" data-coords="181,365,227,382" class="original" href=https://www.kegg.jp/entry/K03060 title="K03060 (rpoZ)" />
+		<area id="41AF07D5" shape="rect" coords="227,365,273,382" data-coords="227,365,273,382" class="original" href=https://www.kegg.jp/entry/K03048 title="K03048 (rpoE)" />
+		<area id="65B1A871" shape="rect" coords="716,800,762,817" data-coords="716,800,762,817" class="original" href=https://www.kegg.jp/entry/K03002 title="K03002 (RPA2)" />
+		<area id="14B3A5F3" shape="rect" coords="716,817,762,834" data-coords="716,817,762,834" class="original" href=https://www.kegg.jp/entry/K02999 title="K02999 (RPA1)" />
+		<area id="64B42376" shape="rect" coords="818,800,864,817" data-coords="818,800,864,817" class="original" href=https://www.kegg.jp/entry/K03000 title="K03000 (RPA12)" />
+		<area id="759B1BA1" shape="rect" coords="864,800,910,817" data-coords="864,800,910,817" class="original" href=https://www.kegg.jp/entry/K03001 title="K03001 (RPA14)" />
+		<area id="81B19E62" shape="rect" coords="910,800,956,817" data-coords="910,800,956,817" class="original" href=https://www.kegg.jp/entry/K03003+K25436 title="K03003 (RPA34), K25436 (POLR1G)" />
+		<area id="A8C03737" shape="rect" coords="841,817,887,834" data-coords="841,817,887,834" class="original" href=https://www.kegg.jp/entry/K03004 title="K03004 (RPA43)" />
+		<area id="9BA72D0A" shape="rect" coords="887,817,933,834" data-coords="887,817,933,834" class="original" href=https://www.kegg.jp/entry/K03005 title="K03005 (RPA49)" />
+		<area id="2595D01E" shape="rect" coords="762,817,808,834" data-coords="762,817,808,834" class="original" href=https://www.kegg.jp/entry/K03027 title="K03027 (RPAC1)" />
+		<area id="7693D29C" shape="rect" coords="762,800,808,817" data-coords="762,800,808,817" class="original" href=https://www.kegg.jp/entry/K03020 title="K03020 (RPAC2)" />
+		<area id="5D92987E" shape="rect" coords="371,355,417,372" data-coords="371,355,417,372" class="original" href=https://www.kegg.jp/entry/K03044+K03045+K13798 title="K03044 (rpoB1), K03045 (rpoB2), K13798 (rpoB)" />
+		<area id="4BADE6E7" shape="rect" coords="417,355,463,372" data-coords="417,355,463,372" class="original" href=https://www.kegg.jp/entry/K03047 title="K03047 (rpoD)" />
+		<area id="1293A078" shape="rect" coords="371,372,417,389" data-coords="371,372,417,389" class="original" href=https://www.kegg.jp/entry/K03041+K03042 title="K03041 (rpoA1), K03042 (rpoA2)" />
+		<area id="5B975A17" shape="rect" coords="565,355,611,372" data-coords="565,355,611,372" class="original" href=https://www.kegg.jp/entry/K03052 title="K03052 (rpoG)" />
+		<area id="4AB061EC" shape="rect" coords="519,355,565,372" data-coords="519,355,565,372" class="original" href=https://www.kegg.jp/entry/K03051 title="K03051 (rpoF)" />
+		<area id="67ADDCD8" shape="rect" coords="611,355,657,372" data-coords="611,355,657,372" class="original" href=https://www.kegg.jp/entry/K03053 title="K03053 (rpoH)" />
+		<area id="11961B7D" shape="rect" coords="473,372,519,389" data-coords="473,372,519,389" class="original" href=https://www.kegg.jp/entry/K03055 title="K03055 (rpoK)" />
+		<area id="5C951383" shape="rect" coords="473,355,519,372" data-coords="473,355,519,372" class="original" href=https://www.kegg.jp/entry/K03049+K03050 title="K03049 (rpoE1), K03050 (rpoE2)" />
+		<area id="FFB169E1" shape="rect" coords="519,372,565,389" data-coords="519,372,565,389" class="original" href=https://www.kegg.jp/entry/K03058 title="K03058 (rpoN)" />
+		<area id="00AEEEE1" shape="rect" coords="417,372,463,389" data-coords="417,372,463,389" class="original" href=https://www.kegg.jp/entry/K03056 title="K03056 (rpoL)" />
+		<area id="10986211" shape="rect" coords="565,372,611,389" data-coords="565,372,611,389" class="original" href=https://www.kegg.jp/entry/K03059 title="K03059 (rpoP)" />
+		<area id="1CAEE4D2" shape="rect" coords="611,372,657,389" data-coords="611,372,657,389" class="original" href=https://www.kegg.jp/entry/K00960 title="K00960 (rpo13)" />
+		<area id="E58F0C08" shape="rect" coords="371,800,417,817" data-coords="371,800,417,817" class="original" href=https://www.kegg.jp/entry/K03021 title="K03021 (RPC2)" />
+		<area id="9491098A" shape="rect" coords="371,817,417,834" data-coords="371,817,417,834" class="original" href=https://www.kegg.jp/entry/K03018 title="K03018 (RPC1)" />
+		<area id="E491870D" shape="rect" coords="473,800,519,817" data-coords="473,800,519,817" class="original" href=https://www.kegg.jp/entry/K03023 title="K03023 (RPC3)" />
+		<area id="D2ACD576" shape="rect" coords="519,800,565,817" data-coords="519,800,565,817" class="original" href=https://www.kegg.jp/entry/K03026 title="K03026 (RPC4)" />
+		<area id="82AC57F3" shape="rect" coords="417,817,463,834" data-coords="417,817,463,834" class="original" href=https://www.kegg.jp/entry/K03027 title="K03027 (RPAC1)" />
+		<area id="9EAC4DE4" shape="rect" coords="611,817,657,834" data-coords="611,817,657,834" class="original" href=https://www.kegg.jp/entry/K03019 title="K03019 (RPC11)" />
+		<area id="D3AA5A71" shape="rect" coords="417,800,463,817" data-coords="417,800,463,817" class="original" href=https://www.kegg.jp/entry/K03020 title="K03020 (RPAC2)" />
+		<area id="81AED2F8" shape="rect" coords="519,817,565,834" data-coords="519,817,565,834" class="original" href=https://www.kegg.jp/entry/K03022 title="K03022 (RPC8)" />
+		<area id="9393848F" shape="rect" coords="473,817,519,834" data-coords="473,817,519,834" class="original" href=https://www.kegg.jp/entry/K03024 title="K03024 (RPC7)" />
+		<area id="EFAA5062" shape="rect" coords="611,800,657,817" data-coords="611,800,657,817" class="original" href=https://www.kegg.jp/entry/K03025 title="K03025 (RPC6)" />
+		<area id="E393CDA1" shape="rect" coords="565,800,611,817" data-coords="565,800,611,817" class="original" href=https://www.kegg.jp/entry/K14721 title="K14721 (RPC5)" />
+		<area id="9295CB23" shape="rect" coords="565,817,611,834" data-coords="565,817,611,834" class="original" href=https://www.kegg.jp/entry/K25304 title="K25304 (RPC9)" />
+		<area id="48B0A971" shape="rect" coords="615,904,661,921" data-coords="615,904,661,921" class="original" href=https://www.kegg.jp/entry/K16250 title="K16250 (NRPD1)" />
+		<area id="5993D419" shape="rect" coords="661,914,707,931" data-coords="661,914,707,931" class="original" href=https://www.kegg.jp/entry/K16252 title="K16252 (NRPD2)" />
+		<area id="47AF2282" shape="rect" coords="707,914,753,931" data-coords="707,914,753,931" class="original" href=https://www.kegg.jp/entry/K16253 title="K16253 (NRPD7)" />
+		<area id="FDB1B166" shape="rect" coords="615,921,661,938" data-coords="615,921,661,938" class="original" href=https://www.kegg.jp/entry/K16251 title="K16251 (NRPE1)" />
+		<area id="7C8E9802" shape="rect" coords="270,821,316,838" data-coords="270,821,316,838" class="original" href=https://www.kegg.jp/entry/K21987 title="K21987 (POLR2M)" />
+		<area id="26986207" shape="rect" coords="761,372,807,389" data-coords="761,372,807,389" class="original" href=https://www.kegg.jp/entry/K25276 title="K25276 (RPO35)" />
+		<area id="259ADD0C" shape="rect" coords="863,372,909,389" data-coords="863,372,909,389" class="original" href=https://www.kegg.jp/entry/K21081 title="K21081 (RPO18)" />
+		<area id="60B52FE2" shape="rect" coords="715,355,761,372" data-coords="715,355,761,372" class="original" href=https://www.kegg.jp/entry/K25274 title="K25274 (RPO132)" />
+		<area id="71975A0D" shape="rect" coords="761,355,807,372" data-coords="761,355,807,372" class="original" href=https://www.kegg.jp/entry/K25278 title="K25278 (RPO7)" />
+		<area id="15B637DC" shape="rect" coords="715,372,761,389" data-coords="715,372,761,389" class="original" href=https://www.kegg.jp/entry/K25273 title="K25273 (RPO147)" />
+		<area id="14B8B2E1" shape="rect" coords="817,372,863,389" data-coords="817,372,863,389" class="original" href=https://www.kegg.jp/entry/K25279 title="K25279 (RPO19)" />
+		<area id="7099D512" shape="rect" coords="863,355,909,372" data-coords="863,355,909,372" class="original" href=https://www.kegg.jp/entry/K25277 title="K25277 (RPO22)" />
+		<area id="5FB7AAE7" shape="rect" coords="817,355,863,372" data-coords="817,355,863,372" class="original" href=https://www.kegg.jp/entry/K25275 title="K25275 (RPO30)" />
+		<area id="37ADCBE2" shape="rect" coords="40,45,186,72" data-coords="40,45,186,72" class="original" href=https://www.kegg.jp/entry/map03020 title="map03020: RNA polymerase" data-entry="map03020" />
+	</map>
+	<map id="module_mapdata" name="module_mapdata" data-scale="1">
+	</map>
+</div>
+<!-- pathway image end -->
+
+<!-- control panel start -->
+
+<div id="controlPanel">
+	<div class="controller">
+		<div class="feature option">
+			<h5>Option</h5>
+			<div>
+				<div class="row scale">
+					<span class="title">Scale:</span>
+					<span class="content">
+						<input type="range" min="0.1" max="1" step="0.1" value="1">
+						<span class="label">100%</span>
+					</span>
+				</div>
+				
+				
+				
+			</div>
+		</div>
+		<div class="feature search">
+			<h5>Search</h5>
+			<div>
+				<div class="row query">
+					<form>
+						<input type="text" name="query" style="width:130px;" autocomplete="off" value="">
+						<input type="submit" value="Go">
+						<span class="ui-icon button ui-icon-close clear-query hidden"></span>
+					</form>
+				</div>
+				<div class="row result">
+				</div>
+			</div>
+		</div>
+		<div class="feature search-pathway">
+			<h5>ID search
+				<span class="ui-icon ui-icon-plus">
+			</h5>
+			<div>
+				<form>
+					<div class="row" style="display:grid; grid-template-columns:135px 1fr; column-gap:5px;">
+						<div>
+							<textarea class="query" rows="2" style="width:130px; resize:none;"></textarea>
+						</div>
+						<div>
+							<input type="submit" class="submit" value="Go">
+							<span class="ui-icon button ui-icon-close clear-query hidden"></span>
+						</div>
+					</div>
+				</form>
+				<div class="row personal hidden">
+					<ul class="mappers"></ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="feature color-pathway">
+			<h5>Color
+				<span class="ui-icon ui-icon-plus">
+			</h5>
+			<div>
+				
+				<div class="row personal hidden">
+					<ul class="mappers"></ul>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+			
+		
+		<div class="feature">
+			<h5>Related Brite</h5>
+			<div class="related-data">
+				<ul class="simple">
+					
+					<li><a href=https://www.kegg.jp/brite/ko03021 target="_blank">03021</a>&nbsp;&nbsp;Transcription machinery</li>
+					
+				</ul>
+			</div>
+			
+			
+			<h5>Related Brite table</h5>
+			<div class="related-data">
+				<ul class="simple">
+					
+					<li><a href=https://www.kegg.jp/kegg/annotation/br01611.html target="_blank">br01611</a>&nbsp;&nbsp;RNA polymerases</li>
+					
+				</ul>
+			</div>
+		</div>
+		
+	</div>
+	<button class="close">
+		<img src=https://www.kegg.jp/Fig/left_triangle_12x12.png>
+	</button>
+	<button class="open">
+		<img src=https://www.kegg.jp/Fig/right_triangle_12x12.png>
+	</button>
+</div>
+<!-- control panel end -->
+
+
+<form id="downloadForm" action=https://www.kegg.jp/kegg-bin/download method="post">
+	<input type="hidden" name="name" value="map03020.png" />
+	<input type="hidden" name="content" />
+	<input type="hidden" name="decode" value="base64" />
+</form>
+
+<div id="waiting-circle">
+	<img src=https://www.kegg.jp/Fig/waiting-circle-small.gif>
+</div>
+
+<!-- pathway image url start -->
+<form class="imageset" data-name="">
+	<input type="hidden" name="image_normal" value="/kegg/pathway/map/map03020.png 1x"
+	       data-src=https://www.kegg.jp/kegg/pathway/map/map03020.png data-situation="1x">
+</form>
+<!-- pathway image url end -->
+
+</body>
+</html>

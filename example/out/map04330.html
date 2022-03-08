@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<!--
+ENTRY       map04330
+DEFINITION  Notch signaling pathway - Reference pathway
+--->
+<head>
+<meta charset="UTF-8">
+<title>
+KEGG PATHWAY: Notch signaling pathway - Reference pathway
+</title>
+<link rel="stylesheet" href=https://www.kegg.jp/css/kegg.css type="text/css" />
+<link rel="stylesheet" href=https://www.kegg.jp/css/jquery-ui.css />
+<style type="text/css">
+<!--
+
+h1.page-title {
+	font-size: 14px;
+	margin: 0px;
+	white-space: nowrap;
+}
+h1.page-title * {
+	vertical-align: middle;
+}
+
+input, select {
+	margin: 0px;
+}
+
+.hidden {
+	display: none !important;
+}
+
+/** navigation start **/
+.nav {
+	padding: 3px 0px 5px 0px;
+	position: relative;
+	min-width: 600px;
+	max-width: 800px;
+	background: #fff;
+}
+
+.nav form {
+	margin: 5px 0px 0px 0px;
+}
+
+.nav .help {
+	display: inline-block;
+	position: relative;
+	left: 20px;
+/*
+	position: absolute;
+	bottom: 5px;
+	right: 0px;
+*/
+}
+/** navigation end **/
+
+#description {
+	padding: 10px;
+	width: 800px;
+}
+
+#waiting-circle {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	display: none;
+}
+
+#controlPanel {
+	top: 0px;
+	left: 0px;
+	width: 220px;
+	background: #ffffff;
+	padding: 0px 0px 0px 0px;
+	white-space: nowrap;
+	overflow: auto;
+	position: fixed;
+	border: solid 1px #999999;
+	display: none;
+}
+
+#controlPanel.closed {
+	border: none;
+	padding: 0px 0px 0px 0px;
+	background: transparent;
+
+	/* jQuery-UI resizale.disabled() の実行で
+	 *      色が薄くなるのを打ち消す */
+	opacity: 1.0;
+}
+
+/** div.row start **/
+
+div.row {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	/* 以下のwidth,overflowの定義で.rowのブロック内で横スクロールする。 */
+	/*
+	width: 98%;
+	overflow: auto;
+	*/
+}
+
+div.row * {
+	vertical-align: middle;
+}
+
+/* 横に並べる場合(title可変幅) start */
+
+.row.scale input {
+	width: 110px;
+}
+
+.row.scale .label {
+	font-size: 0.9em;
+}
+
+/* 横に並べる場合(title可変幅) end */
+
+
+/* Search欄の検索結果 start */
+
+div.row.result > div {
+	margin: 5px 1px 2px 1px;
+}
+
+/* Search欄の検索結果 end */
+
+/**  div.row end **/
+
+#controlPanel h5 {
+  margin: 0px;
+	padding: 5px 0px 5px 10px;
+	vertical-align: middle;
+	border-top: solid 1px #cccccc;
+	border-bottom: solid 1px #cccccc;
+	background: #eeeeee;
+	/* ui-iconの位置調整のために必要 */
+	position: relative;
+}
+
+#controlPanel h5::before {
+	content: url(/Fig/get_htext/open.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5.closed::before {
+	content: url(/Fig/get_htext/close.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5:first-child {
+	border-top: none;
+}
+
+#controlPanel h5:hover {
+	cursor: pointer;
+}
+
+#controlPanel h5  + div {
+	padding: 5px 0px 5px 10px;
+}
+
+#controlPanel h5 .ui-icon {
+	display: inline-block;
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	margin-top: -8px;
+	cursor: pointer;
+}
+
+button {
+	/* Safariでボタンの周りに入る余白を削除 */
+	margin: 0px;
+	padding: 0px;
+	/* ボタンを押した時に表示されるボーダーを非表示にする */
+	outline: none;
+}
+
+button.close, button.open {
+	border: none;
+	padding: 0px;
+	position: absolute;
+	right: 5px;
+	top: 7px;
+}
+
+button.close {
+	/* コントロールパネルに合わせて初期は非表示 */
+	display: none;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+button img {
+	/* 画像の下に入る余白を無くす */
+	display: block;
+}
+
+/** tree style start **/
+ul.tree, ul.tree ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul.tree ul {
+	padding-left: 12px;
+}
+
+ul.tree .class-A > span {
+	font-weight: bold;
+}
+
+ul.tree li {
+	margin: 3px 0px 3px 0px;
+}
+
+.module-tree .module.disabled {
+	display: none;
+}
+
+.module-tree .classification.disabled {
+	display: none;
+}
+
+/** tree style > User data start **/
+ul.mappers {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul.mappers li {
+	position: relative;
+	margin: 5px 0px 2px 0px;
+}
+
+ul.mappers li .ui-icon {
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+}
+ul.mappers li .ui-icon:hover {
+	cursor: pointer;
+}
+ul.mappers li .ui-icon-trash {
+	right: 5px;
+}
+ul.mappers li .ui-icon-document {
+	right: 26px;
+}
+/** tree style > User data end **/
+
+/** tree style end **/
+
+.ui-icon.button {
+	display: inline-block;
+	cursor: pointer;
+}
+
+ul.simple {
+	margin: 0px;
+	padding: 0px;
+}
+ul.simple li {
+	list-style-type: none;
+}
+ul.simple li:not(:first-child) {
+	margin-top: 5px;
+}
+
+//-->
+</style>
+
+<script src=https://www.kegg.jp/js/jquery-3.1.0.min.js></script>
+<script src=https://www.kegg.jp/js/jquery-ui.js></script>
+<script src=https://www.kegg.jp/js/jquery.balloon.min.js></script>
+<script src=https://www.kegg.jp/js/lz-string.min.js></script>
+<script src=https://www.kegg.jp/kegg-bin/get_data.cgi?data=0021&id=show_pathway.merged.js&v2.09></script>
+<script type="text/javascript">
+<!--
+
+// common variable
+const env = {
+	       mapno: '04330',
+	         org: 'map',
+	       entry: 'map04330',
+	       scale: 1,
+	 colorModule: '',
+	personalConf: '',
+}
+
+// HELP button
+function btn(bobj,img) { bobj.src = https://www.kegg.jp/Fig/bget/button_ + img + ".gif"; }
+
+//-->
+</script>
+</head>
+<body>
+<!-- header logo start -->
+<!--
+<table cellpadding="0" width="100%" cellspacing="0" border="0">
+	<tr>
+		<td style="width:80px;">
+			<a href=https://www.kegg.jp/kegg/pathway.html><img align="middle" alt="KEGG" border="0" src=https://www.kegg.jp/Fig/bget/kegg3.gif /></a>
+		</td>
+		<td style="vertical-align:middle;">
+			<font class="title3"><b>Notch signaling pathway - Reference pathway</b></font>
+		</td>
+		<td valign="bottom" align="right">
+		</td>
+	</tr>
+</table>
+-->
+<h1 class="page-title">
+	<a href=https://www.kegg.jp/kegg/pathway.html><img alt="KEGG" border="0" src=https://www.kegg.jp/Fig/bget/kegg3.gif /></a>
+	&nbsp;Notch signaling pathway - Reference pathway
+</h1>
+<!-- header logo end -->
+
+<!-- page navigation start -->
+<div class="nav">
+	[
+	    <a href=https://www.kegg.jp/brite/query=04330&htext=br08901.keg&option=-a&node_proc=br08901_org&proc_enabled=map&panel=collapse id="navPathwayMenu">Pathway menu</a>
+	  | <a href=https://www.kegg.jp/entry/pathway+map04330 id="navPathwayEntry">Pathway entry</a>
+	  | <a id="descLink" href="#description">Show description</a>
+	  | <a id="downloadImageLink" href="#">Image file</a>
+	  | <a href="javascript:void(window.open('https://www.kegg.jp/kegg/document/help_pathway.html','KEGG_Help','width=720,height=640'))">Help</a>
+	]
+
+	
+	<div id="description" class="hidden">
+	The Notch signaling pathway is an evolutionarily conserved, intercellular signaling mechanism essential for proper embryonic development in all metazoan organisms in the Animal kingdom. The Notch proteins (Notch1-Notch4 in vertebrates) are single-pass receptors that are activated by the Delta (or Delta-like) and Jagged/Serrate families of membrane-bound ligands. They are transported to the plasma membrane as cleaved, but otherwise intact polypeptides. Interaction with ligand leads to two additional proteolytic cleavages that liberate the Notch intracellular domain (NICD) from the plasma membrane. The NICD translocates to the nucleus, where it forms a complex with the DNA binding protein CSL, displacing a histone deacetylase (HDAc)-co-repressor (CoR) complex from CSL. Components of an activation complex, such as MAML1 and histone acetyltransferases (HATs), are recruited to the NICD-CSL complex, leading to the transcriptional activation of Notch target genes.
+	</div>
+	
+	
+	<!-- organism list start -->
+	<form name="selmenu" method="get">
+		
+		<input type="button" id="changePathwayTypeButton" value="Change pathway type">
+		
+		
+		
+		<input type="text" class="hidden" name="mapno" value="04330" />
+		<input type="text" class="hidden" id="scale" name="scale" value="1" />
+		<input type="text" class="hidden" id="displayNoColoringImage" name="nocolor" value="0" />
+		<input type="text" class="hidden" id="displayDescription" name="show_description" value="hide" />
+		<input type="text" class="hidden" id="displayControlPanel" name="show_module_list" value="show" />
+		<input type="text" class="hidden" id="clickableMode" name="clickable_mode" value="" />
+		<input type="text" class="hidden" name="module" value="" />
+	</form>
+	<!-- organism list end -->
+
+</div>
+<!-- page navigation end -->
+
+<!-- pathway image start -->
+<div class="image-block" style="position:static;">
+<img src="map04330.png" name="pathwayimage" name="pathwayimage" usemap="#mapdata" border="0" />
+	<map id="mapdata" name="mapdata" data-scale="1">
+		<area id="71B4A59D" shape="rect" coords="240,281,286,298" data-coords="240,281,286,298" class="original" href=https://www.kegg.jp/entry/K06171 title="K06171 (NCSTN)" />
+		<area id="649B9B70" shape="rect" coords="286,281,332,298" data-coords="286,281,332,298" class="original" href=https://www.kegg.jp/entry/K06172 title="K06172 (APH1)" />
+		<area id="AF9A9376" shape="rect" coords="286,264,332,281" data-coords="286,264,332,281" class="original" href=https://www.kegg.jp/entry/K04505+K04522 title="K04505 (PSEN1), K04522 (PSEN2)" />
+		<area id="03B8DE37" shape="rect" coords="640,316,686,333" data-coords="640,316,686,333" class="original" href=https://www.kegg.jp/entry/K06067 title="K06067 (HDAC1_2)" />
+		<area id="B19D4DE8" shape="rect" coords="684,293,730,310" data-coords="684,293,730,310" class="original" href=https://www.kegg.jp/entry/K06066 title="K06066 (CIR)" />
+		<area id="2FAC6C42" shape="rect" coords="623,293,669,310" data-coords="623,293,669,310" class="original" href=https://www.kegg.jp/entry/K04497 title="K04497 (GRO)" />
+		<area id="2F910777" shape="rect" coords="573,293,619,310" data-coords="573,293,619,310" class="original" href=https://www.kegg.jp/entry/K04496 title="K04496 (CTBP)" />
+		<area id="6CA95E5C" shape="rect" coords="600,270,646,287" data-coords="600,270,646,287" class="original" href=https://www.kegg.jp/entry/K06064 title="K06064 (HAIRLESS)" />
+		<area id="719A6F73" shape="rect" coords="670,270,716,287" data-coords="670,270,716,287" class="original" href=https://www.kegg.jp/entry/K06065 title="K06065 (NCOR2)" />
+		<area id="A9A3D004" shape="rect" coords="787,238,833,255" data-coords="787,238,833,255" class="original" href=https://www.kegg.jp/entry/K06056 title="K06056 (PTCRA)" />
+		<area id="459E5175" shape="rect" coords="787,184,833,201" data-coords="787,184,833,201" class="original" href=https://www.kegg.jp/entry/K06054+K06055 title="K06054 (HES1), K06055 (HES5)" />
+		<area id="85B76632" shape="rect" coords="640,211,686,228" data-coords="640,211,686,228" class="original" href=https://www.kegg.jp/entry/K06053 title="K06053 (RBPSUH)" />
+		<area id="9C94FC07" shape="rect" coords="662,172,708,189" data-coords="662,172,708,189" class="original" href=https://www.kegg.jp/entry/K06063 title="K06063 (SNW1)" />
+		<area id="DCA26B6B" shape="rect" coords="585,180,631,197" data-coords="585,180,631,197" class="original" href=https://www.kegg.jp/entry/K04498+K06062 title="K04498 (EP300), K06062 (PCAF)" />
+		<area id="27A16376" shape="rect" coords="585,163,631,180" data-coords="585,163,631,180" class="original" href=https://www.kegg.jp/entry/K06061 title="K06061 (MAML)" />
+		<area id="CBA1B755" shape="rect" coords="123,310,169,327" data-coords="123,310,169,327" class="original" href=https://www.kegg.jp/entry/K06059 title="K06059 (ADAM17)" />
+		<area id="BCB39DA3" shape="rect" coords="240,264,286,281" data-coords="240,264,286,281" class="original" href=https://www.kegg.jp/entry/K06170 title="K06170 (PSENEN)" />
+		<area id="DA9E8C4A" shape="rect" coords="310,185,356,202" data-coords="310,185,356,202" class="original" href=https://www.kegg.jp/entry/K06058 title="K06058 (DTX)" />
+		<area id="CD940A83" shape="rect" coords="274,155,320,172" data-coords="274,155,320,172" class="original" href=https://www.kegg.jp/entry/K06057 title="K06057 (NUMBL)" />
+		<area id="07B2BE5E" shape="rect" coords="60,257,106,274" data-coords="60,257,106,274" class="original" href=https://www.kegg.jp/entry/K06052+K21635 title="K06052 (JAG1), K21635 (JAG2)" />
+		<area id="5F882223" shape="rect" coords="166,211,212,228" data-coords="166,211,212,228" class="original" href=https://www.kegg.jp/entry/K02599+K20994+K20995+K20996 title="K02599 (NOTCH1), K20994 (NOTCH2), K20995 (NOTCH3), K20996 (NOTCH4)" />
+		<area id="6AA6214F" shape="rect" coords="221,136,267,153" data-coords="221,136,267,153" class="original" href=https://www.kegg.jp/entry/K02353 title="K02353 (DVL)" />
+		<area id="C3A389E3" shape="rect" coords="114,135,160,152" data-coords="114,135,160,152" class="original" href=https://www.kegg.jp/entry/K05948 title="K05948 (FNG)" />
+		<area id="71ADC065" shape="rect" coords="60,211,106,228" data-coords="60,211,106,228" class="original" href=https://www.kegg.jp/entry/K06051 title="K06051 (DLL)" />
+		<area id="029FF471" shape="rect" coords="692,316,738,333" data-coords="692,316,738,333" class="original" href=https://www.kegg.jp/entry/K23616 title="K23616 (ATXN1_1L)" />
+		<area id="FAA0D205" shape="rect" coords="787,211,833,228" data-coords="787,211,833,228" class="original" href=https://www.kegg.jp/entry/K09091 title="K09091 (HEY)" />
+		<area id="469B97C8" shape="rect" coords="339,375,448,415" data-coords="339,375,448,415" class="original" href=https://www.kegg.jp/pathway/map04010 title="map04010: MAPK signaling pathway" data-entry="map04010" />
+		<area id="37B2C4F1" shape="rect" coords="40,45,279,70" data-coords="40,45,279,70" class="original" href=https://www.kegg.jp/entry/map04330 title="map04330: Notch signaling pathway" data-entry="map04330" />
+	</map>
+	<map id="module_mapdata" name="module_mapdata" data-scale="1">
+		<area shape="rect" coords="787,184,833,201" data-coords="787,184,833,201" href="javascript:void(0)"  data-refid="459E5175" data-network="N00086" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?K06054+K06055 data-network-title="K06054 (HES1), K06055 (HES5)" class="module" />
+		<area shape="rect" coords="60,257,106,274" data-coords="60,257,106,274" href="javascript:void(0)"  data-refid="07B2BE5E" data-network="N00086" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?K06052+K21635 data-network-title="K06052 (JAG1), K21635 (JAG2)" class="module" />
+		<area shape="rect" coords="166,211,212,228" data-coords="166,211,212,228" href="javascript:void(0)"  data-refid="5F882223" data-network="N00086" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?K02599+K20994+K20995+K20996 data-network-title="K02599 (NOTCH1), K20994 (NOTCH2), K20995 (NOTCH3), K20996 (NOTCH4)" class="module" />
+		<area shape="rect" coords="60,211,106,228" data-coords="60,211,106,228" href="javascript:void(0)"  data-refid="71ADC065" data-network="N00086" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?K06051 data-network-title="K06051 (DLL)" class="module" />
+		<area shape="poly" coords="106,219,165,219,165,221,106,221" data-coords="106,219,165,219,165,221,106,221" href="javascript:void(0)"  data-refid="470C34F6" data-network="N00086" class="module" />
+		<area shape="poly" coords="165,220,156,223,156,216" data-coords="165,220,156,223,156,216" href="javascript:void(0)"  data-refid="9050A146" data-network="N00086" class="module" />
+		<area shape="poly" coords="212,219,522,219,522,221,212,221" data-coords="212,219,522,219,522,221,212,221" href="javascript:void(0)"  data-refid="440F0BF9" data-network="N00086" class="module" />
+		<area shape="poly" coords="522,220,513,223,513,216" data-coords="522,220,513,223,513,216" href="javascript:void(0)"  data-refid="394E7D45" data-network="N00086" class="module" />
+		<area shape="poly" coords="564,219,640,219,640,221,564,221" data-coords="564,219,640,219,640,221,564,221" href="javascript:void(0)"  data-refid="34168465" data-network="N00086" class="module" />
+		<area shape="poly" coords="686,219,727,219,727,221,686,221" data-coords="686,219,727,219,727,221,686,221" href="javascript:void(0)"  data-refid="5119131A" data-network="N00086" class="module" />
+		<area shape="poly" coords="727,220,718,223,718,216" data-coords="727,220,718,223,718,216" href="javascript:void(0)"  data-refid="A78E10C2" data-network="N00086" class="module" />
+		<area shape="poly" coords="750,214,785,192,785,194,750,216" data-coords="750,214,785,192,785,194,750,216" href="javascript:void(0)"  data-refid="D91B77F4" data-network="N00086" class="module" />
+		<area shape="poly" coords="785,193,779,200,776,194" data-coords="785,193,779,200,776,194" href="javascript:void(0)"  data-refid="92B41FB8" data-network="N00086" class="module" />
+		<area shape="rect" coords="787,211,833,228" data-coords="787,211,833,228" href="javascript:void(0)"  data-refid="FAA0D205" data-network="N00086" data-network-href=https://www.kegg.jp/dbget-bin/www_bget?K09091 data-network-title="K09091 (HEY)" class="module" />
+		<area shape="poly" coords="750,219,785,219,785,221,750,221" data-coords="750,219,785,219,785,221,750,221" href="javascript:void(0)"  data-refid="591B7D4E" data-network="N00086" class="module" />
+		<area shape="poly" coords="785,220,776,223,776,216" data-coords="785,220,776,223,776,216" href="javascript:void(0)"  data-refid="F3BEA2C2" data-network="N00086" class="module" />
+	</map>
+</div>
+<!-- pathway image end -->
+
+<!-- control panel start -->
+
+<div id="controlPanel">
+	<div class="controller">
+		<div class="feature option">
+			<h5>Option</h5>
+			<div>
+				<div class="row scale">
+					<span class="title">Scale:</span>
+					<span class="content">
+						<input type="range" min="0.1" max="1" step="0.1" value="1">
+						<span class="label">100%</span>
+					</span>
+				</div>
+				
+				
+				
+			</div>
+		</div>
+		<div class="feature search">
+			<h5>Search</h5>
+			<div>
+				<div class="row query">
+					<form>
+						<input type="text" name="query" style="width:130px;" autocomplete="off" value="">
+						<input type="submit" value="Go">
+						<span class="ui-icon button ui-icon-close clear-query hidden"></span>
+					</form>
+				</div>
+				<div class="row result">
+				</div>
+			</div>
+		</div>
+		<div class="feature search-pathway">
+			<h5>ID search
+				<span class="ui-icon ui-icon-plus">
+			</h5>
+			<div>
+				<form>
+					<div class="row" style="display:grid; grid-template-columns:135px 1fr; column-gap:5px;">
+						<div>
+							<textarea class="query" rows="2" style="width:130px; resize:none;"></textarea>
+						</div>
+						<div>
+							<input type="submit" class="submit" value="Go">
+							<span class="ui-icon button ui-icon-close clear-query hidden"></span>
+						</div>
+					</div>
+				</form>
+				<div class="row personal hidden">
+					<ul class="mappers"></ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="feature color-pathway">
+			<h5>Color
+				<span class="ui-icon ui-icon-plus">
+			</h5>
+			<div>
+				
+				<div class="row personal hidden">
+					<ul class="mappers"></ul>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		<div class="feature">
+			<h5>Network</h5>
+			<div>
+				<div class="row">
+					<ul class="tree network-tree">
+					
+						
+	<li class="classification class-C  ">
+		<span>
+		<input type="checkbox" >
+		<a href=https://www.kegg.jp/network/nt06216+N00086 target="_blank">nt06216</a> NOTCH signaling
+
+		</span>
+		<ul>
+	<li class="entry class-D network ">
+		<span>
+		<input type="checkbox" >
+		<a href=https://www.kegg.jp/entry/N00086 data-entry="N00086" target="_blank">N00086</a>
+		
+		Notch signaling pathway
+
+		</span>
+	</li>
+
+		</ul>
+	</li>
+
+					
+					</ul>
+				</div>
+			</div>
+			
+			
+		
+			
+	</div>
+	<button class="close">
+		<img src=https://www.kegg.jp/Fig/left_triangle_12x12.png>
+	</button>
+	<button class="open">
+		<img src=https://www.kegg.jp/Fig/right_triangle_12x12.png>
+	</button>
+</div>
+<!-- control panel end -->
+
+
+<form id="downloadForm" action=https://www.kegg.jp/kegg-bin/download method="post">
+	<input type="hidden" name="name" value="map04330.png" />
+	<input type="hidden" name="content" />
+	<input type="hidden" name="decode" value="base64" />
+</form>
+
+<div id="waiting-circle">
+	<img src=https://www.kegg.jp/Fig/waiting-circle-small.gif>
+</div>
+
+<!-- pathway image url start -->
+<form class="imageset" data-name="">
+	<input type="hidden" name="image_normal" value="/kegg/pathway/map/map04330.png 1x"
+	       data-src=https://www.kegg.jp/kegg/pathway/map/map04330.png data-situation="1x">
+</form>
+<!-- pathway image url end -->
+
+</body>
+</html>

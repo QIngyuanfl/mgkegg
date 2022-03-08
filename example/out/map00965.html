@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<!--
+ENTRY       map00965
+DEFINITION  Betalain biosynthesis - Reference pathway
+--->
+<head>
+<meta charset="UTF-8">
+<title>
+KEGG PATHWAY: Betalain biosynthesis - Reference pathway
+</title>
+<link rel="stylesheet" href=https://www.kegg.jp/css/kegg.css type="text/css" />
+<link rel="stylesheet" href=https://www.kegg.jp/css/jquery-ui.css />
+<style type="text/css">
+<!--
+
+h1.page-title {
+	font-size: 14px;
+	margin: 0px;
+	white-space: nowrap;
+}
+h1.page-title * {
+	vertical-align: middle;
+}
+
+input, select {
+	margin: 0px;
+}
+
+.hidden {
+	display: none !important;
+}
+
+/** navigation start **/
+.nav {
+	padding: 3px 0px 5px 0px;
+	position: relative;
+	min-width: 600px;
+	max-width: 800px;
+	background: #fff;
+}
+
+.nav form {
+	margin: 5px 0px 0px 0px;
+}
+
+.nav .help {
+	display: inline-block;
+	position: relative;
+	left: 20px;
+/*
+	position: absolute;
+	bottom: 5px;
+	right: 0px;
+*/
+}
+/** navigation end **/
+
+#description {
+	padding: 10px;
+	width: 800px;
+}
+
+#waiting-circle {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	display: none;
+}
+
+#controlPanel {
+	top: 0px;
+	left: 0px;
+	width: 220px;
+	background: #ffffff;
+	padding: 0px 0px 0px 0px;
+	white-space: nowrap;
+	overflow: auto;
+	position: fixed;
+	border: solid 1px #999999;
+	display: none;
+}
+
+#controlPanel.closed {
+	border: none;
+	padding: 0px 0px 0px 0px;
+	background: transparent;
+
+	/* jQuery-UI resizale.disabled() の実行で
+	 *      色が薄くなるのを打ち消す */
+	opacity: 1.0;
+}
+
+/** div.row start **/
+
+div.row {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	/* 以下のwidth,overflowの定義で.rowのブロック内で横スクロールする。 */
+	/*
+	width: 98%;
+	overflow: auto;
+	*/
+}
+
+div.row * {
+	vertical-align: middle;
+}
+
+/* 横に並べる場合(title可変幅) start */
+
+.row.scale input {
+	width: 110px;
+}
+
+.row.scale .label {
+	font-size: 0.9em;
+}
+
+/* 横に並べる場合(title可変幅) end */
+
+
+/* Search欄の検索結果 start */
+
+div.row.result > div {
+	margin: 5px 1px 2px 1px;
+}
+
+/* Search欄の検索結果 end */
+
+/**  div.row end **/
+
+#controlPanel h5 {
+  margin: 0px;
+	padding: 5px 0px 5px 10px;
+	vertical-align: middle;
+	border-top: solid 1px #cccccc;
+	border-bottom: solid 1px #cccccc;
+	background: #eeeeee;
+	/* ui-iconの位置調整のために必要 */
+	position: relative;
+}
+
+#controlPanel h5::before {
+	content: url(/Fig/get_htext/open.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5.closed::before {
+	content: url(/Fig/get_htext/close.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5:first-child {
+	border-top: none;
+}
+
+#controlPanel h5:hover {
+	cursor: pointer;
+}
+
+#controlPanel h5  + div {
+	padding: 5px 0px 5px 10px;
+}
+
+#controlPanel h5 .ui-icon {
+	display: inline-block;
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	margin-top: -8px;
+	cursor: pointer;
+}
+
+button {
+	/* Safariでボタンの周りに入る余白を削除 */
+	margin: 0px;
+	padding: 0px;
+	/* ボタンを押した時に表示されるボーダーを非表示にする */
+	outline: none;
+}
+
+button.close, button.open {
+	border: none;
+	padding: 0px;
+	position: absolute;
+	right: 5px;
+	top: 7px;
+}
+
+button.close {
+	/* コントロールパネルに合わせて初期は非表示 */
+	display: none;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+button img {
+	/* 画像の下に入る余白を無くす */
+	display: block;
+}
+
+/** tree style start **/
+ul.tree, ul.tree ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul.tree ul {
+	padding-left: 12px;
+}
+
+ul.tree .class-A > span {
+	font-weight: bold;
+}
+
+ul.tree li {
+	margin: 3px 0px 3px 0px;
+}
+
+.module-tree .module.disabled {
+	display: none;
+}
+
+.module-tree .classification.disabled {
+	display: none;
+}
+
+/** tree style > User data start **/
+ul.mappers {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul.mappers li {
+	position: relative;
+	margin: 5px 0px 2px 0px;
+}
+
+ul.mappers li .ui-icon {
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+}
+ul.mappers li .ui-icon:hover {
+	cursor: pointer;
+}
+ul.mappers li .ui-icon-trash {
+	right: 5px;
+}
+ul.mappers li .ui-icon-document {
+	right: 26px;
+}
+/** tree style > User data end **/
+
+/** tree style end **/
+
+.ui-icon.button {
+	display: inline-block;
+	cursor: pointer;
+}
+
+ul.simple {
+	margin: 0px;
+	padding: 0px;
+}
+ul.simple li {
+	list-style-type: none;
+}
+ul.simple li:not(:first-child) {
+	margin-top: 5px;
+}
+
+//-->
+</style>
+
+<script src=https://www.kegg.jp/js/jquery-3.1.0.min.js></script>
+<script src=https://www.kegg.jp/js/jquery-ui.js></script>
+<script src=https://www.kegg.jp/js/jquery.balloon.min.js></script>
+<script src=https://www.kegg.jp/js/lz-string.min.js></script>
+<script src=https://www.kegg.jp/kegg-bin/get_data.cgi?data=0021&id=show_pathway.merged.js&v2.09></script>
+<script type="text/javascript">
+<!--
+
+// common variable
+const env = {
+	       mapno: '00965',
+	         org: 'map',
+	       entry: 'map00965',
+	       scale: 1,
+	 colorModule: '',
+	personalConf: '',
+}
+
+// HELP button
+function btn(bobj,img) { bobj.src = https://www.kegg.jp/Fig/bget/button_ + img + ".gif"; }
+
+//-->
+</script>
+</head>
+<body>
+<!-- header logo start -->
+<!--
+<table cellpadding="0" width="100%" cellspacing="0" border="0">
+	<tr>
+		<td style="width:80px;">
+			<a href=https://www.kegg.jp/kegg/pathway.html><img align="middle" alt="KEGG" border="0" src=https://www.kegg.jp/Fig/bget/kegg3.gif /></a>
+		</td>
+		<td style="vertical-align:middle;">
+			<font class="title3"><b>Betalain biosynthesis - Reference pathway</b></font>
+		</td>
+		<td valign="bottom" align="right">
+		</td>
+	</tr>
+</table>
+-->
+<h1 class="page-title">
+	<a href=https://www.kegg.jp/kegg/pathway.html><img alt="KEGG" border="0" src=https://www.kegg.jp/Fig/bget/kegg3.gif /></a>
+	&nbsp;Betalain biosynthesis - Reference pathway
+</h1>
+<!-- header logo end -->
+
+<!-- page navigation start -->
+<div class="nav">
+	[
+	    <a href=https://www.kegg.jp/brite/query=00965&htext=br08901.keg&option=-a&node_proc=br08901_org&proc_enabled=map&panel=collapse id="navPathwayMenu">Pathway menu</a>
+	  | <a href=https://www.kegg.jp/entry/pathway+map00965 id="navPathwayEntry">Pathway entry</a>
+	  | <a id="descLink" href="#description">Show description</a>
+	  | <a id="downloadImageLink" href="#">Image file</a>
+	  | <a href="javascript:void(window.open('https://www.kegg.jp/kegg/document/help_pathway.html','KEGG_Help','width=720,height=640'))">Help</a>
+	]
+
+	
+	<div id="description" class="hidden">
+	Betalains are water-soluble nitrogen-containing pigments that are present in plants belonging to the order Caryophyllales (such as cactus and amaranth families) and in higher fungi. They contain betalamic acid as the chromophore and are classified into two types: betacyanins and betaxanthins. Betacyanins contain a cyclo-DOPA residue and exhibit red/violet coloration, while betaxanthins contain different amino acids or amino side chains and exhibit a yellow/orange coloration. The condensation of betalamic acid with amino acids (including cyclo-DOPA or amines) in plants is a spontaneous reaction, not an enzyme-catalyzed reaction.
+	</div>
+	
+	
+	<!-- organism list start -->
+	<form name="selmenu" method="get">
+		
+		<input type="button" id="changePathwayTypeButton" value="Change pathway type">
+		
+		
+		
+		<input type="text" class="hidden" name="mapno" value="00965" />
+		<input type="text" class="hidden" id="scale" name="scale" value="1" />
+		<input type="text" class="hidden" id="displayNoColoringImage" name="nocolor" value="0" />
+		<input type="text" class="hidden" id="displayDescription" name="show_description" value="hide" />
+		<input type="text" class="hidden" id="displayControlPanel" name="show_module_list" value="show" />
+		<input type="text" class="hidden" id="clickableMode" name="clickable_mode" value="" />
+		<input type="text" class="hidden" name="module" value="" />
+	</form>
+	<!-- organism list end -->
+
+</div>
+<!-- page navigation end -->
+
+<!-- pathway image start -->
+<div class="image-block" style="position:static;">
+<img src="map00965.png" name="pathwayimage" name="pathwayimage" usemap="#mapdata" border="0" />
+	<map id="mapdata" name="mapdata" data-scale="1">
+		<area id="046FDDF7" shape="circle" coords="269,298,4" data-coords="269,298,4" class="original" href=https://www.kegg.jp/entry/C00082 title="C00082 (L-Tyrosine)" data-entry="C00082" />
+		<area id="D66FDD98" shape="circle" coords="230,267,4" data-coords="230,267,4" class="original" href=https://www.kegg.jp/entry/C08538 title="C08538 (Betalamic acid)" data-entry="C08538" />
+		<area id="046FDDCF" shape="circle" coords="269,218,4" data-coords="269,218,4" class="original" href=https://www.kegg.jp/entry/C08565 title="C08565 (Portulacaxanthin II)" data-entry="C08565" />
+		<area id="FA700FD9" shape="circle" coords="457,298,4" data-coords="457,298,4" class="original" href=https://www.kegg.jp/entry/C00822 title="C00822 (Dopaquinone)" data-entry="C00822" />
+		<area id="FA70290B" shape="circle" coords="577,298,4" data-coords="577,298,4" class="original" href=https://www.kegg.jp/entry/C05604 title="C05604 (2-Carboxy-2,3-dihydro-5,6-dihydroxyindole)" data-entry="C05604" />
+		<area id="E1705A5C" shape="circle" coords="702,298,4" data-coords="702,298,4" class="original" href=https://www.kegg.jp/entry/C17751 title="C17751 (cyclo-Dopa 5-O-glucoside)" data-entry="C17751" />
+		<area id="FF707375" shape="circle" coords="818,298,4" data-coords="818,298,4" class="original" href=https://www.kegg.jp/entry/C17752 title="C17752 (cyclo-Dopa-glucuronylglucoside)" data-entry="C17752" />
+		<area id="DB6FD37A" shape="circle" coords="122,552,4" data-coords="122,552,4" class="original" href=https://www.kegg.jp/entry/C08538 title="C08538 (Betalamic acid)" data-entry="C08538" />
+		<area id="E06FCE7F" shape="circle" coords="122,467,4" data-coords="122,467,4" class="original" href=https://www.kegg.jp/entry/C17758 title="C17758 (4,5-seco-Dopa)" data-entry="C17758" />
+		<area id="FE6FECDE" shape="circle" coords="269,552,4" data-coords="269,552,4" class="original" href=https://www.kegg.jp/entry/C08557 title="C08557 (Miraxanthin-V)" data-entry="C08557" />
+		<area id="D8704BC0" shape="circle" coords="651,444,4" data-coords="651,444,4" class="original" href=https://www.kegg.jp/entry/C08538 title="C08538 (Betalamic acid)" data-entry="C08538" />
+		<area id="F9705AE8" shape="circle" coords="778,222,4" data-coords="778,222,4" class="original" href=https://www.kegg.jp/entry/C08538 title="C08538 (Betalamic acid)" data-entry="C08538" />
+		<area id="FA7032FC" shape="circle" coords="577,468,4" data-coords="577,468,4" class="original" href=https://www.kegg.jp/entry/C17756 title="C17756 (2-Descarboxy-cyclo-dopa)" data-entry="C17756" />
+		<area id="FE70601F" shape="circle" coords="789,382,4" data-coords="789,382,4" class="original" href=https://www.kegg.jp/entry/C17754 title="C17754 (3-Methoxytyramine-betaxanthin)" data-entry="C17754" />
+		<area id="D4700F84" shape="circle" coords="421,270,4" data-coords="421,270,4" class="original" href=https://www.kegg.jp/entry/C00355 title="C00355 (3,4-Dihydroxy-L-phenylalanine)" data-entry="C00355" />
+		<area id="FE6FE2ED" shape="circle" coords="269,382,4" data-coords="269,382,4" class="original" href=https://www.kegg.jp/entry/C00355 title="C00355 (3,4-Dihydroxy-L-phenylalanine)" data-entry="C00355" />
+		<area id="F7706E61" shape="circle" coords="818,150,4" data-coords="818,150,4" class="original" href=https://www.kegg.jp/entry/C08537 title="C08537 (Amaranthin)" data-entry="C08537" />
+		<area id="F270877A" shape="circle" coords="927,150,4" data-coords="927,150,4" class="original" href=https://www.kegg.jp/entry/C08542 title="C08542 (Celosianin II)" data-entry="C08542" />
+		<area id="DB7041CF" shape="circle" coords="662,222,4" data-coords="662,222,4" class="original" href=https://www.kegg.jp/entry/C08538 title="C08538 (Betalamic acid)" data-entry="C08538" />
+		<area id="D9705548" shape="circle" coords="702,150,4" data-coords="702,150,4" class="original" href=https://www.kegg.jp/entry/C08540 title="C08540 (Betanin)" data-entry="C08540" />
+		<area id="036FE7E8" shape="circle" coords="269,467,4" data-coords="269,467,4" class="original" href=https://www.kegg.jp/entry/C03758 title="C03758 (Dopamine)" data-entry="C03758" />
+		<area id="0470651A" shape="circle" coords="789,468,4" data-coords="789,468,4" class="original" href=https://www.kegg.jp/entry/C17757 title="C17757 (2-Descarboxy-betanidin)" data-entry="C17757" />
+		<area id="F47014D4" shape="circle" coords="457,382,4" data-coords="457,382,4" class="original" href=https://www.kegg.jp/entry/C05587 title="C05587 (3-Methoxytyramine)" data-entry="C05587" />
+		<area id="FC6FD8DE" shape="circle" coords="269,150,4" data-coords="269,150,4" class="original" href=https://www.kegg.jp/entry/C08543 title="C08543 (Dopaxanthin)" data-entry="C08543" />
+		<area id="FA7019CA" shape="circle" coords="457,468,4" data-coords="457,468,4" class="original" href=https://www.kegg.jp/entry/C17755 title="C17755 (Dopamine quinone)" data-entry="C17755" />
+		<area id="07D26791" shape="circle" coords="702,98,4" data-coords="702,98,4" class="original" href=https://www.kegg.jp/entry/C08544 title="C08544 (Gomphrenin-I)" data-entry="C08544" />
+		<area id="F2700AC5" shape="circle" coords="457,150,4" data-coords="457,150,4" class="original" href=https://www.kegg.jp/entry/C17753 title="C17753 (Dopaxanthin quinone)" data-entry="C17753" />
+		<area id="F27023F7" shape="circle" coords="577,150,4" data-coords="577,150,4" class="original" href=https://www.kegg.jp/entry/C08539 title="C08539 (Betanidin)" data-entry="C08539" />
+		<area id="FA708766" shape="circle" coords="927,118,4" data-coords="927,118,4" class="original" href=https://www.kegg.jp/entry/C08552 title="C08552 (Lampranthin II)" data-entry="C08552" />
+		<area id="F4702884" shape="circle" coords="537,222,4" data-coords="537,222,4" class="original" href=https://www.kegg.jp/entry/C08538 title="C08538 (Betalamic acid)" data-entry="C08538" />
+		<area id="DC7046C5" shape="circle" coords="651,358,4" data-coords="651,358,4" class="original" href=https://www.kegg.jp/entry/C08538 title="C08538 (Betalamic acid)" data-entry="C08538" />
+		<area id="E56FBFB6" shape="circle" coords="153,127,4" data-coords="153,127,4" class="original" href=https://www.kegg.jp/entry/C08538 title="C08538 (Betalamic acid)" data-entry="C08538" />
+		<area id="D870005C" shape="circle" coords="300,499,4" data-coords="300,499,4" class="original" href=https://www.kegg.jp/entry/C08538 title="C08538 (Betalamic acid)" data-entry="C08538" />
+		<area id="B39C87DE" shape="rect" coords="480,293,545,303" data-coords="480,293,545,303" class="original" href=https://www.kegg.jp/entry/R02962 title="R02962" />
+		<area id="9E9FEA07" shape="rect" coords="661,377,726,387" data-coords="661,377,726,387" class="original" href=https://www.kegg.jp/entry/R08831 title="R08831" />
+		<area id="3B9F628A" shape="rect" coords="661,463,726,473" data-coords="661,463,726,473" class="original" href=https://www.kegg.jp/entry/R08834 title="R08834" />
+		<area id="A2A46A05" shape="rect" coords="476,463,541,473" data-coords="476,463,541,473" class="original" href=https://www.kegg.jp/entry/R08833 title="R08833" />
+		<area id="E486FBD0" shape="rect" coords="237,511,302,521" data-coords="237,511,302,521" class="original" href=https://www.kegg.jp/entry/R08835 title="R08835" />
+		<area id="D8C5BDA0" shape="rect" coords="90,495,155,505" data-coords="90,495,155,505" class="original" href=https://www.kegg.jp/entry/R08837 title="R08837" />
+		<area id="45888A4C" shape="rect" coords="237,245,302,255" data-coords="237,245,302,255" class="original" href=https://www.kegg.jp/entry/R08825 title="R08825" />
+		<area id="418A8C29" shape="rect" coords="544,199,609,209" data-coords="544,199,609,209" class="original" href=https://www.kegg.jp/entry/R08821 title="R08821" />
+		<area id="529BF072" shape="rect" coords="670,199,735,209" data-coords="670,199,735,209" class="original" href=https://www.kegg.jp/entry/R08820 title="R08820" />
+		<area id="C2A854F2" shape="rect" coords="787,199,852,209" data-coords="787,199,852,209" class="original" href=https://www.kegg.jp/entry/R08818 title="R08818" />
+		<area id="48A10315" shape="rect" coords="479,145,544,155" data-coords="479,145,544,155" class="original" href=https://www.kegg.jp/entry/R08829 title="R08829" />
+		<area id="4B8FC195" shape="rect" coords="163,145,228,155" data-coords="163,145,228,155" class="original" href=https://www.kegg.jp/entry/R08827 title="R08827" />
+		<area id="5EAE161A" shape="rect" coords="340,290,386,307" data-coords="340,290,386,307" class="original" href=https://www.kegg.jp/entry/K00505+1.14.18.1+R02078 title="K00505 (TYR), 1.14.18.1, R02078" />
+		<area id="72B7DA1A" shape="rect" coords="740,290,786,307" data-coords="740,290,786,307" class="original" href=https://www.kegg.jp/entry/R08817 title="2.4.1.-, R08817" />
+		<area id="8FC3C3BD" shape="rect" coords="848,142,894,159" data-coords="848,142,894,159" class="original" href=https://www.kegg.jp/entry/R08819 title="2.3.1.-, R08819" />
+		<area id="78ABED60" shape="rect" coords="613,146,659,163" data-coords="613,146,659,163" class="original" href=https://www.kegg.jp/entry/K15774+R08822 title="K15774 (5GT), R08822" />
+		<area id="0A2CE552" shape="rect" coords="613,91,659,108" data-coords="613,91,659,108" class="original" href=https://www.kegg.jp/entry/K15775+R08830 title="K15775 (6GT), R08830" />
+		<area id="48B38741" shape="rect" coords="246,410,292,427" data-coords="246,410,292,427" class="original" href=https://www.kegg.jp/entry/K01593+4.1.1.28+R02080 title="K01593 (DDC), 4.1.1.28, R02080" />
+		<area id="5FB60EA3" shape="rect" coords="340,460,386,477" data-coords="340,460,386,477" class="original" href=https://www.kegg.jp/entry/R08832 title="1.10.3.-, R08832" />
+		<area id="A9B78B20" shape="rect" coords="340,373,386,390" data-coords="340,373,386,390" class="original" href=https://www.kegg.jp/entry/K00545+2.1.1.6+R04301 title="K00545 (COMT), 2.1.1.6, R04301" />
+		<area id="28B509C3" shape="rect" coords="246,329,292,346" data-coords="246,329,292,346" class="original" href=https://www.kegg.jp/entry/K00505+1.14.18.1+R00731 title="K00505 (TYR), 1.14.18.1, R00731" />
+		<area id="BFC2BBCC" shape="rect" coords="99,410,145,427" data-coords="99,410,145,427" class="original" href=https://www.kegg.jp/entry/K15777+R08836 title="K15777 (DOPA), R08836" />
+		<area id="26B91234" shape="rect" coords="246,179,292,196" data-coords="246,179,292,196" class="original" href=https://www.kegg.jp/entry/R08826 title="1.14.18.-, R08826" />
+		<area id="5DC0C046" shape="rect" coords="848,110,894,127" data-coords="848,110,894,127" class="original" href=https://www.kegg.jp/entry/R08823 title="2.3.1.-, R08823" />
+		<area id="E4A670CC" shape="rect" coords="613,290,659,307" data-coords="613,290,659,307" class="original" href=https://www.kegg.jp/entry/K15776+R08816 title="K15776 (CDOPA5GT), R08816" />
+		<area id="75B297A9" shape="rect" coords="340,141,386,158" data-coords="340,141,386,158" class="original" href=https://www.kegg.jp/entry/R08828 title="1.10.3.-, R08828" />
+		<area id="A2BC5CA9" shape="rect" coords="740,142,786,159" data-coords="740,142,786,159" class="original" href=https://www.kegg.jp/entry/R08824 title="2.4.1.-, R08824" />
+		<area id="37B2B0E7" shape="rect" coords="40,45,237,70" data-coords="40,45,237,70" class="original" href=https://www.kegg.jp/entry/map00965 title="map00965: Betalain biosynthesis" data-entry="map00965" />
+		<area id="7991211D" shape="rect" coords="156,282,232,316" data-coords="156,282,232,316" class="original" href=https://www.kegg.jp/pathway/map00400 title="map00400: Phenylalanine, tyrosine and tryptophan biosynthesis" data-entry="map00400" />
+	</map>
+	<map id="module_mapdata" name="module_mapdata" data-scale="1">
+	</map>
+</div>
+<!-- pathway image end -->
+
+<!-- control panel start -->
+
+<div id="controlPanel">
+	<div class="controller">
+		<div class="feature option">
+			<h5>Option</h5>
+			<div>
+				<div class="row scale">
+					<span class="title">Scale:</span>
+					<span class="content">
+						<input type="range" min="0.1" max="1" step="0.1" value="1">
+						<span class="label">100%</span>
+					</span>
+				</div>
+				
+				
+				
+			</div>
+		</div>
+		<div class="feature search">
+			<h5>Search</h5>
+			<div>
+				<div class="row query">
+					<form>
+						<input type="text" name="query" style="width:130px;" autocomplete="off" value="">
+						<input type="submit" value="Go">
+						<span class="ui-icon button ui-icon-close clear-query hidden"></span>
+					</form>
+				</div>
+				<div class="row result">
+				</div>
+			</div>
+		</div>
+		<div class="feature search-pathway">
+			<h5>ID search
+				<span class="ui-icon ui-icon-plus">
+			</h5>
+			<div>
+				<form>
+					<div class="row" style="display:grid; grid-template-columns:135px 1fr; column-gap:5px;">
+						<div>
+							<textarea class="query" rows="2" style="width:130px; resize:none;"></textarea>
+						</div>
+						<div>
+							<input type="submit" class="submit" value="Go">
+							<span class="ui-icon button ui-icon-close clear-query hidden"></span>
+						</div>
+					</div>
+				</form>
+				<div class="row personal hidden">
+					<ul class="mappers"></ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="feature color-pathway">
+			<h5>Color
+				<span class="ui-icon ui-icon-plus">
+			</h5>
+			<div>
+				
+				<div class="row personal hidden">
+					<ul class="mappers"></ul>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+			
+		
+			
+	</div>
+	<button class="close">
+		<img src=https://www.kegg.jp/Fig/left_triangle_12x12.png>
+	</button>
+	<button class="open">
+		<img src=https://www.kegg.jp/Fig/right_triangle_12x12.png>
+	</button>
+</div>
+<!-- control panel end -->
+
+
+<form id="downloadForm" action=https://www.kegg.jp/kegg-bin/download method="post">
+	<input type="hidden" name="name" value="map00965.png" />
+	<input type="hidden" name="content" />
+	<input type="hidden" name="decode" value="base64" />
+</form>
+
+<div id="waiting-circle">
+	<img src=https://www.kegg.jp/Fig/waiting-circle-small.gif>
+</div>
+
+<!-- pathway image url start -->
+<form class="imageset" data-name="">
+	<input type="hidden" name="image_normal" value="/kegg/pathway/map/map00965.png 1x"
+	       data-src=https://www.kegg.jp/kegg/pathway/map/map00965.png data-situation="1x">
+</form>
+<!-- pathway image url end -->
+
+</body>
+</html>

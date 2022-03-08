@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<!--
+ENTRY       map00472
+DEFINITION  D-Arginine and D-ornithine metabolism - Reference pathway
+--->
+<head>
+<meta charset="UTF-8">
+<title>
+KEGG PATHWAY: D-Arginine and D-ornithine metabolism - Reference pathway
+</title>
+<link rel="stylesheet" href=https://www.kegg.jp/css/kegg.css type="text/css" />
+<link rel="stylesheet" href=https://www.kegg.jp/css/jquery-ui.css />
+<style type="text/css">
+<!--
+
+input, select {
+	margin: 0px;
+}
+
+.d-none, .hidden {
+	display: none;
+}
+
+/** navigation start **/
+.nav {
+	padding: 3px 0px 5px 0px;
+	position: relative;
+	min-width: 600px;
+	max-width: 800px;
+	background: #fff;
+}
+
+.nav form {
+	margin: 5px 0px 0px 0px;
+}
+
+.nav .help {
+	display: inline-block;
+	position: relative;
+	left: 20px;
+/*
+	position: absolute;
+	bottom: 5px;
+	right: 0px;
+*/
+}
+/** navigation end **/
+
+#description {
+	padding: 10px;
+	width: 800px;
+}
+
+#waiting-circle {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	display: none;
+}
+
+#controlPanel {
+	top: 0px;
+	left: 0px;
+	width: 220px;
+	background: #ffffff;
+	padding: 0px 0px 0px 0px;
+	white-space: nowrap;
+	overflow: auto;
+	position: fixed;
+	border: solid 1px #999999;
+	display: none;
+}
+
+#controlPanel.closed {
+	border: none;
+	padding: 0px 0px 0px 0px;
+	background: transparent;
+
+	/* jQuery-UI resizale.disabled() の実行で
+	 *      色が薄くなるのを打ち消す */
+	opacity: 1.0;
+}
+
+/** div.row start **/
+
+div.row {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	/* 以下のwidth,overflowの定義で.rowのブロック内で横スクロールする。 */
+	/*
+	width: 98%;
+	overflow: auto;
+	*/
+}
+
+div.row * {
+	vertical-align: middle;
+}
+
+/* 横に並べる場合(title可変幅) start */
+
+.row.scale input {
+	width: 110px;
+}
+
+.row.scale .label {
+	font-size: 0.9em;
+}
+
+/* 横に並べる場合(title可変幅) end */
+
+
+/* Search欄の検索結果 start */
+
+div.row.result > div {
+	margin: 5px 1px 2px 1px;
+}
+
+/* Search欄の検索結果 end */
+
+/**  div.row end **/
+
+#controlPanel h5 {
+  margin: 0px;
+	padding: 5px 0px 5px 10px;
+	vertical-align: middle;
+	border-top: solid 1px #cccccc;
+	border-bottom: solid 1px #cccccc;
+	background: #eeeeee;
+	/* ui-iconの位置調整のために必要 */
+	position: relative;
+}
+
+#controlPanel h5::before {
+	content: url(/Fig/get_htext/open.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5.closed::before {
+	content: url(/Fig/get_htext/close.png);
+	margin: 0px 5px 0px 0px;
+}
+
+#controlPanel h5:first-child {
+	border-top: none;
+}
+
+#controlPanel h5:hover {
+	cursor: pointer;
+}
+
+#controlPanel h5  + div {
+	padding: 5px 0px 5px 10px;
+}
+
+#controlPanel h5 .ui-icon {
+	display: inline-block;
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	margin-top: -8px;
+	cursor: pointer;
+}
+
+button {
+	/* Safariでボタンの周りに入る余白を削除 */
+	margin: 0px;
+	padding: 0px;
+	/* ボタンを押した時に表示されるボーダーを非表示にする */
+	outline: none;
+}
+
+button.close, button.open {
+	border: none;
+	padding: 0px;
+	position: absolute;
+	right: 5px;
+	top: 7px;
+}
+
+button.close {
+	/* コントロールパネルに合わせて初期は非表示 */
+	display: none;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+button img {
+	/* 画像の下に入る余白を無くす */
+	display: block;
+}
+
+/** tree style start **/
+ul.tree, ul.tree ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul.tree ul {
+	padding-left: 12px;
+}
+
+ul.tree .class-A > span {
+	font-weight: bold;
+}
+
+ul.tree li {
+	margin: 3px 0px 3px 0px;
+}
+
+.module.disabled, .module.disabled *{
+	color: #999999;
+}
+
+.module.disabled {
+	display: none;
+}
+
+/** tree style > User data start **/
+.map-data ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+.map-data li {
+	position: relative;
+	margin: 5px 0px 2px 0px;
+}
+
+.map-data li .ui-icon {
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+}
+.map-data li .ui-icon:hover {
+	cursor: pointer;
+}
+.map-data li .ui-icon-trash {
+	right: 5px;
+}
+.map-data li .ui-icon-document {
+	right: 26px;
+}
+/** tree style > User data end **/
+
+/** tree style end **/
+
+ul.simple {
+	margin: 0px;
+	padding: 0px;
+}
+ul.simple li {
+	list-style-type: none;
+}
+ul.simple li:not(:first-child) {
+	margin-top: 5px;
+}
+
+//-->
+</style>
+
+<script src=https://www.kegg.jp/js/jquery-3.1.0.min.js></script>
+<script src=https://www.kegg.jp/js/jquery-ui.js></script>
+<script src=https://www.kegg.jp/js/jquery.balloon.min.js></script>
+<script src=https://www.kegg.jp/js/lz-string.min.js></script>
+<script src=https://www.kegg.jp/kegg-bin/get_data.cgi?data=0021&id=show_pathway.merged.js&v2.09></script>
+<script type="text/javascript">
+<!--
+
+// common variable
+const env = {
+	       mapno: '00472',
+	         org: 'map',
+	       entry: 'map00472',
+	       scale: 1,
+	 colorModule: '',
+	personalConf: '',
+}
+
+// HELP button
+function btn(bobj,img) { bobj.src = https://www.kegg.jp/Fig/bget/button_ + img + ".gif"; }
+
+//-->
+</script>
+</head>
+<body>
+<!-- header logo start -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0">
+	<tr>
+		<td style="width:80px;">
+			<a href=https://www.kegg.jp/kegg/pathway.html><img align="middle" alt="KEGG" border="0" src=https://www.kegg.jp/Fig/bget/kegg3.gif /></a>
+		</td>
+		<td style="vertical-align:middle;">
+			<font class="title3"><b>D-Arginine and D-ornithine metabolism - Reference pathway</b></font>
+		</td>
+		<td valign="bottom" align="right">
+		</td>
+	</tr>
+</table>
+<!-- header logo end -->
+
+<!-- page navigation start -->
+<div class="nav">
+	[
+	    <a href=https://www.kegg.jp/brite/query=00472&htext=br08901.keg&option=-a&node_proc=br08901_org&proc_enabled=map&panel=collapse id="navPathwayMenu">Pathway menu</a>
+	  | <a href=https://www.kegg.jp/entry/pathway+map00472 id="navPathwayEntry">Pathway entry</a>
+	  | <a id="downloadImageLink" href="#">Image (png) file</a>
+	  | <a href="javascript:void(window.open('https://www.kegg.jp/kegg/document/help_pathway.html','KEGG_Help','width=720,height=640'))">Help</a>
+	]
+
+	
+	
+	<!-- organism list start -->
+	<form name="selmenu" method="get">
+		
+		<input type="button" id="changePathwayTypeButton" value="Change pathway type">
+		
+		
+		
+		<input type="text" class="hidden" name="mapno" value="00472" />
+		<input type="text" class="hidden" id="scale" name="scale" value="1" />
+		<input type="text" class="hidden" id="displayNoColoringImage" name="nocolor" value="0" />
+		<input type="text" class="hidden" id="displayDescription" name="show_description" value="hide" />
+		<input type="text" class="hidden" id="displayControlPanel" name="show_module_list" value="show" />
+		<input type="text" class="hidden" id="clickableMode" name="clickable_mode" value="" />
+		<input type="text" class="hidden" name="module" value="" />
+	</form>
+	<!-- organism list end -->
+
+</div>
+<!-- page navigation end -->
+
+<!-- pathway image start -->
+<div class="image-block" style="position:static;">
+<img src="map00472.png" name="pathwayimage" name="pathwayimage" usemap="#mapdata" border="0" />
+	<map id="mapdata" name="mapdata" data-scale="1">
+		<area id="2EB48A64" shape="circle" coords="78,307,4" data-coords="78,307,4" class="original" href=https://www.kegg.jp/entry/C03564 title="C03564 (1-Pyrroline-2-carboxylate)" data-entry="C03564" />
+		<area id="DF6FC9AC" shape="circle" coords="152,306,4" data-coords="152,306,4" class="original" href=https://www.kegg.jp/entry/C01110 title="C01110 (5-Amino-2-oxopentanoic acid)" data-entry="C01110" />
+		<area id="E66FD8BB" shape="circle" coords="253,138,4" data-coords="253,138,4" class="original" href=https://www.kegg.jp/entry/C03341 title="C03341 (2-Amino-4-oxopentanoic acid)" data-entry="C03341" />
+		<area id="E66FDDAC" shape="circle" coords="253,208,4" data-coords="253,208,4" class="original" href=https://www.kegg.jp/entry/C03943 title="C03943 ((2R,4S)-2,4-Diaminopentanoate)" data-entry="C03943" />
+		<area id="E76FFBED" shape="circle" coords="363,389,4" data-coords="363,389,4" class="original" href=https://www.kegg.jp/entry/C03771 title="C03771 (5-Guanidino-2-oxopentanoate)" data-entry="C03771" />
+		<area id="E76FF6C5" shape="circle" coords="363,209,4" data-coords="363,209,4" class="original" href=https://www.kegg.jp/entry/C00077 title="C00077 (L-Ornithine)" data-entry="C00077" />
+		<area id="E46FFBC5" shape="circle" coords="363,306,4" data-coords="363,306,4" class="original" href=https://www.kegg.jp/entry/C00515 title="C00515 (D-Ornithine)" data-entry="C00515" />
+		<area id="DF6FDE24" shape="circle" coords="292,246,4" data-coords="292,246,4" class="original" href=https://www.kegg.jp/entry/C01667 title="C01667 (Bacitracin)" data-entry="C01667" />
+		<area id="E2702848" shape="circle" coords="512,209,4" data-coords="512,209,4" class="original" href=https://www.kegg.jp/entry/C00062 title="C00062 (L-Arginine)" data-entry="C00062" />
+		<area id="DF702D48" shape="circle" coords="512,306,4" data-coords="512,306,4" class="original" href=https://www.kegg.jp/entry/C00792 title="C00792 (D-Arginine)" data-entry="C00792" />
+		<area id="F2700F7F" shape="circle" coords="437,210,4" data-coords="437,210,4" class="original" href=https://www.kegg.jp/entry/C00134 title="C00134 (Putrescine)" data-entry="C00134" />
+		<area id="45A3FEEE" shape="rect" coords="205,165,251,182" data-coords="205,165,251,182" class="original" href=https://www.kegg.jp/entry/K21672+1.4.1.12+R04200+R04201 title="K21672 (ord), 1.4.1.12, R04200, R04201" />
+		<area id="40AC9458" shape="rect" coords="228,250,274,267" data-coords="228,250,274,267" class="original" href=https://www.kegg.jp/entry/K17898+K17899+5.4.3.5+R02461 title="K17898 (oraE), K17899 (oraS), 5.4.3.5, R02461" />
+		<area id="21913E54" shape="rect" coords="190,298,236,315" data-coords="190,298,236,315" class="original" href=https://www.kegg.jp/entry/K00273+1.4.3.3+R02457 title="K00273 (DAO), 1.4.3.3, R02457" />
+		<area id="8B94BC61" shape="rect" coords="190,332,236,349" data-coords="190,332,236,349" class="original" href=https://www.kegg.jp/entry/K00824+2.6.1.21+R02459 title="K00824 (dat), 2.6.1.21, R02459" />
+		<area id="AFAAF2E2" shape="rect" coords="315,259,361,276" data-coords="315,259,361,276" class="original" href=https://www.kegg.jp/entry/5.1.1.10+R00672 title="5.1.1.10, R00672" />
+		<area id="5DB313A9" shape="rect" coords="340,240,386,257" data-coords="340,240,386,257" class="original" href=https://www.kegg.jp/entry/5.1.1.9+R00672 title="5.1.1.9, R00672" />
+		<area id="B491FF17" shape="rect" coords="365,259,411,276" data-coords="365,259,411,276" class="original" href=https://www.kegg.jp/entry/K21898+5.1.1.12+R00672 title="K21898 (orr), 5.1.1.12, R00672" />
+		<area id="FAB4F152" shape="rect" coords="438,327,484,344" data-coords="438,327,484,344" class="original" href=https://www.kegg.jp/entry/K00273+1.4.3.3+R02923 title="K00273 (DAO), 1.4.3.3, R02923" />
+		<area id="96B173BD" shape="rect" coords="437,298,483,315" data-coords="437,298,483,315" class="original" href=https://www.kegg.jp/entry/3.5.3.10+R02458 title="3.5.3.10, R02458" />
+		<area id="E7B9F33B" shape="rect" coords="437,381,483,398" data-coords="437,381,483,398" class="original" href=https://www.kegg.jp/entry/K00824+2.6.1.21+R02924 title="K00824 (dat), 2.6.1.21, R02924" />
+		<area id="2F9D8EE3" shape="rect" coords="490,248,536,265" data-coords="490,248,536,265" class="original" href=https://www.kegg.jp/entry/5.1.1.9+R00567 title="5.1.1.9, R00567" />
+		<area id="4E841D06" shape="poly" coords="356,295,301,295,301,295,299,295,298,296,297,295,298,294,296,294,295,295,294,294,294,294,293,293,293,293,292,292,292,292,292,290,292,290,291,289,291,289,291,287,291,287,291,251,293,251,293,287,293,287,293,289,293,289,294,290,294,290,294,292,294,292,295,293,295,293,296,294,296,294,297,295,296,296,298,296,299,295,300,296,299,297,301,297,301,297,356,297" data-coords="356,295,301,295,301,295,299,295,298,296,297,295,298,294,296,294,295,295,294,294,294,294,293,293,293,293,292,292,292,292,292,290,292,290,291,289,291,289,291,287,291,287,291,251,293,251,293,287,293,287,293,289,293,289,294,290,294,290,294,292,294,292,295,293,295,293,296,294,296,294,297,295,296,296,298,296,299,295,300,296,299,297,301,297,301,297,356,297" class="original" href=https://www.kegg.jp/entry/R02460 title="R02460" />
+		<area id="9B287CCD" shape="poly" coords="149,313,149,380,149,380,149,381,149,381,150,383,150,383,150,384,150,384,151,385,151,385,152,387,152,387,153,388,154,387,156,387,155,388,156,389,157,388,159,388,159,388,358,388,358,390,159,390,159,390,157,390,158,389,157,388,156,389,154,389,155,388,154,387,154,387,153,385,153,385,152,384,152,384,152,383,152,383,151,381,151,381,151,380,151,380,151,313" data-coords="149,313,149,380,149,380,149,381,149,381,150,383,150,383,150,384,150,384,151,385,151,385,152,387,152,387,153,388,154,387,156,387,155,388,156,389,157,388,159,388,159,388,358,388,358,390,159,390,159,390,157,390,158,389,157,388,156,389,154,389,155,388,154,387,154,387,153,385,153,385,152,384,152,384,152,383,152,383,151,381,151,381,151,380,151,380,151,313" class="original" href=https://www.kegg.jp/entry/R03250 title="R03250" />
+		<area id="17D11EAF" shape="poly" coords="84,305,146,305,146,307,84,307" data-coords="84,305,146,305,146,307,84,307" class="original" href=https://www.kegg.jp/entry/R03249 title="R03249" />
+		<area id="13B6F351" shape="rect" coords="438,348,484,365" data-coords="438,348,484,365" class="original" href=https://www.kegg.jp/entry/K19746+1.4.99.6+R11018 title="K19746 (dauA), 1.4.99.6, R11018" />
+		<area id="C5965395" shape="rect" coords="564,344,610,361" data-coords="564,344,610,361" class="original" href=https://www.kegg.jp/entry/K19744+1.4.1.25+R11031+R11032 title="K19744 (dauB), 1.4.1.25, R11031, R11032" />
+		<area id="4A8B0B23" shape="rect" coords="255,165,301,182" data-coords="255,165,301,182" class="original" href=https://www.kegg.jp/entry/K21672+1.4.1.26+R04200 title="K21672 (ord), 1.4.1.26, R04200" />
+		<area id="50AC5F65" shape="rect" coords="415,245,461,262" data-coords="415,245,461,262" class="original" href=https://www.kegg.jp/entry/K23385+4.1.1.116+R12304 title="K23385 (dokD), 4.1.1.116, R12304" />
+		<area id="37B7C4C9" shape="rect" coords="40,45,371,70" data-coords="40,45,371,70" class="original" href=https://www.kegg.jp/entry/map00472 title="map00472: D-Arginine and D-ornithine metabolism" data-entry="map00472" />
+		<area id="9F99883B" shape="rect" coords="346,133,533,158" data-coords="346,133,533,158" class="original" href=https://www.kegg.jp/pathway/map00220 title="map00220: Arginine biosynthesis" data-entry="map00220" />
+	</map>
+	<map id="module_mapdata" name="module_mapdata" data-scale="1">
+	</map>
+</div>
+<!-- pathway image end -->
+
+<!-- control panel start -->
+
+<div id="controlPanel">
+	<div class="controller">
+		<h5>Option</h5>
+		<div>
+			<div class="row scale">
+				<span class="title">Scale:</span>
+				<span class="content">
+					<input type="range" min="0.1" max="1" step="0.1" value="1">
+					<span class="label">100%</span>
+				</span>
+			</div>
+			
+			
+			
+		</div>
+		<h5>Search</h5>
+		<div>
+			<div class="row query">
+				<form>
+					<input type="search" name="query" style="width:150px;" autocomplete="off" value="">
+					<input type="submit" value="Go">
+					<input type="button" value="&times;" class="clear hidden">
+				</form>
+			</div>
+			<div class="row result">
+			</div>
+		</div>
+		
+		<h5>User data
+			<span class="ui-icon ui-icon-plus mapper">
+		</h5>
+		<div>
+			<div class="row map-data">
+				<ul></ul>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+	</div>
+	<button class="close">
+		<img src=https://www.kegg.jp/Fig/left_triangle_12x12.png>
+	</button>
+	<button class="open">
+		<img src=https://www.kegg.jp/Fig/right_triangle_12x12.png>
+	</button>
+</div>
+<!-- control panel end -->
+
+
+<form id="downloadForm" action=https://www.kegg.jp/kegg-bin/download method="post">
+	<input type="hidden" name="name" value="map00472.png" />
+	<input type="hidden" name="content" />
+	<input type="hidden" name="decode" value="base64" />
+</form>
+
+<div id="waiting-circle">
+	<img src=https://www.kegg.jp/Fig/waiting-circle-small.gif>
+</div>
+
+<!-- pathway image url start -->
+<form class="imageset" data-name="">
+	<input type="hidden" name="image_normal" value="/kegg/pathway/map/map00472.png 1x"
+	       data-src=https://www.kegg.jp/kegg/pathway/map/map00472.png data-situation="1x">
+</form>
+<!-- pathway image url end -->
+
+</body>
+</html>
